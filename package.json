@@ -1,0 +1,23 @@
+{
+  "name": "team6",
+  "version": "1.0.0",
+  "description": "Team 6 project tech",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabrinaz35/team6.git"
+  },
+  "author": "Maja, David, Maks, Sabrina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sabrinaz35/team6/issues"
+  },
+  "homepage": "https://github.com/sabrinaz35/team6#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
