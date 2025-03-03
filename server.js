@@ -29,6 +29,10 @@ app.get('/', function(req, res) {
 }); 
 
 
+app.get('/inlog', function(req, res) { //Route van de Inlogpagina
+  res.render('pages/inlog');
+}); 
+
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
 
