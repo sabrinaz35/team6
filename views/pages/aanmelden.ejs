@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
+<main>
+  <div class="accountAanmaken">
+    <h1>Hoi welkom</h1>
+      <div>
+        <h2>create account</h2>
+        <form action="/add-account" method="post">
+          <label for="name">Naam</label>
+          <input name="name" type="text" >
+    
+          <label for="e-mailadress">E-mailadres</label>
+          <input name="email" type="email" required>
+    
+          <label for="password">Password</label>
+          <input name="password" type="password" required>
+    
+          <button type="submit" value="Send Request">Aanmelden</button>
+        </form>
+      </div>
+  </div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+</body>
