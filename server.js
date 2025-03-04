@@ -23,6 +23,35 @@ app.listen(port, () => {
 app.use(express.urlencoded({extended: true})) 
 
 
+//******* DATABASE **********
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+// URL aanmaken om met de database te connecten met info uit de .env file
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority&appName=${process.env.DB_NAME}`
+//MongoClient met een MongoClientOptions object aanmaken om de Stable API versie vast te leggen
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    // client met server connecten (optional starting in v4.7)
+    await client.connect();
+    // ping sturen om een succesvol connectie te bevestigen
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // client closes bij finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
+
 // ******* ROUTES ********** 
 app.get('/', function(req, res) {
   res.render('pages/index');
@@ -32,6 +61,9 @@ app.get('/', function(req, res) {
 app.get('/inlog', function(req, res) { //Route van de Inlogpagina
   res.render('pages/inlog');
 }); 
+
+
+
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',async (req, res) => {
@@ -63,10 +95,15 @@ app.post('/add-account',async (req, res) => {
         }
   })
   
+
  //Route voor de form   
     app.get('/aanmelden', (req, res) => {  
-      res.render('aanmelden'); 
+      res.render('pages/aanmelden'); 
     })
+
+
+
+
 
 
 // ******* ERROR HANDLING ********
@@ -89,33 +126,8 @@ app.use((err, req, res) => {
 })
 
 
-//******* DATABASE **********
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-// URL aanmaken om met de database te connecten met info uit de .env file
-const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority&appName=${process.env.DB_NAME}`
-//MongoClient met een MongoClientOptions object aanmaken om de Stable API versie vast te leggen
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
 
-async function run() {
-  try {
-    // client met server connecten (optional starting in v4.7)
-    await client.connect();
-    // ping sturen om een succesvol connectie te bevestigen
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // client closes bij finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
 
 
 
