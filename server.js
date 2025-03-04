@@ -33,6 +33,42 @@ app.get('/inlog', function(req, res) { //Route van de Inlogpagina
   res.render('pages/inlog');
 }); 
 
+//**********Account aanmaken plus toevoegen in mongo**********
+app.post('/add-account',async (req, res) => {
+
+  //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
+    const database = client.db("klanten"); 
+    const gebruiker = database.collection("user");
+  
+    //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
+    const doc = { 
+            name: req.body.name,
+            emailadress: req.body.email,
+            password: req.body.password
+          }
+  
+    //Om het document toe te voegen in de database de volgende code
+    const toevoegen = await gebruiker.insertOne(doc)
+
+    //Even loggen om te checken of er een ID is aangemaakt
+    console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`);
+
+    //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
+        if (doc){
+          //Er is hier nog wat mis, hij geeft namelijk nog aan dat de naam Undefined is
+          res.send(`Welkom, ${gebruiker.name}! Account is succesvol aangemaakt.`)
+        } else {
+          //Dit werkt helemaal nog niet :(
+          res.send(`Oops er ging iets fout.`)
+        }
+  })
+  
+ //Route voor de form   
+    app.get('/aanmelden', (req, res) => {  
+      res.render('aanmelden'); 
+    })
+
+
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
 
