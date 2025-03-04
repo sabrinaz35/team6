@@ -96,13 +96,43 @@ app.post('/add-account',async (req, res) => {
   })
   
 
- //Route voor de form   
+ //Route voor de form van het acount aanmaken   
     app.get('/aanmelden', (req, res) => {  
       res.render('pages/aanmelden'); 
     })
 
 
 
+//**********inloggen en check via mongo**********
+
+app.post('/inlog-account',async (req, res) => {
+
+  //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
+  const database = client.db("klanten"); 
+  const gebruiker = database.collection("user");
+
+  //Een query aanmaken met daarin de naam om zo op te kunnen zoeken of die gebruiker bestaan op basis wat de gebruiker heeft ingevuld bij de form
+  const query = { name: req.body.name }; 
+
+  //Code om de user daadwerkelijk te vinden, met daarbij de overeenkomst van de query
+  const user = await gebruiker.findOne(query);  
+
+  //if else state met daarin dat de gebruiker overeen moet komen met het opgegeven wachtwoord + een respons terug geven aan de gebruiker
+if (user) {
+    if(user.password == req.body.password){
+      res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
+    } else {
+      res.send('Wachtwoord komt niet overeen')
+    }
+} else {
+  //Ook als niet gevonden word een response terug
+    res.send("Gebruiker niet gevonden. Probeer opnieuw.");
+}})
+
+  //Connectie om de inlog form te laten zien
+  app.get('/inlog', (req, res) => {  
+    res.render('inlog');
+  })
 
 
 
