@@ -87,8 +87,8 @@ app.post('/add-account',async (req, res) => {
 
     //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
         if (doc){
-          //Er is hier nog wat mis, hij geeft namelijk nog aan dat de naam Undefined is
-          res.send(`Welkom, ${gebruiker.name}! Account is succesvol aangemaakt.`)
+          //Groet de gebruiker, naam wordt overgenomen van de form, niet van de database
+          res.send(`Welkom, ${doc.name}! Account is succesvol aangemaakt.`)
         } else {
           //Dit werkt helemaal nog niet :(
           res.send(`Oops er ging iets fout.`)
