@@ -3,9 +3,14 @@
     background-color: green;
     padding: 20px;
     display: flex;
-    justify-content: center;
-    font-family: 'Pixelify Sans', sans-serif; /* Lettertype voor de header */
-    color: white; /* Tekstkleur wit voor de hele header */
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo styling */
+.logo {
+    height: 50px; /* Pas de grootte aan zoals nodig */
+    width: auto;
 }
 
 /* Knoppen container voor de navigatie items */
@@ -20,10 +25,10 @@
     background-color: rgb(7, 170, 67);
     padding: 10px 20px;
     text-decoration: none;
-    color: white; /* Tekstkleur wit voor de navigatie items */
+    color: white;
     font-weight: bold;
     border-radius: 5px;
-    font-family: 'Pixelify Sans', sans-serif; /* Lettertype voor de nav-items */
+    font-family: 'Pixelify Sans', sans-serif;
 }
 
 /* Hover effect voor de nav-items */
