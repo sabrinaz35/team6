@@ -13,6 +13,12 @@
     width: auto;
 }
 
+.logo:hover {
+    transform: scale(1.05); /* Maakt het logo iets groter */
+    opacity: 0.8; /* Maakt het logo een beetje transparanter */
+    cursor: pointer; /* Geeft aan dat het klikbaar is */
+}
+
 /* Knoppen container voor de navigatie items */
 .nav-buttons {
     display: flex;

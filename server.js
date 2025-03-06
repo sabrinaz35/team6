@@ -155,7 +155,20 @@ app.use((err, req, res) => {
   res.status(500).send('500: server error')
 })
 
-app.use('/images', express.static('static/images'));
+app.get('/', function(req, res) {
+  res.render('pages/index');
+}); 
+app.get('/about', (req, res) => {
+  res.render('pages/about'); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+});
+
+app.get('/opgeslagenartiesten', (req, res) => {
+  res.render('pages/opgeslagenartiesten'); // Zorg voor een opgeslagenartiesten.ejs bestand
+});
+
+app.get('/contact', (req, res) => {
+  res.render('pages/contact'); // Zorg ervoor dat je een contact.ejs bestand hebt
+});
 
 
 
