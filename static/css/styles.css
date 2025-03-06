@@ -1,0 +1,44 @@
+/* Algemene stijlen voor de header */
+.header-bar {
+    background-color: #DFDEDE;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo styling */
+.logo {
+    height: 100px; /* Pas de grootte aan zoals nodig */
+    width: auto;
+}
+
+.logo:hover {
+    transform: scale(1.05); /* Maakt het logo iets groter */
+    opacity: 0.8; /* Maakt het logo een beetje transparanter */
+    cursor: pointer; /* Geeft aan dat het klikbaar is */
+}
+
+/* Knoppen container voor de navigatie items */
+.nav-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+/* Basis stijlen voor de navigatie items */
+.nav-item {
+    display: inline-block;
+    background-color: rgb(7, 170, 67);
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Hover effect voor de nav-items */
+.nav-item:hover {
+    background-color: rgb(185, 67, 67);
+    color: rgb(31, 198, 31);
+}
