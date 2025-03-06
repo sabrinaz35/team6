@@ -155,7 +155,7 @@ app.use((err, req, res) => {
   res.status(500).send('500: server error')
 })
 
-
+app.use('/images', express.static('static/images'));
 
 
 

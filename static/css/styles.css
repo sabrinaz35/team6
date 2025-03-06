@@ -1,6 +1,6 @@
 /* Algemene stijlen voor de header */
 .header-bar {
-    background-color: green;
+    background-color: #DFDEDE;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -9,7 +9,7 @@
 
 /* Logo styling */
 .logo {
-    height: 50px; /* Pas de grootte aan zoals nodig */
+    height: 100px; /* Pas de grootte aan zoals nodig */
     width: auto;
 }
 
