@@ -8,6 +8,8 @@ const express = require("express");
 const app = express();
 const port = 4000;
 
+const bcrypt = require ("bcryptjs")
+
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
 
@@ -71,12 +73,16 @@ app.post('/add-account',async (req, res) => {
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten"); 
     const gebruiker = database.collection("user");
+
+    //const aanmaken om een hash te creëren voor het wachtwoord
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
   
     //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
     const doc = { 
             name: req.body.name,
             emailadress: req.body.email,
-            password: req.body.password
+            //Het ingevulde wachtwoord door de gebruiker word gestuurd als die hash naar de database
+            password: hashedPassword
           }
   
     //Om het document toe te voegen in de database de volgende code
@@ -117,9 +123,14 @@ app.post('/inlog-account',async (req, res) => {
   //Code om de user daadwerkelijk te vinden, met daarbij de overeenkomst van de query
   const user = await gebruiker.findOne(query);  
 
+
   //if else state met daarin dat de gebruiker overeen moet komen met het opgegeven wachtwoord + een respons terug geven aan de gebruiker
 if (user) {
-    if(user.password == req.body.password){
+
+  //Hieronder ontcijfer je de hash weer met bcrypt compare, waardoor er een vergelijking gemaakt kan worden tussen de wachtwoorden en zo ingelogd kan worden.
+  const isMatch = await bcrypt.compare(req.body.password, user.password);
+
+    if(isMatch){
       res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       res.send('Wachtwoord komt niet overeen')
