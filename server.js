@@ -127,10 +127,8 @@ app.post('/inlog-account',async (req, res) => {
 if (user) {
   //Hieronder ontcijfer je de hash weer met bcrypt compare, waardoor er een vergelijking gemaakt kan worden tussen de wachtwoorden en zo ingelogd kan worden.
   const isMatch = await bcrypt.compare(req.body.password, user.password);
-
-    if(isMatch){
+  if(isMatch){
     if(user.password == xss(req.body.password)){
-
       res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       res.send('Wachtwoord komt niet overeen')
@@ -138,7 +136,8 @@ if (user) {
 } else {
   //Ook als niet gevonden word een response terug
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
-}})
+  }}
+})
 
   //Connectie om de inlog form te laten zien
   app.get('/inlog', (req, res) => {  
@@ -169,6 +168,7 @@ app.use((err, req, res) => {
 app.get('/', function(req, res) {
   res.render('pages/index');
 }); 
+
 app.get('/about', (req, res) => {
   res.render('pages/about'); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 });
@@ -180,15 +180,3 @@ app.get('/opgeslagenartiesten', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('pages/contact'); // Zorg ervoor dat je een contact.ejs bestand hebt
 });
-
-
-
-
-
-
-
-
-
-
-
-
