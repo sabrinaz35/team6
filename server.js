@@ -1,6 +1,6 @@
 console.log("Hallo wereld");
 
-// Info van .env file toevoegen om .env te processen
+// Info van .env file toevoegen om .env te processen.
 require('dotenv').config() 
 
 // Express webserver initialiseren
@@ -144,6 +144,65 @@ if (user) {
   app.get('/inlog', (req, res) => {  
     res.render('inlog');
   })
+
+
+// ******** SPOTIFY API **********
+
+//Dit stukje code hebben wij uit ChatGPT gehaald, omdat het oproepen van APIs vanuit spotify heel ingewikkeld is. 
+//Ze willen een access token die elk uur geupdated moet worden. 
+//Hiervoor hadden zij ook voorbeeld code op de website maar die werkte niet, omdat er zelf fouten inzaten zoals twee keer dezelfde variable declareren. 
+//Ik snap de helft van deze code.
+
+// request require om de volgende code van spotify werkend te maken
+const request = require('request');
+
+// inloggegevens voor de Spotify API App vanuit de .env laden
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
+
+// access token aanvragen
+async function getAccessToken() {
+  return new Promise((resolve, reject) => {
+    var authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      headers: {
+        'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
+      },
+      form: { grant_type: 'client_credentials' },
+      json: true
+    };
+
+    request.post(authOptions, (error, response, body) => {
+      if (error) return reject(error);
+      if (response.statusCode !== 200) return reject(`Error: ${response.statusCode}`);
+      
+      resolve(body.access_token);
+    });
+  });
+}
+
+// pitpull data van spotify opvragen
+async function fetchData() {
+  try {
+    const accessToken = await getAccessToken(); // Access token opvragen voordat de data opgevraagd wordt
+    
+    const response = await fetch('https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    });
+
+    const data = await response.json();
+    console.log(data); // Log artist data
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+// functie aanroepen
+//gaat nu niet werken vanwege dependencies
+fetchData();
 
 
 
