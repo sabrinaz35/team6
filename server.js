@@ -4,18 +4,18 @@ console.log("Hallo wereld");
 require('dotenv').config() 
 
 // Express webserver initialiseren
-const express = require("express");
+const express = require('express');
 const app = express();
+const helmet = require('helmet') 
 const port = 4000;
 
-const xss = require("xss");
-const helmet = require("helmet") 
-
-//Activeren van de helmet module 
-app.use(helmet())
+const xss = require('xss');
 
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
+
+//Activeren van de helmet module 
+app.use(helmet())
 
 //ejs templates opstarten
 app.set('view engine', 'ejs');
