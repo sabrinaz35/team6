@@ -9,6 +9,10 @@ const app = express();
 const port = 4000;
 
 const xss = require("xss");
+const helmet = require("helmet") 
+
+//Activeren van de helmet module 
+app.use(helmet())
 
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
