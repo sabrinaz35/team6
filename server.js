@@ -11,6 +11,7 @@ const port = 4000;
 const bcrypt = require ("bcryptjs")
 const xss = require("xss");
 
+
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
 
@@ -65,6 +66,21 @@ app.get('/inlog', function(req, res) { //Route van de Inlogpagina
   res.render('pages/inlog');
 }); 
 
+app.get('/', function(req, res) {
+  res.render('pages/index');
+}); 
+app.get('/about', (req, res) => {
+  res.render('pages/about'); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+});
+
+app.get('/opgeslagenartiesten', (req, res) => {
+  res.render('pages/opgeslagenartiesten'); // Zorg voor een opgeslagenartiesten.ejs bestand
+});
+
+app.get('/contact', (req, res) => {
+  res.render('pages/contact'); // Zorg ervoor dat je een contact.ejs bestand hebt
+});
+
 
 
 //**********Account aanmaken plus toevoegen in mongo**********
@@ -99,7 +115,7 @@ app.post('/add-account',async (req, res) => {
           res.send(`Oops er ging iets fout.`)
         }
   })
-  
+
 
  //Route voor de form van het acount aanmaken   
     app.get('/aanmelden', (req, res) => {  
@@ -110,7 +126,7 @@ app.post('/add-account',async (req, res) => {
 
 //**********inloggen en check via mongo**********
 
-app.post('/inlog-account',async (req, res) => {
+app.post('/inlog-account'),async (req, res) => {
 
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten"); 
@@ -138,12 +154,14 @@ if (user) {
 } else {
   //Ook als niet gevonden word een response terug
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
-}})
+}}
 
   //Connectie om de inlog form te laten zien
   app.get('/inlog', (req, res) => {  
     res.render('inlog');
   })
+
+}
 
 
 // ******** SPOTIFY API **********
@@ -224,30 +242,3 @@ app.use((err, req, res) => {
   // 500 status code als HTTP response sturen 
   res.status(500).send('500: server error')
 })
-
-app.get('/', function(req, res) {
-  res.render('pages/index');
-}); 
-app.get('/about', (req, res) => {
-  res.render('pages/about'); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
-});
-
-app.get('/opgeslagenartiesten', (req, res) => {
-  res.render('pages/opgeslagenartiesten'); // Zorg voor een opgeslagenartiesten.ejs bestand
-});
-
-app.get('/contact', (req, res) => {
-  res.render('pages/contact'); // Zorg ervoor dat je een contact.ejs bestand hebt
-});
-
-
-
-
-
-
-
-
-
-
-
-
