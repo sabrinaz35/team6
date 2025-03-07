@@ -81,7 +81,8 @@ app.post('/add-account',async (req, res) => {
     const doc = { 
         name: xss(req.body.name),            
         emailadress: xss(req.body.email), 
-        password: xss(hashedPassword),
+        //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
+        password: hashedPassword,
       }
   
     //Om het document toe te voegen in de database de volgende code
@@ -124,19 +125,21 @@ app.post('/inlog-account',async (req, res) => {
 
 
   //if else state met daarin dat de gebruiker overeen moet komen met het opgegeven wachtwoord + een respons terug geven aan de gebruiker
-if (user) {
-  //Hieronder ontcijfer je de hash weer met bcrypt compare, waardoor er een vergelijking gemaakt kan worden tussen de wachtwoorden en zo ingelogd kan worden.
-  const isMatch = await bcrypt.compare(req.body.password, user.password);
-  if(isMatch){
-    if(user.password == xss(req.body.password)){
+  if (user) {
+    // Vergelijk het ingevoerde wachtwoord met het gehashte wachtwoord in de database
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    
+    if (isMatch) {
+      // Als het wachtwoord overeenkomt, log de gebruiker in
       res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
-      res.send('Wachtwoord komt niet overeen')
+      // Als het wachtwoord niet overeenkomt
+      res.send('Wachtwoord komt niet overeen');
     }
-} else {
-  //Ook als niet gevonden word een response terug
+  } else {
+    // Als de gebruiker niet wordt gevonden
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
-  }}
+  }
 })
 
   //Connectie om de inlog form te laten zien
