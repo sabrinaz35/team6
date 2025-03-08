@@ -110,3 +110,29 @@ h1, h2, h3{
     background-color: rgb(185, 67, 67);
     cursor: pointer;
 }
+
+.background-opacity-80{
+    width: 100vw;
+    margin-top: 20%;
+    padding: 3em 0em;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.background-opacity-80 section{
+    width:400px;
+    border-radius: 5px;
+    padding: 0.5em;
+    background: rgb(255,255,255,0.7);
+}
+
+.uitgelichte-artiest{
+    
+    padding: 0.5em;
+}
+
+.uitgelichte-artiest img{
+    max-width: 100%;
+}
