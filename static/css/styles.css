@@ -14,7 +14,7 @@
 }
 
 .logo:hover {
-    transform: scale(1.05); /* Maakt het logo iets groter */
+    transform: scale(1.03); /* Maakt het logo iets groter */
     opacity: 0.8; /* Maakt het logo een beetje transparanter */
     cursor: pointer; /* Geeft aan dat het klikbaar is */
 }
@@ -28,10 +28,11 @@
 /* Basis stijlen voor de navigatie items */
 .nav-item {
     display: inline-block;
-    background-color: rgb(7, 170, 67);
+    background-color: rgb(77, 119, 79);
     padding: 10px 20px;
     text-decoration: none;
     color: white;
+    font-size: 1.5em;
     font-weight: bold;
     border-radius: 5px;
     font-family: 'Pixelify Sans', sans-serif;
@@ -40,5 +41,98 @@
 /* Hover effect voor de nav-items */
 .nav-item:hover {
     background-color: rgb(185, 67, 67);
-    color: rgb(31, 198, 31);
+}
+
+body{
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    background-image: url(../images/background-screen.png);
+    background-size: cover;
+}
+
+h1, h2, h3{
+    font-family: 'Kanit', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+}
+.startpagina h1{
+    visibility: hidden;
+}
+
+.startpagina-firstsection{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        color: white;
+        max-width: 800px; 
+        margin: 0 auto; 
+    }
+    
+.startpagina h2 {
+    font-size: 60px;
+    margin-bottom: 0;
+}
+
+.startpagina-firstsection p{
+    margin-top: -2%;
+    margin-bottom: 0;
+    font-size: 2em;
+    font-weight: 300;
+    opacity: 90%;
+}
+
+.link-row{
+    display: flex;
+    gap: 1em;
+}
+
+.link-row a {
+    display: inline-block;
+    background-color: rgb(77, 119, 79);
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 5px;
+    font-family: 'Pixelify Sans', sans-serif;
+    width: 6em;
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.link-row a:last-child{
+    background-color: rgb(99 152 103);
+}
+.link-row a:hover {
+    background-color: rgb(185, 67, 67);
+    cursor: pointer;
+}
+
+.background-opacity-80{
+    width: 100vw;
+    margin-top: 20%;
+    padding: 3em 0em;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.background-opacity-80 section{
+    width:400px;
+    border-radius: 5px;
+    padding: 0.5em;
+    background: rgb(255,255,255,0.7);
+}
+
+.uitgelichte-artiest{
+    
+    padding: 0.5em;
+}
+
+.uitgelichte-artiest img{
+    max-width: 100%;
 }
