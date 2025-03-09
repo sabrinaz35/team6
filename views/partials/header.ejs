@@ -1,10 +1,34 @@
+
+<!-- Ik heb hier een navigatie gemaakt en daarbij de symboltjes in een svg gezet en die toegvoegd aan de navigatie-->
 <header class="header-bar">
-    <a href="/">  <!-- Dit zorgt ervoor dat het logo klikbaar is en naar index.ejs verwijst -->
-        <img src="static/images/Logo2Artiest.png" alt="Logo" class="logo">
+    <a href="/">  
+        <img src="static/images/logogeel.png" alt="Logo" class="logo" id="logo">
     </a>
     <nav class="nav-buttons">
-        <a href="/about" class="nav-item">Over</a>
-        <a href="/opgeslagenartiesten" class="nav-item">Opgeslagen Artiesten</a>
-        <a href="/account" class="nav-item">Account</a>
+        <a href="/ontdek" class="nav-item">
+            <img src="/static/images/rondje.svg" class="icon" alt="rondje"> Ontdek
+        </a>
+        <a href="/opgeslagenartiesten" class="nav-item">
+            <img src="/static/images/driehoek.svg" class="icon" alt="driehoek"> Opgeslagen artiesten
+        </a>
+        <a href="/account" class="nav-item">
+            <img src="/static/images/vierkant.svg" class="icon" alt="vierkant"> Account
+        </a>
     </nav>
+    
 </header>
+
+<!-- Dit is de java die de mouseover naar een rode afbeelding brengt!-->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const logo = document.getElementById("logo");
+
+        logo.addEventListener("mouseover", function() {
+            this.src = "static/images/logorood.png";
+        });
+
+        logo.addEventListener("mouseout", function() {
+            this.src = "static/images/logogeel.png";
+        });
+    });
+</script>

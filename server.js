@@ -158,16 +158,17 @@ app.use((err, req, res) => {
 app.get('/', function(req, res) {
   res.render('pages/index');
 }); 
+// Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 app.get('/about', (req, res) => {
-  res.render('pages/about'); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+  res.render('pages/about'); 
 });
-
+ // Zorg voor een opgeslagenartiesten.ejs bestand
 app.get('/opgeslagenartiesten', (req, res) => {
-  res.render('pages/opgeslagenartiesten'); // Zorg voor een opgeslagenartiesten.ejs bestand
+  res.render('pages/opgeslagenartiesten');
 });
-
-app.get('/contact', (req, res) => {
-  res.render('pages/contact'); // Zorg ervoor dat je een contact.ejs bestand hebt
+// Zorg ervoor dat je een contact.ejs bestand hebt
+app.get('/account', (req, res) => {
+  res.render('pages/account'); 
 });
 
 

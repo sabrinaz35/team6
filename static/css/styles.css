@@ -1,23 +1,24 @@
-/* Algemene stijlen voor de header */
+/* Algemene stijlen voor de header zoals de kleur en padding */
 .header-bar {
-    background-color: #DFDEDE;
+    background-color: #9CC88DDE;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Logo styling */
+/* Logo/ afbeelding styling met name de grote*/
 .logo {
-    height: 100px; /* Pas de grootte aan zoals nodig */
+    height: 100px; 
     width: auto;
 }
 
+/* Geeft aan dat het klikbaar is en maakt het logo iets groter */ 
 .logo:hover {
-    transform: scale(1.05); /* Maakt het logo iets groter */
-    opacity: 0.8; /* Maakt het logo een beetje transparanter */
-    cursor: pointer; /* Geeft aan dat het klikbaar is */
+    transform: scale(1.05); 
+    cursor: pointer; 
 }
+
 
 /* Knoppen container voor de navigatie items */
 .nav-buttons {
@@ -27,18 +28,26 @@
 
 /* Basis stijlen voor de navigatie items */
 .nav-item {
-    display: inline-block;
-    background-color: rgb(7, 170, 67);
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    background-color: #4D774F;
     padding: 10px 20px;
     text-decoration: none;
     color: white;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 10px;
     font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Hier worden de icone/svg in bepaalde grote behouden */
+.icon {
+    width: 18px;
+    height: 16px;
+    margin-right: 5px;
 }
 
 /* Hover effect voor de nav-items */
 .nav-item:hover {
-    background-color: rgb(185, 67, 67);
+    background-color: #b84242;
     color: rgb(31, 198, 31);
-}

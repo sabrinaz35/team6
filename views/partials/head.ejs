@@ -3,3 +3,18 @@
 <title>Input!</title>
     
 <link rel="stylesheet" href="static/css/styles.css">
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const logo = document.getElementById("logo");
+
+        logo.addEventListener("mouseover", function() {
+            this.src = "static/images/logorood.png";
+        });
+
+        logo.addEventListener("mouseout", function() {
+            this.src = "static/images/logogeel.png";
+        });
+    });
+</script>
+
