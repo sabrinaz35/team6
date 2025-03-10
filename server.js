@@ -16,6 +16,15 @@ const xss = require("xss");
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
 
+
+//Middleware Sessions bij het inloggen
+app.use(sessions({ 
+  secret: process.env.SESSION_SECRET, 
+  resave: false,
+  saveUninitialized: true
+  }))
+
+
 //ejs templates opstarten
 app.set('view engine', 'ejs');
 
@@ -123,7 +132,7 @@ app.post('/add-account',async (req, res) => {
 
 //**********inloggen en check via mongo**********
 
-app.post('/inlog-account'),async, inlogSessie, (req, res) => {
+app.post('/inlog-account',async (req, res) => {
 
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten"); 
@@ -135,7 +144,6 @@ app.post('/inlog-account'),async, inlogSessie, (req, res) => {
   //Code om de user daadwerkelijk te vinden, met daarbij de overeenkomst van de query
   const user = await gebruiker.findOne(query);  
 
-
   //if else state met daarin dat de gebruiker overeen moet komen met het opgegeven wachtwoord + een respons terug geven aan de gebruiker
   if (user) {
     // Vergelijk het ingevoerde wachtwoord met het gehashte wachtwoord in de database
@@ -143,7 +151,9 @@ app.post('/inlog-account'),async, inlogSessie, (req, res) => {
     
     if (isMatch) {
       // Als het wachtwoord overeenkomt, log de gebruiker in
-      res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
+      req.session.user = user
+      res.render('pages/profiel', {user: req.session.user})
+      // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       // Als het wachtwoord niet overeenkomt
       res.send('Wachtwoord komt niet overeen');
@@ -152,32 +162,7 @@ app.post('/inlog-account'),async, inlogSessie, (req, res) => {
     // Als de gebruiker niet wordt gevonden
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
 
-}}
-
-//Sessions bij het inloggen
-app.use(session({ 
-  secret: process.env.SESSION_SECRET, 
-  //Maxage is hoelang de gebruiker niet actief is op de site in dit geval 1 minuut
-  cookie: { maxAge: 60000 }}))
-
-  //Connectie om de inlog form te laten zien
-  app.get('/inlog', inlogSessie, (req, res) => {  
-    res.render('inlog');
-
-    if (req.session.views) {
-      req.session.views++
-      res.setHeader('Content-Type', 'text/html')
-      res.write('<p>views: ' + req.session.views + '</p>')
-      res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
-      res.end()
-    } else {
-      req.session.views = 1
-      res.end('welcome to the session demo. refresh!')
-    }
-
-    console.log('Sessie is gestart')
-  })
-
+}})
 
 
 
