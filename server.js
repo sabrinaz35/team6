@@ -159,15 +159,12 @@ app.post('/inlog-account'),async (req, res) => {
     res.render('inlog');
   })
 
-
-
-
 // ******** SPOTIFY API **********
 
-//Dit stukje code hebben wij uit ChatGPT gehaald, omdat het oproepen van APIs vanuit spotify heel ingewikkeld is. 
-//Ze willen een access token die elk uur geupdated moet worden. 
-//Hiervoor hadden zij ook voorbeeld code op de website maar die werkte niet, omdat er zelf fouten inzaten zoals twee keer dezelfde variable declareren. 
-//Ik snap de helft van deze code.
+
+//cors gebruiken om frontend requests naar de backend mogelijk te maken
+const cors = require('cors');
+app.use(cors())
 
 // request require om de volgende code van spotify werkend te maken
 const request = require('request');
@@ -176,70 +173,35 @@ const request = require('request');
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 
-// access token aanvragen
-async function getAccessToken() {
-  return new Promise((resolve, reject) => {
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      headers: {
-        'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
-      },
-      form: { grant_type: 'client_credentials' },
-      json: true
-    };
+//Dit stukje code hebben wij uit ChatGPT gehaald, omdat het oproepen van APIs vanuit spotify heel ingewikkeld is. 
+//Ze willen een access token die elk uur geupdated moet worden. 
+//Hiervoor hadden zij ook voorbeeld code op de website maar die werkte niet, omdat er zelf fouten inzaten zoals twee keer dezelfde variable declareren. 
+//Ik snap de helft van deze code.
 
-    request.post(authOptions, (error, response, body) => {
-      if (error) return reject(error);
-      if (response.statusCode !== 200) return reject(`Error: ${response.statusCode}`);
-      
-      resolve(body.access_token);
-    });
+// access token aanvragen, die later van de frontend voor de API call kan worden gebruikt
+app.get('/token', (req, res) => {
+  const authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
+    },
+    form: { grant_type: 'client_credentials' },
+    json: true
+  };
+
+  request.post(authOptions, (error, response, body) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to get token' });
+    }
+    if (response.statusCode !== 200) {
+      return res.status(response.statusCode).json({ error: body });
+    }
+
+    // Send the token to the frontend
+    res.json({ access_token: body.access_token });
   });
-}
+});
 
-//zoeken randomizen
-function getRandomSearch() {
-  // lijst van allemaal lowercase letters
-  const characters = 'abcdefghijklmnopqrstuvwxyz';
-
-  // haal een random letter uit deze lijst
-  const randomCharacter = characters.charAt(Math.floor(Math.random() * characters.length));
-
-  // deze letter returnen als zoek term
-  return randomCharacter;
-}
-
-
-// artist data van spotify opvragen
-async function fetchData() {
-  try {
-    const accessToken = await getAccessToken(); // Access token opvragen voordat de data opgevraagd wordt
-    
-    //krijg een random array aan artiesten met een random begin letter
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken
-      }
-    });
-
-    //alle artiesten data loggen
-    const data = await response.json();
-    console.log("Full artist data:", data.artists.items);
-
-    
-
-    //sorteer de array en check naar artiesten die populariteit =< 10 hebben
-    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 30);
-    console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
- 
-}
-
-// functie aanroepen
-fetchData();
 
 
 
