@@ -227,7 +227,7 @@ async function fetchData() {
     console.log("Full artist data:", data.artists.items);
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
-    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 50);
+    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 30);
     console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
 
   } catch (error) {
