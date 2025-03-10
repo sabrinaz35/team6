@@ -114,7 +114,6 @@ app.post('/add-account',async (req, res) => {
         }
   })
 
-
  //Route voor de form van het acount aanmaken   
     app.get('/aanmelden', (req, res) => {  
       res.render('pages/aanmelden'); 
