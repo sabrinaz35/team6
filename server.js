@@ -197,13 +197,26 @@ async function getAccessToken() {
   });
 }
 
+//zoeken randomizen
+function getRandomSearch() {
+  // A list of all lowercase letters
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+
+  // Get a random letter
+  const randomCharacter = characters.charAt(Math.floor(Math.random() * characters.length));
+
+  // Return just the letter as a search term
+  return randomCharacter;
+}
+
+
 // artist data van spotify opvragen
 async function fetchData() {
   try {
     const accessToken = await getAccessToken(); // Access token opvragen voordat de data opgevraagd wordt
     
     //krijg een random array aan artiesten
-    const response = await fetch('https://api.spotify.com/v1/artists?ids=2CIMQHirSU0MQqyYHq0eOx%2C57dN52uHvrHOxijzpIgu3E%2C1vCWHaC5f2uS3yhpwWbIA6', {
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=3`, {
       headers: {
         Authorization: 'Bearer ' + accessToken
       }
@@ -213,7 +226,7 @@ async function fetchData() {
     console.log(data); // Log artist data
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
-    let kleineArtiesten = data.artists.filter(artist => artist.popularity <= 70);
+    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 10);
     console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
 
   } catch (error) {
