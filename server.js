@@ -114,7 +114,6 @@ app.post('/add-account',async (req, res) => {
         }
   })
 
-
  //Route voor de form van het acount aanmaken   
     app.get('/aanmelden', (req, res) => {  
       res.render('pages/aanmelden'); 
@@ -241,4 +240,5 @@ app.use((err, req, res) => {
   // 500 status code als HTTP response sturen 
   res.status(500).send('500: server error')
 })
+
 
