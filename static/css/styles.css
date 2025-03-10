@@ -1,6 +1,7 @@
+/* Hieronder komt de styling van de partials.  */
 /* Algemene stijlen voor de header zoals de kleur en padding */
 .header-bar {
-    background-color: #9CC88DDE;
+    background-color: #d3e7cd3f;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -15,7 +16,6 @@
 
 /* Geeft aan dat het klikbaar is en maakt het logo iets groter */ 
 .logo:hover {
-
     transform: scale(1.05); 
     cursor: pointer; 
 }
@@ -36,7 +36,7 @@
     padding: 10px 20px;
     text-decoration: none;
     color: white;
-    font-size: 1.5em;
+    font-size: 1.1em;
     font-weight: bold;
     border-radius: 10px;
     font-family: 'Pixelify Sans', sans-serif;
@@ -54,11 +54,26 @@
     background-color: rgb(185, 67, 67);
 }
 
+.footer-bar {
+    background-color: #4D774F;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    bottom: 0;
+    left: 0%;
+    max-width: 100%;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
 /* Algemene styling */
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
 body{
     font-family: 'Montserrat', Helvetica, Arial, sans-serif;
-    background-image: url(../images/background-screen.png);
-    background-size: cover;
+    background-color: rgb(152, 199, 140);
 }
 
 h1, h2, h3{
@@ -126,7 +141,7 @@ h1, h2, h3{
 }
 
 .background-opacity-80{
-    width: 100vw;
+    width: 100%;
     margin-top: 20%;
     padding: 3em 0em;
     background-color: rgba(255, 255, 255, 0.3);
@@ -151,18 +166,7 @@ h1, h2, h3{
 }
 
 
-.footer-bar {
-    background-color: #4D774F;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-   left: 0%;
-    width: 100%;
-    font-family: 'Pixelify Sans', sans-serif;
-}
-/* Styling inlogpagina*/
+/* Styling inlog- en aanmeldpagina*/
 .inloggen, .accountAanmaken{
     width: 350px;
     background: rgb(255, 255, 255, 0.7);
@@ -196,6 +200,11 @@ button {
     font-weight: bold;
     margin-top: 1em;
 }
+
+button:hover{
+    background-color: rgb(185, 67, 67);
+}
+
 
 label{
     gap: 10px;
