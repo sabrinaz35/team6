@@ -151,6 +151,15 @@ h1, h2, h3{
 }
 
 
+.footer-bar {
+    background-color: #4D774F;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Pixelify Sans', sans-serif;
+
 /* Styling inlogpagina*/
 .inloggen, .accountAanmaken{
     width: 350px;
