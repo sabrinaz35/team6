@@ -54,6 +54,7 @@
     background-color: rgb(185, 67, 67);
 }
 
+/* Algemene styling */
 body{
     font-family: 'Montserrat', Helvetica, Arial, sans-serif;
     background-image: url(../images/background-screen.png);
@@ -64,6 +65,8 @@ h1, h2, h3{
     font-family: 'Kanit', Arial, Helvetica, sans-serif;
     font-weight: 800;
 }
+
+/* Hieronder komt styling van index.pagina.  */
 .startpagina h1{
     visibility: hidden;
 }
@@ -140,7 +143,6 @@ h1, h2, h3{
 }
 
 .uitgelichte-artiest{
-    
     padding: 0.5em;
 }
 
@@ -148,3 +150,63 @@ h1, h2, h3{
     max-width: 100%;
 }
 
+
+/* Styling inlogpagina*/
+.inloggen, .accountAanmaken{
+    width: 350px;
+    background: rgb(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: rgb(77, 119, 79);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Pixelify Sans', sans-serif;
+    cursor: pointer;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+label{
+    gap: 10px;
+    text-align: left;
+    font-weight: 700;
+    margin-top: 1em;
+}
+
+label:first-child{
+    margin-top: 0.5em;
+}
+
+.inloggen h1,.accountAanmaken h1{
+    font-size: 3em;
+    margin: 0.5em;
+}
+
+.inloggen p, .accountAanmaken p{
+    margin-top: 2em;
+}
+.inloggen a, .accountAanmaken a{
+    text-decoration: none;
+    font-weight: 700;
+    color: black;
+}
