@@ -199,13 +199,13 @@ async function getAccessToken() {
 
 //zoeken randomizen
 function getRandomSearch() {
-  // A list of all lowercase letters
+  // lijst van allemaal lowercase letters
   const characters = 'abcdefghijklmnopqrstuvwxyz';
 
-  // Get a random letter
+  // haal een random letter uit deze lijst
   const randomCharacter = characters.charAt(Math.floor(Math.random() * characters.length));
 
-  // Return just the letter as a search term
+  // deze letter returnen als zoek term
   return randomCharacter;
 }
 
@@ -215,7 +215,7 @@ async function fetchData() {
   try {
     const accessToken = await getAccessToken(); // Access token opvragen voordat de data opgevraagd wordt
     
-    //krijg een random array aan artiesten
+    //krijg een random array aan artiesten met een random begin letter
     const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
       headers: {
         Authorization: 'Bearer ' + accessToken
@@ -225,6 +225,8 @@ async function fetchData() {
     //alle artiesten data loggen
     const data = await response.json();
     console.log("Full artist data:", data.artists.items);
+
+    
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
     let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 30);
