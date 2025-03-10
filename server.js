@@ -216,17 +216,18 @@ async function fetchData() {
     const accessToken = await getAccessToken(); // Access token opvragen voordat de data opgevraagd wordt
     
     //krijg een random array aan artiesten
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=3`, {
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
       headers: {
         Authorization: 'Bearer ' + accessToken
       }
     });
 
+    //alle artiesten data loggen
     const data = await response.json();
-    console.log(data); // Log artist data
+    console.log("Full artist data:", data.artists.items);
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
-    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 10);
+    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity <= 50);
     console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
 
   } catch (error) {
