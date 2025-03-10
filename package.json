@@ -18,12 +18,18 @@
   },
   "homepage": "https://github.com/sabrinaz35/team6#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "mongodb": "^6.14.1"
+    "mongodb": "^6.14.1",
+    "request": "^2.88.2",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
     "nodemon": "^3.1.9"
   }
 }
