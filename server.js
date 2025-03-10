@@ -6,6 +6,7 @@ require('dotenv').config()
 // Express webserver initialiseren
 const express = require("express");
 const app = express();
+var sessions = require('express-session')
 const port = 4000;
 
 const bcrypt = require ("bcryptjs")
@@ -82,7 +83,6 @@ app.get('/contact', (req, res) => {
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',async (req, res) => {
-
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten"); 
     const gebruiker = database.collection("user");
@@ -123,7 +123,7 @@ app.post('/add-account',async (req, res) => {
 
 //**********inloggen en check via mongo**********
 
-app.post('/inlog-account'),async (req, res) => {
+app.post('/inlog-account'),async, inlogSessie, (req, res) => {
 
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten"); 
@@ -154,9 +154,28 @@ app.post('/inlog-account'),async (req, res) => {
 
 }}
 
+//Sessions bij het inloggen
+app.use(session({ 
+  secret: process.env.SESSION_SECRET, 
+  //Maxage is hoelang de gebruiker niet actief is op de site in dit geval 1 minuut
+  cookie: { maxAge: 60000 }}))
+
   //Connectie om de inlog form te laten zien
-  app.get('/inlog', (req, res) => {  
+  app.get('/inlog', inlogSessie, (req, res) => {  
     res.render('inlog');
+
+    if (req.session.views) {
+      req.session.views++
+      res.setHeader('Content-Type', 'text/html')
+      res.write('<p>views: ' + req.session.views + '</p>')
+      res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+      res.end()
+    } else {
+      req.session.views = 1
+      res.end('welcome to the session demo. refresh!')
+    }
+
+    console.log('Sessie is gestart')
   })
 
 
