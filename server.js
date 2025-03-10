@@ -6,6 +6,7 @@ require('dotenv').config()
 // Express webserver initialiseren
 const express = require("express");
 const app = express();
+var sessions = require('express-session')
 const port = 4000;
 
 const bcrypt = require ("bcryptjs")
@@ -14,6 +15,15 @@ const xss = require("xss");
 
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
+
+
+//Middleware Sessions bij het inloggen
+app.use(sessions({ 
+  secret: process.env.SESSION_SECRET, 
+  resave: false,
+  saveUninitialized: true
+  }))
+
 
 //ejs templates opstarten
 app.set('view engine', 'ejs');
@@ -82,7 +92,6 @@ app.get('/contact', (req, res) => {
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',async (req, res) => {
-
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten"); 
     const gebruiker = database.collection("user");
@@ -123,7 +132,7 @@ app.post('/add-account',async (req, res) => {
 
 //**********inloggen en check via mongo**********
 
-app.post('/inlog-account'),async (req, res) => {
+app.post('/inlog-account',async (req, res) => {
 
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten"); 
@@ -135,7 +144,6 @@ app.post('/inlog-account'),async (req, res) => {
   //Code om de user daadwerkelijk te vinden, met daarbij de overeenkomst van de query
   const user = await gebruiker.findOne(query);  
 
-
   //if else state met daarin dat de gebruiker overeen moet komen met het opgegeven wachtwoord + een respons terug geven aan de gebruiker
   if (user) {
     // Vergelijk het ingevoerde wachtwoord met het gehashte wachtwoord in de database
@@ -143,7 +151,9 @@ app.post('/inlog-account'),async (req, res) => {
     
     if (isMatch) {
       // Als het wachtwoord overeenkomt, log de gebruiker in
-      res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
+      req.session.user = user
+      res.render('pages/profiel', {user: req.session.user})
+      // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       // Als het wachtwoord niet overeenkomt
       res.send('Wachtwoord komt niet overeen');
@@ -152,22 +162,20 @@ app.post('/inlog-account'),async (req, res) => {
     // Als de gebruiker niet wordt gevonden
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
 
-}}
+}})
+
 
   //Connectie om de inlog form te laten zien
   app.get('/inlog', (req, res) => {  
     res.render('inlog');
   })
 
-
-
-
 // ******** SPOTIFY API **********
 
-//Dit stukje code hebben wij uit ChatGPT gehaald, omdat het oproepen van APIs vanuit spotify heel ingewikkeld is. 
-//Ze willen een access token die elk uur geupdated moet worden. 
-//Hiervoor hadden zij ook voorbeeld code op de website maar die werkte niet, omdat er zelf fouten inzaten zoals twee keer dezelfde variable declareren. 
-//Ik snap de helft van deze code.
+
+//cors gebruiken om frontend requests naar de backend mogelijk te maken
+const cors = require('cors');
+app.use(cors())
 
 // request require om de volgende code van spotify werkend te maken
 const request = require('request');
@@ -176,49 +184,35 @@ const request = require('request');
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 
-// access token aanvragen
-async function getAccessToken() {
-  return new Promise((resolve, reject) => {
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      headers: {
-        'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
-      },
-      form: { grant_type: 'client_credentials' },
-      json: true
-    };
+//Dit stukje code hebben wij uit ChatGPT gehaald, omdat het oproepen van APIs vanuit spotify heel ingewikkeld is. 
+//Ze willen een access token die elk uur geupdated moet worden. 
+//Hiervoor hadden zij ook voorbeeld code op de website maar die werkte niet, omdat er zelf fouten inzaten zoals twee keer dezelfde variable declareren. 
+//Ik snap de helft van deze code.
 
-    request.post(authOptions, (error, response, body) => {
-      if (error) return reject(error);
-      if (response.statusCode !== 200) return reject(`Error: ${response.statusCode}`);
-      
-      resolve(body.access_token);
-    });
+// access token aanvragen, die later van de frontend voor de API call kan worden gebruikt
+app.get('/token', (req, res) => {
+  const authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
+    },
+    form: { grant_type: 'client_credentials' },
+    json: true
+  };
+
+  request.post(authOptions, (error, response, body) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to get token' });
+    }
+    if (response.statusCode !== 200) {
+      return res.status(response.statusCode).json({ error: body });
+    }
+
+    // Send the token to the frontend
+    res.json({ access_token: body.access_token });
   });
-}
+});
 
-// pitpull data van spotify opvragen
-async function fetchData() {
-  try {
-    const accessToken = await getAccessToken(); // Access token opvragen voordat de data opgevraagd wordt
-    
-    const response = await fetch('https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg', {
-      headers: {
-        Authorization: 'Bearer ' + accessToken
-      }
-    });
-
-    const data = await response.json();
-    console.log(data); // Log artist data
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
-// functie aanroepen
-//gaat nu niet werken vanwege dependencies
-fetchData();
 
 
 

@@ -2,7 +2,7 @@
   "name": "team6",
   "version": "1.0.0",
   "description": "Team 6 project tech",
-  "main": "server.js",
+  "main": "server.js", 
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -19,9 +19,11 @@
   "homepage": "https://github.com/sabrinaz35/team6#readme",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "mongodb": "^6.14.1",
     "request": "^2.88.2",
     "xss": "^1.0.15"
