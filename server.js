@@ -6,6 +6,7 @@ require('dotenv').config()
 // Express webserver initialiseren
 const express = require("express");
 const app = express();
+var sessions = require('express-session')
 const port = 4000;
 
 const bcrypt = require ("bcryptjs")
@@ -14,6 +15,15 @@ const xss = require("xss");
 
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
+
+
+//Middleware Sessions bij het inloggen
+app.use(sessions({ 
+  secret: process.env.SESSION_SECRET, 
+  resave: false,
+  saveUninitialized: true
+  }))
+
 
 //ejs templates opstarten
 app.set('view engine', 'ejs');
@@ -82,7 +92,6 @@ app.get('/contact', (req, res) => {
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',async (req, res) => {
-
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten"); 
     const gebruiker = database.collection("user");
@@ -123,7 +132,7 @@ app.post('/add-account',async (req, res) => {
 
 //**********inloggen en check via mongo**********
 
-app.post('/inlog-account'),async (req, res) => {
+app.post('/inlog-account',async (req, res) => {
 
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten"); 
@@ -135,7 +144,6 @@ app.post('/inlog-account'),async (req, res) => {
   //Code om de user daadwerkelijk te vinden, met daarbij de overeenkomst van de query
   const user = await gebruiker.findOne(query);  
 
-
   //if else state met daarin dat de gebruiker overeen moet komen met het opgegeven wachtwoord + een respons terug geven aan de gebruiker
   if (user) {
     // Vergelijk het ingevoerde wachtwoord met het gehashte wachtwoord in de database
@@ -143,7 +151,9 @@ app.post('/inlog-account'),async (req, res) => {
     
     if (isMatch) {
       // Als het wachtwoord overeenkomt, log de gebruiker in
-      res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
+      req.session.user = user
+      res.render('pages/profiel', {user: req.session.user})
+      // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       // Als het wachtwoord niet overeenkomt
       res.send('Wachtwoord komt niet overeen');
@@ -152,7 +162,8 @@ app.post('/inlog-account'),async (req, res) => {
     // Als de gebruiker niet wordt gevonden
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
 
-}}
+}})
+
 
   //Connectie om de inlog form te laten zien
   app.get('/inlog', (req, res) => {  
