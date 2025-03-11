@@ -4,8 +4,13 @@ console.log("Hallo wereld");
 require('dotenv').config() 
 
 // Express webserver initialiseren
-const express = require("express");
+const express = require('express');
 const app = express();
+const helmet = require('helmet') 
+const port = 4000;
+
+const xss = require('xss');
+
 var sessions = require('express-session')
 const port = 4000;
 
@@ -16,6 +21,8 @@ const xss = require("xss");
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
 
+//Activeren van de helmet module 
+app.use(helmet())
 
 //Middleware Sessions bij het inloggen
 app.use(sessions({ 
@@ -23,7 +30,6 @@ app.use(sessions({
   resave: false,
   saveUninitialized: true
   }))
-
 
 //ejs templates opstarten
 app.set('view engine', 'ejs');
