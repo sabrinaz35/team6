@@ -1,24 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include('../partials/head'); %>
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
-</head>
+<html lang="nl">
+  <head>
+    <%- include('../partials/head'); %>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body class="container">
+  <body class="startpagina">
 
 <header>
   <%- include('../partials/header'); %>
+  <div class="shape"></div>
 </header>
 
-<main>
-  <h1>Hallo, dit is de homepagina</h1>
-  
-</main>
+    <main>
+      <!-- Home is "hidden", voor accesiblity. -->
+      <h1>Home</h1>
+      <section class="startpagina-firstsection">
+        <h2>Zoek nu nieuwe artiesten met de Little Artist Machine.</h2>
+        <p>Jouw guide voor je zoektocht</p>
+        <section class="link-row">
+          <a href="/inlog">Inloggen</a>
+          <a href="/aanmelden">Aanmelden</a>
+        </section>
+      </section>
 
-<footer>
-  <%- include('../partials/footer'); %>
-</footer>
 
-</body>
+      <section class="background-opacity-80">
+        <section class="uitgelichte-artiest">
+          <img id="artiestfoto" src="static/images/artiest-milo.png" alt="foto van de artiest">
+          <h3 id="artiestinformatie">Milolaathetlukken - 21k volgers</h3>
+          <p id="artiestbeschrijving">Een jonge rapper uit Amsterdam met grappige lines.</p>
+        </section>
+        <section class="playlist">
+          <h3>Luister nu onze playlist!</h3>
+          <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWUS3jbm4YExP?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </section>
+      </section>
+    </main>
+
+    <footer><%- include('../partials/footer'); %></footer>
+    <%- include('../partials/script'); %>
+  </body>
 </html>

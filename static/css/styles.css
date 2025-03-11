@@ -1,23 +1,25 @@
-/* Algemene stijlen voor de header */
+/* Hieronder komt de styling van de partials.  */
+/* Algemene stijlen voor de header zoals de kleur en padding */
 .header-bar {
-    background-color: #DFDEDE;
+    background-color: #d3e7cd3f;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Logo styling */
+/* Logo/ afbeelding styling met name de grote*/
 .logo {
-    height: 100px; /* Pas de grootte aan zoals nodig */
+    height: 100px; 
     width: auto;
 }
 
+/* Geeft aan dat het klikbaar is en maakt het logo iets groter */ 
 .logo:hover {
-    transform: scale(1.05); /* Maakt het logo iets groter */
-    opacity: 0.8; /* Maakt het logo een beetje transparanter */
-    cursor: pointer; /* Geeft aan dat het klikbaar is */
+    transform: scale(1.05); 
+    cursor: pointer; 
 }
+
 
 /* Knoppen container voor de navigatie items */
 .nav-buttons {
@@ -27,18 +29,204 @@
 
 /* Basis stijlen voor de navigatie items */
 .nav-item {
-    display: inline-block;
-    background-color: rgb(7, 170, 67);
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    background-color: #4D774F;
     padding: 10px 20px;
     text-decoration: none;
     color: white;
+    font-size: 1.1em;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 10px;
     font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Hier worden de icone/svg in bepaalde grote behouden */
+.icon {
+    width: 18px;
+    height: 16px;
+    margin-right: 5px;
 }
 
 /* Hover effect voor de nav-items */
 .nav-item:hover {
     background-color: rgb(185, 67, 67);
-    color: rgb(31, 198, 31);
+}
+
+.footer-bar {
+    background-color: #4D774F;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    bottom: 0;
+    left: 0%;
+    max-width: 100%;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Algemene styling */
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+body{
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    background-color: rgb(152, 199, 140);
+}
+
+h1, h2, h3{
+    font-family: 'Kanit', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+}
+
+/* Hieronder komt styling van index.pagina.  */
+.startpagina h1{
+    visibility: hidden;
+}
+
+.startpagina-firstsection{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        color: white;
+        max-width: 800px; 
+        margin: 0 auto; 
+    }
+    
+.startpagina h2 {
+    font-size: 60px;
+    margin-bottom: 0;
+}
+
+.startpagina-firstsection p{
+    margin-top: -2%;
+    margin-bottom: 0;
+    font-size: 2em;
+    font-weight: 300;
+    opacity: 90%;
+}
+
+.link-row{
+    display: flex;
+    gap: 1em;
+}
+
+.link-row a {
+    display: inline-block;
+    background-color: rgb(77, 119, 79);
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 5px;
+    font-family: 'Pixelify Sans', sans-serif;
+    width: 6em;
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.link-row a:last-child{
+    background-color: rgb(99 152 103);
+}
+.link-row a:hover {
+    background-color: rgb(185, 67, 67);
+    cursor: pointer;
+}
+
+.background-opacity-80{
+    width: 100%;
+    margin-top: 20%;
+    padding: 3em 0em;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.background-opacity-80 section{
+    width:400px;
+    border-radius: 5px;
+    padding: 0.5em;
+    background: rgb(255,255,255,0.7);
+}
+
+.uitgelichte-artiest{
+    padding: 0.5em;
+}
+
+.uitgelichte-artiest img{
+    max-width: 100%;
+}
+
+
+/* Styling inlog- en aanmeldpagina*/
+.inloggen, .accountAanmaken{
+    width: 350px;
+    background: rgb(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: rgb(77, 119, 79);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Pixelify Sans', sans-serif;
+    cursor: pointer;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+button:hover{
+    background-color: rgb(185, 67, 67);
+}
+
+
+label{
+    gap: 10px;
+    text-align: left;
+    font-weight: 700;
+    margin-top: 1em;
+}
+
+label:first-child{
+    margin-top: 0.5em;
+}
+
+.inloggen h1,.accountAanmaken h1{
+    font-size: 3em;
+    margin: 0.5em;
+}
+
+.inloggen p, .accountAanmaken p{
+    margin-top: 2em;
+}
+.inloggen a, .accountAanmaken a{
+    text-decoration: none;
+    font-weight: 700;
+    color: black;
 }

@@ -12,9 +12,8 @@
 <!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
 <main>
   <div class="inloggen">
-    <h1>Hoi welkom</h1>
-      <div>
-        <h2>Login</h2>
+      <section>
+        <h1>Inloggen</h1>
         <form action="/inlog-account" method="post">
           <label for="name">Naam</label>
           <input name="name" type="text" >
@@ -25,9 +24,10 @@
           <label for="password">Password</label>
           <input name="password" type="password" required>
     
-          <button type="submit" value="Send Request">Aanmelden</button>
+          <button type="submit" value="Send Request">Inloggen</button>
         </form>
-      </div>
+      </section>
+      <p>Nog geen account? <a href="/aanmelden">Meld je nu aan!</a></p>
   </div>
 </main>
 

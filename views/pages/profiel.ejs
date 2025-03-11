@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main>
+    <h1>Mijn profiel</h1>
+   <h2><%= user.name %> </h2>
+
+<form action="/uitloggen">
+  <button>Uitloggen</button>
+</form>
+
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+</body>
