@@ -14,7 +14,7 @@
   <div class="accountAanmaken">
       <div>
         <h1>Aanmelden</h1>
-        <form action="/add-account" method="post">
+        <form action="/add-account" method="post" enctype="multipart/form-data">
           <label for="name">Naam</label>
           <input name="name" type="text" >
     
@@ -23,6 +23,10 @@
     
           <label for="password">Password</label>
           <input name="password" type="password" required>
+
+          <label for="profiel-foto">Selecteer een foto voor je profiel</label>
+          <input type="file" name="profielFoto" accept="image/*" />
+
     
           <button type="submit" value="Send Request">Aanmelden</button>
         </form>

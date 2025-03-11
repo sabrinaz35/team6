@@ -12,6 +12,9 @@ const port = 4000;
 const bcrypt = require ("bcryptjs")
 const xss = require("xss");
 
+const multer = require("multer")
+//Hier gaan de ingevoerde foto's naartoe
+const upload = multer({dest: 'static/upload/'})
 
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
@@ -192,7 +195,15 @@ app.get('/profiel', (req, res) => {
       res.redirect('/inlog');
     })})
 
+// ******** MULTER**********
 
+//Ik heb dit hieronder toegevoegd, maar het wilt niet helemaal lukken nog
+app.post('/add-account', upload.single('profielFoto'), function (req, res) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+  console.log(req.file.filename)
+})
+ 
     
 // ******** SPOTIFY API **********
 
