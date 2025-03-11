@@ -22,7 +22,7 @@ function getRandomSearch() {
 }
 
 
-// artist data van spotify opvragen
+// artist data van spotify opvragen en naar de artist spotlight op de homepagina overzetten
 async function fetchData() {
   try {
     // Access token opvragen voordat de data opgevraagd wordt
@@ -41,8 +41,27 @@ async function fetchData() {
     
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
-    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity > 10 && artist.popularity < 30);
-    console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
+    let kleineArtiesten = data.artists.items.filter(artist => artist.popularity > 10 && artist.popularity < 40);
+    //defineert de eerste artiest uit het kleineArtiesten array
+    let eersteArtiest = kleineArtiesten[0];
+
+    //als er geen kleine artiesten in de 50 opgehaalde artiest data zitten stuur een foutmelding
+    if(kleineArtiesten == ""){
+      console.log("geen kleine Artiesten gevonden!")
+    } else {
+      console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
+
+
+      //artist spotlight op de homepagina
+
+      //de eerste kleine artiest uit het kleineArtiesten array word gebruikt voor de artist spotlight op de homepage
+      document.getElementById('artiestinformatie').innerText = `${eersteArtiest.name} - ${eersteArtiest.followers.total} volgers`;
+      //image vervangen door foto van spotfy artiest
+      document.getElementById('artiestfoto').src = `${eersteArtiest.images[0].url}`;
+      //er wordt van spotify geen beschrijving gegeven dus als er geen artiest word gevonden haal de beschrijving weg
+      document.getElementById('artiestbeschrijving').innerText = "";
+    }
+    
 
   } catch (error) {
     console.error('Error fetching data:', error);
