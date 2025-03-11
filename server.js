@@ -170,8 +170,31 @@ app.post('/inlog-account',async (req, res) => {
     res.render('inlog');
   })
 
-// ******** SPOTIFY API **********
+//Functie van het account scherm, als de account al bestaat dan naar profiel en anders naar het inlogscherm leiden.
+app.get('/profiel', (req, res) => {  
+  if (req.session.user){
+    res.render('pages/profiel', {user: req.session.user});
 
+  } else {
+    res.render('pages/inlog')
+    //, {user: req.session.user}
+  }})
+
+  // ******** uitloggen **********
+
+  app.get('/uitloggen', (req, res) => {  
+    
+    req.session.destroy(err => {
+      if (err) {
+        console.error("Fout bij uitloggen:", err);
+        return res.send("Er ging iets mis bij het uitloggen.");
+      }
+      res.redirect('/inlog');
+    })})
+
+
+    
+// ******** SPOTIFY API **********
 
 //cors gebruiken om frontend requests naar de backend mogelijk te maken
 const cors = require('cors');
