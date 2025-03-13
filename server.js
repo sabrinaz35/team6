@@ -15,6 +15,9 @@ var sessions = require('express-session')
 
 const bcrypt = require ("bcryptjs")
 
+const multer = require("multer")
+//Hier gaan de ingevoerde foto's naartoe
+const upload = multer({dest: 'static/upload/'})
 
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
@@ -95,7 +98,7 @@ app.get('/contact', (req, res) => {
 
 
 //**********Account aanmaken plus toevoegen in mongo**********
-app.post('/add-account',async (req, res) => {
+app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten"); 
     const gebruiker = database.collection("user");
@@ -109,6 +112,7 @@ app.post('/add-account',async (req, res) => {
         emailadress: xss(req.body.email), 
         //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
         password: hashedPassword,
+        profielFoto: (req.file.filename),
       }
   
     //Om het document toe te voegen in de database de volgende code
@@ -195,7 +199,6 @@ app.get('/profiel', (req, res) => {
       }
       res.redirect('/inlog');
     })})
-
 
     
 // ******** SPOTIFY API **********
