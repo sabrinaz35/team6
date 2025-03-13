@@ -8,8 +8,11 @@ Je begint bij het startscherm en daar word je geleidt door een aantal vragen om 
 # Stappenplan installeren
 
 Stap 1: Clone de code 
+
 Stap 2: Start de terminal en geef het command npm init, hierbij installeer je al de benodigde licenses die je nodig hebt. (Zie de gebruikte modueles om te zien welke wij gebruiken in dit project)
+
 Stap 3: Maak een .env bestand aan en voeg dit bij je git ignore
+
 Stap 3.1: Maak een account aan in mongodb en zet de corresponderende link in je .env bestand onder de DB_HOST en voeg alle andere gegevens ook in, zie hieronder de lijst met benodigde gegevens.
 
 DB_HOST= 
@@ -23,6 +26,7 @@ DB_PASSWORD=
 DB_COLLECTION=
 
 Stap 3.2: Voeg ook een SECRET_SESSION= aan met een zelf bedachte wachtwoord.
+
 Stap 3.3: Maak een account aan via spotify develop en maak een eigen app, daarbij krijg je een clientID en een clientSecret en voeg deze ook bij je .env bestand. 
 
 CLIENT_ID:
