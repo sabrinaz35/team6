@@ -94,7 +94,7 @@ app.get('/contact', (req, res) => {
 
 
 //**********Account aanmaken plus toevoegen in mongo**********
-app.post('/add-account',async (req, res) => {
+app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten"); 
     const gebruiker = database.collection("user");
@@ -108,6 +108,7 @@ app.post('/add-account',async (req, res) => {
         emailadress: xss(req.body.email), 
         //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
         password: hashedPassword,
+        profielFoto: (req.file.filename),
       }
   
     //Om het document toe te voegen in de database de volgende code
@@ -195,15 +196,6 @@ app.get('/profiel', (req, res) => {
       res.redirect('/inlog');
     })})
 
-// ******** MULTER**********
-
-//Ik heb dit hieronder toegevoegd, maar het wilt niet helemaal lukken nog
-app.post('/add-account', upload.single('profielFoto'), function (req, res) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-  console.log(req.file.filename)
-})
- 
     
 // ******** SPOTIFY API **********
 
