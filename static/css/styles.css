@@ -202,11 +202,6 @@ button {
     margin-top: 1em;
 }
 
-button:hover{
-    background-color: rgb(185, 67, 67);
-}
-
-
 label{
     gap: 10px;
     text-align: left;
@@ -249,15 +244,70 @@ label:first-child{
     transition: transform 0.2s ease-in-out;
 }
 
-.icon-btn img {
-    width: 50px; /* Pas de grootte van de SVG-iconen aan */
+/* Maak de hartjes kleiner */
+.icon-btn img[alt="Volgende"],  
+.icon-btn img[alt="Vorige"] {
+    width: 80px; /* Kleinere grootte */
     height: auto;
+    transition: transform 0.2s ease-in-out;
 }
 
-.icon-btn:hover {
-    transform: scale(1.1); /* Licht inzoomeffect bij hover */
+/* Optioneel: hover-effect */
+.icon-btn:hover img {
+    transform: scale(1.1);
 }
 
 .tuneder-image {
-   margin-top: 20%;
+    margin-top: 20%;
 }
+
+.icon-btn:active .heart-icon {
+    transform: scale(1.1); /* Licht inzoomeffect bij klik */
+}
+
+.tuneder-image {
+    margin-top: 20%;
+}
+
+.heart-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 1s ease; /* Toegevoegde transitie voor de container */
+}
+
+.heart-container.split {
+    transform: scale(0.5) rotate(45deg); /* Voorbeeld van een effect voor de container */
+}
+
+/* De linker- en rechterhelft die gaan bewegen */
+.heart-left, .heart-right {
+    position: absolute;
+    width: 50%; /* Zorg ervoor dat de helften op hun plaats zitten */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Toegevoegde transitie voor beweging */
+}
+
+/* Linker helft positie */
+.heart-left {
+    left: 0;
+}
+
+/* Rechter helft positie */
+.heart-right {
+    right: 0;
+}
+
+/* Wanneer de split-klasse wordt toegevoegd, bewegen de helften van elkaar weg */
+.heart-container.split .heart-left {
+    transform: translateX(-100px); /* Verplaats de linkerhelft naar links */
+}
+
+.heart-container.split .heart-right {
+    transform: translateX(100px); /* Verplaats de rechterhelft naar rechts */
+}
+
+

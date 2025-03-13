@@ -2,6 +2,7 @@
 <html lang="nl">
 <head>
   <%- include('../partials/head'); %>
+
 </head>
 <body>
 
@@ -11,24 +12,27 @@
 
 <!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
 <main>
-    <div class="tuneder-wrapper">
-        <!-- Linker knop -->
-        <button class="icon-btn">
-            <img src="static/images/vierkant.svg" alt="Vorige">
-        </button>
-    
-        <!-- Centrale afbeelding -->
-        <img src="static/images/radio2.png" alt="Radio afbeelding" class="tuneder-image">
-    
-        <!-- Rechter knop -->
-        <button class="icon-btn">
-            <img src="static/images/rondje.svg" alt="Volgende">
-        </button>
+  <div class="tuneder-wrapper">
+    <!-- Linker knop -->
+    <div class="heart-container" onclick="splitHeart()">
+        <img src="static/images/linkerhart.svg" alt="Linker helft" class="heart-left">
+        <img src="static/images/rechterhard.svg" alt="Rechter helft" class="heart-right">
     </div>
+
+    <!-- Centrale afbeelding -->
+    <img src="static/images/radio2.png" alt="Radio afbeelding" class="tuneder-image">
+
+    <!-- Rechter knop -->
+    <button class="icon-btn">
+        <img src="static/images/heart.svg" alt="Volgende">
+    </button>
+</div>
+
       
 </main>
 
 <footer>
   
 </footer>
+<%- include('../partials/script'); %>
 </body>
