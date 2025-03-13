@@ -124,7 +124,8 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
     //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
         if (doc){
           //Groet de gebruiker, naam wordt overgenomen van de form, niet van de database
-          res.send(`Welkom, ${doc.name}! Account is succesvol aangemaakt.`)
+          req.session.user = user
+          res.render('pages/profiel', {user: req.session.user})
         } else {
           //Dit werkt helemaal nog niet :(
           res.send(`Oops er ging iets fout.`)
