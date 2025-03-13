@@ -143,26 +143,6 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
     })
 
 
-  //Om het document toe te voegen in de database de volgende code
-  const toevoegen = await gebruiker.insertOne(doc);
-
-  //Even loggen om te checken of er een ID is aangemaakt
-  console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`);
-
-  //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
-  if (doc) {
-    //Groet de gebruiker, naam wordt overgenomen van de form, niet van de database
-    res.send(`Welkom, ${doc.name}! Account is succesvol aangemaakt.`);
-  } else {
-    //Dit werkt helemaal nog niet :(
-    res.send(`Oops er ging iets fout.`);
-  }
-});
-
-//Route voor de form van het acount aanmaken
-app.get("/aanmelden", (req, res) => {
-  res.render("pages/aanmelden");
-});
 
 //**********inloggen en check via mongo**********
 
