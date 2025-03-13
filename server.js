@@ -95,6 +95,9 @@ app.get('/contact', (req, res) => {
   res.render('pages/contact'); // Zorg ervoor dat je een contact.ejs bestand hebt
 });
 
+app.get('/tuneder', (req, res) => {
+  res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
+});
 
 
 //**********Account aanmaken plus toevoegen in mongo**********
