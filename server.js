@@ -243,7 +243,7 @@ app.get("/token", (req, res) => {
     if (response.statusCode !== 200) {
       return res.status(response.statusCode).json({ error: body });
     }
-
+    
     // Send the token to the frontend
     res.json({ access_token: body.access_token });
   });
