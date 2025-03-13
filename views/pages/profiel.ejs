@@ -13,6 +13,9 @@
     <h1>Mijn profiel</h1>
    <h2><%= user.name %> </h2>
 
+   <h2>Je profielfoto:</h2>
+    <img src="<%= '/static/upload/' + user.profielFoto %>" alt="Profielfoto" width="200">
+
 <form action="/uitloggen">
   <button>Uitloggen</button>
 </form>

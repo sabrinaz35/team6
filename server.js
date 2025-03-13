@@ -9,11 +9,16 @@ const app = express();
 const helmet = require("helmet");
 const port = 4000;
 
-const xss = require("xss");
+const xss = require('xss');
 
-var sessions = require("express-session");
+var sessions = require('express-session')
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require ("bcryptjs")
+
+const multer = require("multer")
+//Hier gaan de ingevoerde foto's naartoe
+const upload = multer({dest: 'static/upload/'})
+
 
 //static data access mogelijk maken
 app.use("/static", express.static("static"));
@@ -93,22 +98,46 @@ app.get("/contact", (req, res) => {
   res.render("pages/contact"); // Zorg ervoor dat je een contact.ejs bestand hebt
 });
 
+
 //**********Account aanmaken plus toevoegen in mongo**********
-app.post("/add-account", async (req, res) => {
-  //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de ""
-  const database = client.db("klanten");
-  const gebruiker = database.collection("user");
+app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
+  //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
+    const database = client.db("klanten"); 
+    const gebruiker = database.collection("user");
 
-  //const aanmaken om een hash te creëren voor het wachtwoord
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //const aanmaken om een hash te creëren voor het wachtwoord
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  
+    //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
+    const doc = { 
+        name: xss(req.body.name),            
+        emailadress: xss(req.body.email), 
+        //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
+        password: hashedPassword,
+        profielFoto: (req.file.filename),
+      }
+  
+    //Om het document toe te voegen in de database de volgende code
+    const toevoegen = await gebruiker.insertOne(doc)
 
-  //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
-  const doc = {
-    name: xss(req.body.name),
-    emailadress: xss(req.body.email),
-    //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
-    password: hashedPassword,
-  };
+    //Even loggen om te checken of er een ID is aangemaakt
+    console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`);
+
+    //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
+        if (doc){
+          //Groet de gebruiker, naam wordt overgenomen van de form, niet van de database
+          res.send(`Welkom, ${doc.name}! Account is succesvol aangemaakt.`)
+        } else {
+          //Dit werkt helemaal nog niet :(
+          res.send(`Oops er ging iets fout.`)
+        }
+  })
+
+ //Route voor de form van het acount aanmaken   
+    app.get('/aanmelden', (req, res) => {  
+      res.render('pages/aanmelden'); 
+    })
+
 
   //Om het document toe te voegen in de database de volgende code
   const toevoegen = await gebruiker.insertOne(doc);
@@ -190,6 +219,7 @@ app.get("/uitloggen", (req, res) => {
     res.redirect("/inlog");
   });
 });
+
 
 // ******** SPOTIFY API **********
 
