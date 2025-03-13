@@ -231,3 +231,33 @@ label:first-child{
     font-weight: 700;
     color: black;
 }
+
+/* Styling Tuneder*/
+.tuneder-wrapper {
+    display: flex;
+    justify-content: center; /* Elementen in het midden uitlijnen */
+    align-items: center;
+    gap: 20px; /* Ruimte tussen de knoppen en afbeelding */
+    height: 80vh;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon-btn img {
+    width: 50px; /* Pas de grootte van de SVG-iconen aan */
+    height: auto;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1); /* Licht inzoomeffect bij hover */
+}
+
+.tuneder-image {
+   margin-top: 20%;
+}

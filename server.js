@@ -94,6 +94,10 @@ app.get("/opgeslagenartiesten", (req, res) => {
   res.render("pages/opgeslagenartiesten"); // Zorg voor een opgeslagenartiesten.ejs bestand
 });
 
+app.get('/tuneder', (req, res) => {
+  res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
+  });
+
 app.get("/contact", (req, res) => {
   res.render("pages/contact"); // Zorg ervoor dat je een contact.ejs bestand hebt
 });
