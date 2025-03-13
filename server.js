@@ -4,8 +4,13 @@ console.log("Hallo wereld");
 require('dotenv').config() 
 
 // Express webserver initialiseren
-const express = require("express");
+const express = require('express');
 const app = express();
+const helmet = require('helmet') 
+const port = 4000;
+
+const xss = require('xss');
+
 var sessions = require('express-session')
 const port = 4000;
 
@@ -16,6 +21,8 @@ const xss = require("xss");
 //static data access mogelijk maken
 app.use('/static', express.static('static'))
 
+//Activeren van de helmet module 
+app.use(helmet())
 
 //Middleware Sessions bij het inloggen
 app.use(sessions({ 
@@ -23,7 +30,6 @@ app.use(sessions({
   resave: false,
   saveUninitialized: true
   }))
-
 
 //ejs templates opstarten
 app.set('view engine', 'ejs');
@@ -170,8 +176,31 @@ app.post('/inlog-account',async (req, res) => {
     res.render('inlog');
   })
 
-// ******** SPOTIFY API **********
+//Functie van het account scherm, als de account al bestaat dan naar profiel en anders naar het inlogscherm leiden.
+app.get('/profiel', (req, res) => {  
+  if (req.session.user){
+    res.render('pages/profiel', {user: req.session.user});
 
+  } else {
+    res.render('pages/inlog')
+    //, {user: req.session.user}
+  }})
+
+  // ******** uitloggen **********
+
+  app.get('/uitloggen', (req, res) => {  
+    
+    req.session.destroy(err => {
+      if (err) {
+        console.error("Fout bij uitloggen:", err);
+        return res.send("Er ging iets mis bij het uitloggen.");
+      }
+      res.redirect('/inlog');
+    })})
+
+
+    
+// ******** SPOTIFY API **********
 
 //cors gebruiken om frontend requests naar de backend mogelijk te maken
 const cors = require('cors');
