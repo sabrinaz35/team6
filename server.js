@@ -249,7 +249,6 @@ app.get("/token", (req, res) => {
   });
 });
 
-
 //Artieste opslaan in favourieten
 
 app.post("/opslaan", async (req, res) => {
@@ -260,7 +259,8 @@ app.post("/opslaan", async (req, res) => {
   //check of gebruiker in session zit
   if (req.session.user) {
     //als er een user session bestaat, check of hij al favourieten heeft
-    if(favourieten == true){ //als er favourieten zijn, update favourtieten met array
+    
+    if(favourieten){ //als er favourieten zijn, update favourtieten met array
         
       } else { //favourieten toevoegen
         const favourietenLijst  = { favourieten: {
@@ -279,13 +279,7 @@ app.post("/opslaan", async (req, res) => {
     } else { //gebruiker laten weten dat hij eerst moet inloggen
       
     }
-
-    
 })
-
-
-
-
 
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
