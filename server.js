@@ -138,8 +138,8 @@ app.post("/inlog-account", async (req, res) => {
   const database = client.db("klanten");
   const gebruiker = database.collection("user");
 
-  //Een query aanmaken met daarin de naam om zo op te kunnen zoeken of die gebruiker bestaan op basis wat de gebruiker heeft ingevuld bij de form
-  const query = { email: xss(req.body.email) };
+  //Een query aanmaken met daarin de email om zo op te kunnen zoeken of die gebruiker bestaan op basis wat de gebruiker heeft ingevuld bij de form
+  const query = { emailadress: xss(req.body.email) };
 
   //Code om de user daadwerkelijk te vinden, met daarbij de overeenkomst van de query
   const user = await gebruiker.findOne(query);
