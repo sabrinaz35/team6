@@ -119,6 +119,8 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
         //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
         password: hashedPassword,
         profielFoto: (req.file.filename),
+        //alvast een lege array ter voorbereiding 
+        favorieten: [ ], 
       }
   
     //Om het document toe te voegen in de database de volgende code
