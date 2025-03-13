@@ -74,3 +74,19 @@ fetchData();
 
 
 
+
+//like artist button op homepagina
+const like = document.querySelector("#likebutton")
+
+like.addEventListener(onclick, slaOp())
+
+async function slaOp(){
+  try{
+    const response = await fetch('http://localhost:4000/opslaan');
+  } catch(error){
+    console.error("Token not fetched", error)
+  }
+}
+
+
+

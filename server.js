@@ -249,6 +249,44 @@ app.get("/token", (req, res) => {
   });
 });
 
+
+//Artieste opslaan in favourieten
+
+app.post("/opslaan", async (req, res) => {
+  const database = client.db("klanten")
+  const gebruiker = database.collection("user")
+  const favourieten = gebruiker.find( { favourieten: { $exists: true } } ).limit(1).size();
+
+  //check of gebruiker in session zit
+  if (req.session.user) {
+    //als er een user session bestaat, check of hij al favourieten heeft
+    if(favourieten == true){ //als er favourieten zijn, update favourtieten met array
+        
+      } else { //favourieten toevoegen
+        const favourietenLijst  = { favourieten: {
+          foto: xss(req.body.name),            
+          spotifylink: xss(req.body.email), 
+          
+          artistName: hashedPassword,
+          artistPopularity: (req.file.filename),
+          }
+        }
+        //Om het document toe te voegen in de database de volgende code   
+        const opslaanFavo = await database.collection("user").gebruiker.insertOne(favourietenLijst);
+
+      }
+
+    } else { //gebruiker laten weten dat hij eerst moet inloggen
+      
+    }
+
+    
+})
+
+
+
+
+
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
 
