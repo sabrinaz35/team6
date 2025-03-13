@@ -12,10 +12,8 @@ const port = 4000;
 const xss = require('xss');
 
 var sessions = require('express-session')
-const port = 4000;
 
 const bcrypt = require ("bcryptjs")
-const xss = require("xss");
 
 
 //static data access mogelijk maken
