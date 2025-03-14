@@ -32,6 +32,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false } 
   }),
 );
 
@@ -166,8 +167,10 @@ app.post("/inlog-account", async (req, res) => {
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (isMatch) {
-      // Als het wachtwoord overeenkomt, log de gebruiker in
-      req.session.user = user;
+      // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij email op
+      req.session.user = {
+        email: user.emailadress,
+      }
       res.render("pages/profiel", { user: req.session.user });
       // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
@@ -194,6 +197,34 @@ app.get("/profiel", (req, res) => {
     //, {user: req.session.user}
   }
 });
+
+
+//Artieste opslaan in favourieten
+app.post("/favorieten/:artiest",async (req, res) => {
+  const database = client.db("klanten");
+  const gebruiker = database.collection("user");
+
+  // kijken of de gebruiker is ingelogd
+  if (!req.session.user) {
+    return res.status(404).send("Sessie niet gevonden");
+  }
+
+  // vinden van de user
+  const query = { emailadress: xss(req.session.user.email) }; // Assuming the email is stored in the session
+  const user = await gebruiker.findOne(query);
+
+  if (!user) {
+    return res.status(404).send("Gebruiker niet gevonden");
+  }
+
+  // voegt de artiest toe aan de database
+  user.favorieten.push(req.params.artiest);
+  await gebruiker.updateOne(
+    { emailadress: user.emailadress }, // Use the email to find the correct user
+    { $set: { favorieten: user.favorieten } }
+  );
+});
+
 
 // ******** uitloggen **********
 
@@ -252,58 +283,6 @@ app.get("/token", (req, res) => {
   });
 });
 
-//Artieste opslaan in favourieten
-
-// app.post("/opslaan", async (req, res) => {
-//   const database = client.db("klanten")
-//   const gebruiker = database.collection("user")
-//   const favourieten = gebruiker.find( { favourieten: { $exists: true } } ).limit(1).size();
-
-//   //check of gebruiker in session zit
-//   if (req.session.user) {
-//     //als er een user session bestaat, check of hij al favourieten heeft
-    
-//     if(favourieten){ //als er favourieten zijn, update favourtieten met array
-        
-//       } else { //favourieten toevoegen
-//         const favourietenLijst  = { favourieten: {
-//           foto: xss(req.body.name),            
-//           spotifylink: xss(req.body.email), 
-          
-//           artistName: hashedPassword,
-//           artistPopularity: (req.file.filename),
-//           }
-//         }
-//         //Om het document toe te voegen in de database de volgende code   
-//         const opslaanFavo = await database.collection("user").gebruiker.insertOne(favourietenLijst);
-
-//       }
-
-//     } else { //gebruiker laten weten dat hij eerst moet inloggen
-      
-//     }
-// })
-
-//Als het goed is moet :artiest dan vervangen worden door iets van de api
-//Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
-app.get("/favorieten/:artiest",async (req, res) => {
-  const database = client.db("klanten")
-  const gebruiker = database.collection("user")
-
-  const query = { emailadress: xss(req.body.email) };
-  const user = await gebruiker.findOne(query)
-  
-  if (req.session.user) {
-    user.favorieten.push(req.params.artiest);
-    await gebruiker.updateOne(
-      { user },
-      { $set: { favorieten: user.favorieten } }
-    );
-  } else {
-    return res.status(404).send("Gebruiker niet gevonden");
-  }
-  res.redirect("/pages/index")
-});
 
 
 
