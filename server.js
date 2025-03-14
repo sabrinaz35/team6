@@ -35,6 +35,7 @@ app.use(
   }),
 );
 
+
 //ejs templates opstarten
 app.set("view engine", "ejs");
 
@@ -253,35 +254,58 @@ app.get("/token", (req, res) => {
 
 //Artieste opslaan in favourieten
 
-app.post("/opslaan", async (req, res) => {
+// app.post("/opslaan", async (req, res) => {
+//   const database = client.db("klanten")
+//   const gebruiker = database.collection("user")
+//   const favourieten = gebruiker.find( { favourieten: { $exists: true } } ).limit(1).size();
+
+//   //check of gebruiker in session zit
+//   if (req.session.user) {
+//     //als er een user session bestaat, check of hij al favourieten heeft
+    
+//     if(favourieten){ //als er favourieten zijn, update favourtieten met array
+        
+//       } else { //favourieten toevoegen
+//         const favourietenLijst  = { favourieten: {
+//           foto: xss(req.body.name),            
+//           spotifylink: xss(req.body.email), 
+          
+//           artistName: hashedPassword,
+//           artistPopularity: (req.file.filename),
+//           }
+//         }
+//         //Om het document toe te voegen in de database de volgende code   
+//         const opslaanFavo = await database.collection("user").gebruiker.insertOne(favourietenLijst);
+
+//       }
+
+//     } else { //gebruiker laten weten dat hij eerst moet inloggen
+      
+//     }
+// })
+
+//Als het goed is moet :artiest dan vervangen worden door iets van de api
+//Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
+app.get("/favorieten/:artiest",async (req, res) => {
   const database = client.db("klanten")
   const gebruiker = database.collection("user")
-  const favourieten = gebruiker.find( { favourieten: { $exists: true } } ).limit(1).size();
 
-  //check of gebruiker in session zit
+  const query = { emailadress: xss(req.body.email) };
+  const user = await gebruiker.findOne(query)
+  
   if (req.session.user) {
-    //als er een user session bestaat, check of hij al favourieten heeft
-    
-    if(favourieten){ //als er favourieten zijn, update favourtieten met array
-        
-      } else { //favourieten toevoegen
-        const favourietenLijst  = { favourieten: {
-          foto: xss(req.body.name),            
-          spotifylink: xss(req.body.email), 
-          
-          artistName: hashedPassword,
-          artistPopularity: (req.file.filename),
-          }
-        }
-        //Om het document toe te voegen in de database de volgende code   
-        const opslaanFavo = await database.collection("user").gebruiker.insertOne(favourietenLijst);
+    user.favorieten.push(req.params.artiest);
+    await gebruiker.updateOne(
+      { user },
+      { $set: { favorieten: user.favorieten } }
+    );
+  } else {
+    return res.status(404).send("Gebruiker niet gevonden");
+  }
+  res.redirect("/pages/index")
+});
 
-      }
 
-    } else { //gebruiker laten weten dat hij eerst moet inloggen
-      
-    }
-})
 
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
