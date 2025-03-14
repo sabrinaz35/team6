@@ -1,16 +1,2 @@
 <script src="/static/javascript/frontend.js"></script>
 
-<!-- Dit is de java die de mouseover naar een rode afbeelding brengt!-->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const logo = document.getElementById("logo");
-
-        logo.addEventListener("mouseover", function() {
-            this.src = "static/images/logo-rood.png";
-        });
-
-        logo.addEventListener("mouseout", function() {
-            this.src = "static/images/logogeel.png";
-        });
-    });
-</script>
