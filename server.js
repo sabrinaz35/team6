@@ -284,6 +284,7 @@ app.get("/token", (req, res) => {
 //     }
 // })
 
+
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
 app.get("/favorieten/:artiest",async (req, res) => {
