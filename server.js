@@ -32,6 +32,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false } 
   }),
 );
 
@@ -166,8 +167,10 @@ app.post("/inlog-account", async (req, res) => {
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (isMatch) {
-      // Als het wachtwoord overeenkomt, log de gebruiker in
-      req.session.user = user;
+      // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij email op
+      req.session.user = {
+        email: user.emailadress,
+      }
       res.render("pages/profiel", { user: req.session.user });
       // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
@@ -194,6 +197,34 @@ app.get("/profiel", (req, res) => {
     //, {user: req.session.user}
   }
 });
+
+
+//Artieste opslaan in favourieten
+app.post("/favorieten/:artiest",async (req, res) => {
+  const database = client.db("klanten");
+  const gebruiker = database.collection("user");
+
+  // kijken of de gebruiker is ingelogd
+  if (!req.session.user) {
+    return res.status(404).send("Sessie niet gevonden");
+  }
+
+  // vinden van de user
+  const query = { emailadress: xss(req.session.user.email) }; // Assuming the email is stored in the session
+  const user = await gebruiker.findOne(query);
+
+  if (!user) {
+    return res.status(404).send("Gebruiker niet gevonden");
+  }
+
+  // voegt de artiest toe aan de database
+  user.favorieten.push(req.params.artiest);
+  await gebruiker.updateOne(
+    { emailadress: user.emailadress }, // Use the email to find the correct user
+    { $set: { favorieten: user.favorieten } }
+  );
+});
+
 
 // ******** uitloggen **********
 
@@ -252,6 +283,7 @@ app.get("/token", (req, res) => {
   });
 });
 
+
 //Artieste opslaan in favourieten
 
 // app.post("/opslaan", async (req, res) => {
@@ -305,6 +337,7 @@ app.get("/favorieten/:artiest",async (req, res) => {
   }
   res.redirect("/pages/index")
 });
+
 
 
 

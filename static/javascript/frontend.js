@@ -76,17 +76,25 @@ fetchData();
 
 
 //like artist button op homepagina
+//Hier moet denk ik ook de api in komen te staan
 const like = document.querySelector("#likebutton")
 
-like.addEventListener(onclick, slaOp())
-
-async function slaOp(){
+like.addEventListener('click', async function() {
   try{
-    const response = await fetch('http://localhost:4000/opslaan');
-  } catch(error){
-    console.error("Token not fetched", error)
-  }
-}
+        const response = await fetch('http://localhost:4000/opslaan');
+      } catch(error){
+        console.error("Token not fetched", error)
+      }
+})
+
+
+// async function slaOp(){
+//   try{
+//     const response = await fetch('http://localhost:4000/opslaan');
+//   } catch(error){
+//     console.error("Token not fetched", error)
+//   }
+// }
 
 
 
