@@ -122,10 +122,13 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
     console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`);
 
     //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
-        if (doc){
-          //Groet de gebruiker, naam wordt overgenomen van de form, niet van de database
-          req.session.user = user
-          res.render('pages/profiel', {user: req.session.user})
+        if (toevoegen.insertedId){
+          const user = await gebruiker.findOne({ emailadress: doc.emailadress }); // Use the email to find the user
+
+      // Set the user in the session
+      req.session.user = user;
+      res.redirect('/pages/profiel'); 
+
         } else {
           //Dit werkt helemaal nog niet :(
           res.send(`Oops er ging iets fout.`)
