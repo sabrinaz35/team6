@@ -74,5 +74,22 @@ async function fetchData() {
 // functie aanroepen
 fetchData();
 
+document.addEventListener("DOMContentLoaded", function () {
+  function splitHeart() {
+      const heart = document.querySelector(".heart-container");
+      heart.classList.add("split");
+
+      // Optioneel: Reset na animatie (na 1000 ms)
+      setTimeout(() => {
+          heart.classList.remove("split");
+      }, 1000);
+  }
+
+  // Voeg de event listener toe aan de hart-container
+  const heartContainer = document.querySelector(".heart-container");
+  heartContainer.addEventListener("click", splitHeart);
+});
+
+
 
 

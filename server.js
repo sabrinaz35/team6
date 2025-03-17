@@ -152,11 +152,11 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
         }
   })
 
- //Route voor de form van het acount aanmaken   
-    app.get('/aanmelden', (req, res) => {  
-      res.render('pages/aanmelden'); 
-    })
 
+//Route voor de form van het acount aanmaken
+app.get("/aanmelden", (req, res) => {
+  res.render("pages/aanmelden");
+});
 
 
 //**********inloggen en check via mongo**********
