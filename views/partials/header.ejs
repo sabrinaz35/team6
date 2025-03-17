@@ -1,8 +1,7 @@
-
-<!-- Ik heb hier een navigatie gemaakt en daarbij de symboltjes in een svg gezet en die toegvoegd aan de navigatie-->
+<!-- Ik heb hier een navigatie gemaakt en daarbij de symboltjes in een svg gezet en die toegevoegd aan de navigatie-->
 <div class="header-bar">
     <a href="/">  
-        <img src="static/images/logogeel.png" alt="Logo" class="logo" id="logo">
+        <img src="/static/images/logogeel.png" alt="Logo" class="logo" id="logo">
     </a>
     <nav class="nav-buttons">
         <a href="/tuneder" class="nav-item">
@@ -15,20 +14,7 @@
             <img src="/static/images/vierkant.svg" class="icon" alt="vierkant"> Account
         </a>
     </nav>
-    
 </div>
 
-<!-- Dit is de java die de mouseover naar een rode afbeelding brengt!-->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const logo = document.getElementById("logo");
-
-        logo.addEventListener("mouseover", function() {
-            this.src = "static/images/logo-rood.png";
-        });
-
-        logo.addEventListener("mouseout", function() {
-            this.src = "static/images/logogeel.png";
-        });
-    });
-</script>
+<!-- Laad de externe JavaScript file -->
+<script src="/js/frontend.js" defer></script>

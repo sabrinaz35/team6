@@ -23,8 +23,21 @@ const upload = multer({dest: 'static/upload/'})
 //static data access mogelijk maken
 app.use("/static", express.static("static"));
 
-//Activeren van de helmet module
-app.use(helmet());
+//Activeren van de helmet module EN alle bronnen van ander websites worden toegestaan
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"], // inline scripts toestaan
+        connectSrc: ["'self'", "https://api.spotify.com", "http://localhost:4000"], // API calls naar Spotify en backend toestaan
+        frameSrc: ["'self'", "https://open.spotify.com"], // Spotify playlist embeds toestaan
+        imgSrc: ["'self'", "data:", "https://i.scdn.co"], // fotos toestaan van de door spotify gegeven bron
+        styleSrc: ["'self'", 'https://fonts.googleapis.com'], //fonts van google toestaan
+      },
+    },
+  })
+);
 
 //Middleware Sessions bij het inloggen
 app.use(
@@ -45,6 +58,8 @@ app.listen(port, () => {
 
 // maakt het mogelijk om informatie op te halen die in formulieren wordt opgegeven
 app.use(express.urlencoded({ extended: true }));
+
+
 
 //******* DATABASE **********
 
@@ -137,10 +152,12 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
         }
   })
 
+
 //Route voor de form van het acount aanmaken
 app.get("/aanmelden", (req, res) => {
   res.render("pages/aanmelden");
 });
+
 
 //**********inloggen en check via mongo**********
 
@@ -241,7 +258,7 @@ app.get("/token", (req, res) => {
     if (response.statusCode !== 200) {
       return res.status(response.statusCode).json({ error: body });
     }
-
+    
     // Send the token to the frontend
     res.json({ access_token: body.access_token });
   });
@@ -251,7 +268,7 @@ app.get("/token", (req, res) => {
 //moet onder routes staan dus niet verschuiven!
 
 // error 404 handling
-app.use((req, res) => {
+app.use((err, req, res) => {
   // console log voor error 404
   console.error("404 error at URL: " + req.url);
   // 404 status code als HTTP response sturen
@@ -265,3 +282,6 @@ app.use((err, req, res) => {
   // 500 status code als HTTP response sturen
   res.status(500).send("500: server error");
 });
+
+// header script
+app.use(express.static('public'));

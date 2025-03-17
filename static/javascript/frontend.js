@@ -34,6 +34,8 @@ async function fetchData() {
       }
     });
 
+    
+    console.log("Spotify API response status:", response.status); // Debugging
     //alle artiesten data loggen
     const data = await response.json();
     console.log("Full artist data:", data.artists.items);
