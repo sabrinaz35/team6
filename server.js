@@ -282,3 +282,6 @@ app.use((err, req, res) => {
   // 500 status code als HTTP response sturen
   res.status(500).send("500: server error");
 });
+
+// header script
+app.use(express.static('public'));
