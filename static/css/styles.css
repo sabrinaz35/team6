@@ -153,10 +153,20 @@ h1, h2, h3{
 }
 .background-opacity-80 section{
     width:400px;
+    margin-top: 20%;
     border-radius: 5px;
     padding: 0.5em;
     background: rgb(255,255,255,0.7);
 }
+
+marquee {
+        font-size: 24px;      /* Grotere tekst */
+        font-weight: bold;    /* Vette tekst */
+        color: #ff0000;       /* Rode tekstkleur */
+        font-family: 'Pixelify Sans', sans-serif; 
+        padding-top: 30px;    /* Ruimte boven de tekst */   
+}
+
 
 .uitgelichte-artiest{
     padding: 0.5em;
