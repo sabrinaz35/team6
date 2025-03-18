@@ -70,6 +70,7 @@ async function fetchData() {
       document.getElementById("artistNameInput").value = eersteArtiest.name;
       document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
       document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
+      document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
       console.log(eersteArtiest.id)
     }
     

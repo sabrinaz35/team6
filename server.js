@@ -207,9 +207,21 @@ app.get("/profiel", (req, res) => {
 
 
 //**********artiesten opslaan in mongodb**********
-//ophalen pagina
-app.get("/opgeslagen-artiesten", (req, res) => {
-  res.render("pages/opgeslagen-artiesten"); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+//ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
+app.get("/opgeslagen-artiesten", async (req, res) => {
+  const database = client.db("klanten");
+  const gebruiker = database.collection("user");
+
+  // Haal de gebruiker op basis van de sessiegegevens
+  const query = { emailadress: req.session.user.emailadress };
+  const user = await gebruiker.findOne(query);
+
+  if (user) {
+    console.log("gebruiker gevonden");
+    // return res.status(404).send("Gebruiker gevonden");
+  }
+  
+  res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 });
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
@@ -226,7 +238,8 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     id: req.body.artistId,
     naam: req.body.artistName,
     genre: req.body.artistGenre,
-    volgers: parseInt(req.body.artistFollowers) // Zorg dat dit een getal is
+    volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
+    images: req.body.artistFoto
   };
   
   if (user) {
@@ -301,10 +314,6 @@ app.get("/token", (req, res) => {
     res.json({ access_token: body.access_token });
   });
 });
-
-
-
-
 
 
 // ******* ERROR HANDLING ********
