@@ -23,6 +23,10 @@ const upload = multer({dest: 'static/upload/'})
 //static data access mogelijk maken
 app.use("/static", express.static("static"));
 
+// header script
+app.use(express.static('public'));
+
+
 //Activeren van de helmet module EN alle bronnen van ander websites worden toegestaan
 app.use(
   helmet({
@@ -210,29 +214,29 @@ app.get("/profiel", (req, res) => {
 
 
 //Artieste opslaan in favourieten
-app.post("/favorieten/:artiest",async (req, res) => {
-  const database = client.db("klanten");
-  const gebruiker = database.collection("user");
 
-  // kijken of de gebruiker is ingelogd
-  if (!req.session.user) {
-    return res.status(404).send("Sessie niet gevonden");
-  }
+//Als het goed is moet :artiest dan vervangen worden door iets van de api
+//Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
+app.post("/opgeslagen-artiesten",async (req, res) => {
+  const database = client.db("klanten")
+  const gebruiker = database.collection("user")
 
-  // vinden van de user
-  const query = { emailadress: xss(req.session.user.email) }; // Assuming the email is stored in the session
-  const user = await gebruiker.findOne(query);
-
-  if (!user) {
+  const query = { emailadress: req.session.user.emailadress };
+  const user = await gebruiker.findOne(query)
+  
+  if (user) {
+    console.log("Gebruiker gevonden:", user);
+    // user.favorieten.push(req.body.artistId);
+    await gebruiker.updateOne(
+      { emailadress: req.session.user.emailadress},
+      { $push: { favorieten: req.body.artistId} }
+    );
+    console.log(user)
+  } else {
+    console.log('of niet')
     return res.status(404).send("Gebruiker niet gevonden");
   }
-
-  // voegt de artiest toe aan de database
-  user.favorieten.push(req.params.artiest);
-  await gebruiker.updateOne(
-    { emailadress: user.emailadress }, // Use the email to find the correct user
-    { $set: { favorieten: user.favorieten } }
-  );
+  res.redirect("/") 
 });
 
 
@@ -294,65 +298,6 @@ app.get("/token", (req, res) => {
 });
 
 
-//Artieste opslaan in favourieten
-
-// app.post("/opslaan", async (req, res) => {
-//   const database = client.db("klanten")
-//   const gebruiker = database.collection("user")
-//   const favourieten = gebruiker.find( { favourieten: { $exists: true } } ).limit(1).size();
-
-//   //check of gebruiker in session zit
-//   if (req.session.user) {
-//     //als er een user session bestaat, check of hij al favourieten heeft
-    
-//     if(favourieten){ //als er favourieten zijn, update favourtieten met array
-        
-//       } else { //favourieten toevoegen
-//         const favourietenLijst  = { favourieten: {
-//           foto: xss(req.body.name),            
-//           spotifylink: xss(req.body.email), 
-          
-//           artistName: hashedPassword,
-//           artistPopularity: (req.file.filename),
-//           }
-//         }
-//         //Om het document toe te voegen in de database de volgende code   
-//         const opslaanFavo = await database.collection("user").gebruiker.insertOne(favourietenLijst);
-
-//       }
-
-//     } else { //gebruiker laten weten dat hij eerst moet inloggen
-      
-//     }
-// })
-
-
-//Als het goed is moet :artiest dan vervangen worden door iets van de api
-//Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
-app.post("/opgeslagen-artiesten",async (req, res) => {
-  const database = client.db("klanten")
-  const gebruiker = database.collection("user")
-
-  const query = { emailadress: req.session.user.emailadress };
-  const user = await gebruiker.findOne(query)
-
-  user.favorieten.push(req.body.artistId); // Voeg de artiest toe
-  
-  if (user) {
-    console.log("Gebruiker gevonden:", user);
-    user.favorieten.push(req.body.artistId);
-    await gebruiker.updateOne(
-      { emailadress: req.body.email },
-      { $set: { favorieten: user.favorieten } }
-    );
-    console.log(user)
-  } else {
-    console.log('of niet')
-    return res.status(404).send("Gebruiker niet gevonden");
-  }
-  res.redirect("/") 
-
-});
 
 
 
@@ -376,5 +321,3 @@ app.use((err, req, res) => {
   res.status(500).send("500: server error");
 });
 
-// header script
-app.use(express.static('public'));
