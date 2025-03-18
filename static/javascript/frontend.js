@@ -66,8 +66,11 @@ async function fetchData() {
 
       //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
       document.getElementById('favoInput').value=eersteArtiest.id
+      //Andere gegevens ook meegeven aan naar de mongodb database
+      document.getElementById("artistNameInput").value = eersteArtiest.name;
+      document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
+      document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
       console.log(eersteArtiest.id)
-
     }
     
 
@@ -100,40 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// //like artist button op homepagina
-// //Hier moet denk ik ook de api in komen te staan
-// const like = document.querySelector("#likebutton")
-
-// like.addEventListener('click', async function() {
-//   try {
-//     const accessToken = await getAccessToken(); 
-//     const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
-//       headers: {
-//         Authorization: 'Bearer ' + accessToken
-//       }
-//     });
-
-//     const data = await response.json();
-//     if (data.artists.items) {
-//       const artist = data.artists.items[0]; // Pak de eerste artiest uit de lijst
-    
-//       const artistData = {
-//         name: artist.name,
-//         genre: artist.genres.join(", ") || "Onbekend", // Zet meerdere genres samen
-//         followers: artist.followers.total || 0
-//       };
-    
-//       // Stuur artiest-gegevens naar de server via een POST-request
-//       await fetch(`/favorieten`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(artistData) // Verstuur als JSON
-//       });
-//     }
-//   } catch (error) {
-//     console.error("Token not fetched", error);
-//   }
-// })
 
 
 

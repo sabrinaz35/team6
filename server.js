@@ -223,13 +223,21 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
 
   const query = { emailadress: req.session.user.emailadress };
   const user = await gebruiker.findOne(query)
+
+//Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met wat in de index staat en de frontend
+  const artiestData = {
+    id: req.body.artistId,
+    naam: req.body.artistName,
+    genre: req.body.artistGenre,
+    volgers: parseInt(req.body.artistFollowers) // Zorg dat dit een getal is
+  };
   
   if (user) {
     console.log("Gebruiker gevonden:", user);
-    // user.favorieten.push(req.body.artistId);
     await gebruiker.updateOne(
       { emailadress: req.session.user.emailadress},
-      { $push: { favorieten: req.body.artistId} }
+      //Uiteindelijk alle artiestendata doorsturen naar database
+      { $push: { favorieten:  artiestData } }
     );
     console.log(user)
   } else {
