@@ -112,11 +112,6 @@ app.get("/about", (req, res) => {
 });
 
 
-app.get("/opgeslagen-artiesten", (req, res) => {
-  res.render("pages/opgeslagen-artiesten"); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
-});
-
-
 app.get('/tuneder', (req, res) => {
   res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
   });
@@ -170,7 +165,6 @@ app.get("/aanmelden", (req, res) => {
 
 
 //**********inloggen en check via mongo**********
-
 app.post("/inlog-account", async (req, res) => {
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten");
@@ -191,7 +185,6 @@ app.post("/inlog-account", async (req, res) => {
       // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij user op
       req.session.user = user
       res.render("pages/profiel", { user: req.session.user });
-      // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       // Als het wachtwoord niet overeenkomt
       res.send("Wachtwoord komt niet overeen");
@@ -213,7 +206,11 @@ app.get("/profiel", (req, res) => {
 });
 
 
-//Artieste opslaan in favourieten
+//**********artiesten opslaan in mongodb**********
+//ophalen pagina
+app.get("/opgeslagen-artiesten", (req, res) => {
+  res.render("pages/opgeslagen-artiesten"); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+});
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
