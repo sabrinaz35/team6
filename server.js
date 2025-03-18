@@ -147,10 +147,20 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
     //Even loggen om te checken of er een ID is aangemaakt
     console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`);
 
-    //De controle hieronder werkt nog niet helemaal, ik wil namelijk dat hij teruggeeft of het gelukt is
-        if (doc){
-          //Groet de gebruiker, naam wordt overgenomen van de form, niet van de database
-          res.send(`Welkom, ${doc.name}! Account is succesvol aangemaakt.`)
+    //controleren of er daadwerkelijk een user is toegevoegd
+        if (toevoegen.insertedId){
+          //De nieuwe gebruiker vinden in de database
+          const newUser = await gebruiker.findOne({ emailadress: doc.emailadress });
+
+          //controleren of de gebruiker bestaat
+          if (newUser) {
+            console.log("Gebruiker is gevonden na het toevoegen");
+          }
+          //de gebruiker in een session zetten
+          req.session.user = newUser
+
+          //Na het aanmaken van de session meteen doorsturen naar profiel pagina met daarin de gegevens van de gebruiker
+          res.redirect("/profiel");
         } else {
           //Dit werkt helemaal nog niet :(
           res.send(`Oops er ging iets fout.`)
@@ -209,6 +219,10 @@ app.get("/profiel", (req, res) => {
 //**********artiesten opslaan in mongodb**********
 //ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
 app.get("/opgeslagen-artiesten", async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/profiel");
+  }
+ 
   const database = client.db("klanten");
   const gebruiker = database.collection("user");
 
@@ -219,9 +233,11 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
   if (user) {
     console.log("gebruiker gevonden");
     // return res.status(404).send("Gebruiker gevonden");
+    res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+  } else {
+    res.send("Gebruiker is niet gevonden :(")
   }
-  
-  res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+
 });
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
