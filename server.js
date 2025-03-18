@@ -219,6 +219,10 @@ app.get("/profiel", (req, res) => {
 //**********artiesten opslaan in mongodb**********
 //ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
 app.get("/opgeslagen-artiesten", async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/profiel");
+  }
+ 
   const database = client.db("klanten");
   const gebruiker = database.collection("user");
 
@@ -229,9 +233,11 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
   if (user) {
     console.log("gebruiker gevonden");
     // return res.status(404).send("Gebruiker gevonden");
+    res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+  } else {
+    res.send("Gebruiker is niet gevonden :(")
   }
-  
-  res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+
 });
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
