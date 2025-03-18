@@ -23,6 +23,10 @@ const upload = multer({dest: 'static/upload/'})
 //static data access mogelijk maken
 app.use("/static", express.static("static"));
 
+// header script
+app.use(express.static('public'));
+
+
 //Activeren van de helmet module EN alle bronnen van ander websites worden toegestaan
 app.use(
   helmet({
@@ -107,9 +111,6 @@ app.get("/about", (req, res) => {
   res.render("pages/about"); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 });
 
-app.get("/opgeslagenartiesten", (req, res) => {
-  res.render("pages/opgeslagenartiesten"); // Zorg voor een opgeslagenartiesten.ejs bestand
-});
 
 app.get('/tuneder', (req, res) => {
   res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
@@ -164,7 +165,6 @@ app.get("/aanmelden", (req, res) => {
 
 
 //**********inloggen en check via mongo**********
-
 app.post("/inlog-account", async (req, res) => {
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten");
@@ -182,12 +182,9 @@ app.post("/inlog-account", async (req, res) => {
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (isMatch) {
-      // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij email op
-      req.session.user = {
-        email: user.emailadress,
-      }
+      // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij user op
+      req.session.user = user
       res.render("pages/profiel", { user: req.session.user });
-      // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
       // Als het wachtwoord niet overeenkomt
       res.send("Wachtwoord komt niet overeen");
@@ -196,11 +193,6 @@ app.post("/inlog-account", async (req, res) => {
     // Als de gebruiker niet wordt gevonden
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
   }
-});
-
-//Connectie om de inlog form te laten zien
-app.get("/inlog", (req, res) => {
-  res.render("inlog");
 });
 
 //Functie van het account scherm, als de account al bestaat dan naar profiel en anders naar het inlogscherm leiden.
@@ -214,30 +206,55 @@ app.get("/profiel", (req, res) => {
 });
 
 
-//Artieste opslaan in favourieten
-app.post("/favorieten/:artiest",async (req, res) => {
+//**********artiesten opslaan in mongodb**********
+//ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
+app.get("/opgeslagen-artiesten", async (req, res) => {
   const database = client.db("klanten");
   const gebruiker = database.collection("user");
 
-  // kijken of de gebruiker is ingelogd
-  if (!req.session.user) {
-    return res.status(404).send("Sessie niet gevonden");
-  }
-
-  // vinden van de user
-  const query = { emailadress: xss(req.session.user.email) }; // Assuming the email is stored in the session
+  // Haal de gebruiker op basis van de sessiegegevens
+  const query = { emailadress: req.session.user.emailadress };
   const user = await gebruiker.findOne(query);
 
-  if (!user) {
+  if (user) {
+    console.log("gebruiker gevonden");
+    // return res.status(404).send("Gebruiker gevonden");
+  }
+  
+  res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+});
+
+//Als het goed is moet :artiest dan vervangen worden door iets van de api
+//Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
+app.post("/opgeslagen-artiesten",async (req, res) => {
+  const database = client.db("klanten")
+  const gebruiker = database.collection("user")
+
+  const query = { emailadress: req.session.user.emailadress };
+  const user = await gebruiker.findOne(query)
+
+//Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met wat in de index staat en de frontend
+  const artiestData = {
+    id: req.body.artistId,
+    naam: req.body.artistName,
+    genre: req.body.artistGenre,
+    volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
+    images: req.body.artistFoto
+  };
+  
+  if (user) {
+    console.log("Gebruiker gevonden:", user);
+    await gebruiker.updateOne(
+      { emailadress: req.session.user.emailadress},
+      //Uiteindelijk alle artiestendata doorsturen naar database
+      { $push: { favorieten:  artiestData } }
+    );
+    console.log(user)
+  } else {
+    console.log('of niet')
     return res.status(404).send("Gebruiker niet gevonden");
   }
-
-  // voegt de artiest toe aan de database
-  user.favorieten.push(req.params.artiest);
-  await gebruiker.updateOne(
-    { emailadress: user.emailadress }, // Use the email to find the correct user
-    { $set: { favorieten: user.favorieten } }
-  );
+  res.redirect("/") 
 });
 
 
@@ -299,63 +316,6 @@ app.get("/token", (req, res) => {
 });
 
 
-//Artieste opslaan in favourieten
-
-// app.post("/opslaan", async (req, res) => {
-//   const database = client.db("klanten")
-//   const gebruiker = database.collection("user")
-//   const favourieten = gebruiker.find( { favourieten: { $exists: true } } ).limit(1).size();
-
-//   //check of gebruiker in session zit
-//   if (req.session.user) {
-//     //als er een user session bestaat, check of hij al favourieten heeft
-    
-//     if(favourieten){ //als er favourieten zijn, update favourtieten met array
-        
-//       } else { //favourieten toevoegen
-//         const favourietenLijst  = { favourieten: {
-//           foto: xss(req.body.name),            
-//           spotifylink: xss(req.body.email), 
-          
-//           artistName: hashedPassword,
-//           artistPopularity: (req.file.filename),
-//           }
-//         }
-//         //Om het document toe te voegen in de database de volgende code   
-//         const opslaanFavo = await database.collection("user").gebruiker.insertOne(favourietenLijst);
-
-//       }
-
-//     } else { //gebruiker laten weten dat hij eerst moet inloggen
-      
-//     }
-// })
-
-
-//Als het goed is moet :artiest dan vervangen worden door iets van de api
-//Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
-// app.get("/favorieten/${artistName}",async (req, res) => {
-//   const database = client.db("klanten")
-//   const gebruiker = database.collection("user")
-
-//   const query = { emailadress: xss(req.body.email) };
-//   const user = await gebruiker.findOne(query)
-  
-//   if (req.session.user) {
-//     user.favorieten.push(req.params.artiest);
-//     await gebruiker.updateOne(
-//       { user },
-//       { $set: { favorieten: user.favorieten } }
-//     );
-//   } else {
-//     return res.status(404).send("Gebruiker niet gevonden");
-//   }
-//   res.redirect("/pages/index")
-// });
-
-
-
-
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
 
@@ -375,5 +335,3 @@ app.use((err, req, res) => {
   res.status(500).send("500: server error");
 });
 
-// header script
-app.use(express.static('public'));
