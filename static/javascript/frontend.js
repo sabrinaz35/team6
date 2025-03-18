@@ -24,6 +24,7 @@ function getRandomSearch() {
 
 // artist data van spotify opvragen en naar de artist spotlight op de homepagina overzetten
 async function fetchData() {
+  console.log('Fetching data')
   try {
     // Access token opvragen voordat de data opgevraagd wordt
     const accessToken = await getAccessToken(); 
@@ -63,6 +64,10 @@ async function fetchData() {
       //er wordt van spotify geen beschrijving gegeven dus als er geen artiest word gevonden haal de beschrijving weg
       document.getElementById('artiestbeschrijving').innerText = "";
 
+      //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
+      document.getElementById('favoInput').value=eersteArtiest.id
+      console.log(eersteArtiest.id)
+
     }
     
 
@@ -88,15 +93,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Voeg de event listener toe aan de hart-container
   const heartContainer = document.querySelector(".heart-container");
-  heartContainer.addEventListener("click", splitHeart);
+  heartContainer.addEventListener('click', splitHeart);
 });
 
 
 
 
 
-//like artist button op homepagina
-//Hier moet denk ik ook de api in komen te staan
+// //like artist button op homepagina
+// //Hier moet denk ik ook de api in komen te staan
 // const like = document.querySelector("#likebutton")
 
 // like.addEventListener('click', async function() {
@@ -130,14 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
 //   }
 // })
 
-
-// async function slaOp(){
-//   try{
-//     const response = await fetch('http://localhost:4000/opslaan');
-//   } catch(error){
-//     console.error("Token not fetched", error)
-//   }
-// }
 
 
 

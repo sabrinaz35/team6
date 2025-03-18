@@ -107,9 +107,11 @@ app.get("/about", (req, res) => {
   res.render("pages/about"); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 });
 
-app.get("/opgeslagenartiesten", (req, res) => {
-  res.render("pages/opgeslagenartiesten"); // Zorg voor een opgeslagenartiesten.ejs bestand
+
+app.get("/opgeslagen-artiesten", (req, res) => {
+  res.render("pages/opgeslagen-artiesten"); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 });
+
 
 app.get('/tuneder', (req, res) => {
   res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
@@ -182,10 +184,8 @@ app.post("/inlog-account", async (req, res) => {
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (isMatch) {
-      // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij email op
-      req.session.user = {
-        email: user.emailadress,
-      }
+      // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij user op
+      req.session.user = user
       res.render("pages/profiel", { user: req.session.user });
       // res.send(`Welkom, ${user.name}! Inloggen was succesvol.`);
     } else {
@@ -196,11 +196,6 @@ app.post("/inlog-account", async (req, res) => {
     // Als de gebruiker niet wordt gevonden
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
   }
-});
-
-//Connectie om de inlog form te laten zien
-app.get("/inlog", (req, res) => {
-  res.render("inlog");
 });
 
 //Functie van het account scherm, als de account al bestaat dan naar profiel en anders naar het inlogscherm leiden.
@@ -334,24 +329,30 @@ app.get("/token", (req, res) => {
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
-// app.get("/favorieten/${artistName}",async (req, res) => {
-//   const database = client.db("klanten")
-//   const gebruiker = database.collection("user")
+app.post("/opgeslagen-artiesten",async (req, res) => {
+  const database = client.db("klanten")
+  const gebruiker = database.collection("user")
 
-//   const query = { emailadress: xss(req.body.email) };
-//   const user = await gebruiker.findOne(query)
+  const query = { emailadress: req.session.user.emailadress };
+  const user = await gebruiker.findOne(query)
+
+  user.favorieten.push(req.body.artistId); // Voeg de artiest toe
   
-//   if (req.session.user) {
-//     user.favorieten.push(req.params.artiest);
-//     await gebruiker.updateOne(
-//       { user },
-//       { $set: { favorieten: user.favorieten } }
-//     );
-//   } else {
-//     return res.status(404).send("Gebruiker niet gevonden");
-//   }
-//   res.redirect("/pages/index")
-// });
+  if (user) {
+    console.log("Gebruiker gevonden:", user);
+    user.favorieten.push(req.body.artistId);
+    await gebruiker.updateOne(
+      { emailadress: req.body.email },
+      { $set: { favorieten: user.favorieten } }
+    );
+    console.log(user)
+  } else {
+    console.log('of niet')
+    return res.status(404).send("Gebruiker niet gevonden");
+  }
+  res.redirect("/") 
+
+});
 
 
 
