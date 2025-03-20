@@ -94,6 +94,49 @@ async function fetchData() {
 // functie aanroepen
 fetchData();
 
+
+//deze functie gebruiken om de artiest op basis van de zoekcriteria te vinden
+async function artiestZoeken(){
+  try{
+    //Spotify data opvragen
+
+    // Access token opvragen voordat de data opgevraagd wordt
+    const accessToken = await getAccessToken(); 
+    //krijg een random array aan artiesten met een random begin letter
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    });
+
+    console.log("Spotify API response status:", response.status); // Debugging
+    //alle artiesten data loggen
+    const data = await response.json();
+    console.log("Full artist data:", data.artists.items);
+
+
+    //data van populariteitsvraag uit ejs halen
+    let populariteitLaag =
+    let populariteitHoog =
+
+    //data van genres uit ejs halen
+    let genresFilter = 
+
+    let gevondenArtiest = data.artists.items.filter(artist => artist.popularity > populariteitLaag && artist.popularity < populariteitHoog && artist.genres.includes(genresFilter));
+
+
+    //source van de iframe te vervangen naar de top tracks van de gevonden artiest
+    let artiestID = gevondenArtiest.id;
+    document.getElementById("gevondenArtiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`
+
+  } catch (error) {
+    console.error("error fetching artist source")
+  }
+}
+
+
+
+//hart split als je op dislike clickt
 document.addEventListener("DOMContentLoaded", function () {
   function splitHeart() {
       const heart = document.querySelector(".heart-container");
