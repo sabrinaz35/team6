@@ -136,6 +136,7 @@ async function artiestZoeken(){
 
 
 
+//hart split als je op dislike clickt
 document.addEventListener("DOMContentLoaded", function () {
   function splitHeart() {
       const heart = document.querySelector(".heart-container");
