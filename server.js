@@ -129,18 +129,25 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
 
     //const aanmaken om een hash te creëren voor het wachtwoord
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  
+
+    let filename 
+
+  if (req.file && req.file.filename) {
+    filename = req.file.filename
+  } else {
+    filename = "profiel-placeholder.png" //een afbeelding toevoegen..
+  }
+
     //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
     const doc = { 
         name: xss(req.body.name),            
         emailadress: xss(req.body.email), 
         //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
         password: hashedPassword,
-        profielFoto: (req.file.filename),
+        profielFoto: (filename),
         //alvast een lege array ter voorbereiding 
         favorieten: [ ], 
       }
-
   
     //Om het document toe te voegen in de database de volgende code
     const toevoegen = await gebruiker.insertOne(doc)
@@ -255,46 +262,52 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     id: req.body.artistId,
     naam: req.body.artistName,
     genre: req.body.artistGenre,
-    volgers: Number(req.body.artistFollowers) || 0,// Zorg dat dit een getal is  volgers: parseInt(req.body.artistFollowers) || 0,
+    volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
     images: req.body.artistFoto
   };
-
+  
   if (user) {
-      // Anders moet de artiest gegevens gewoon weer toegevoegd worden
+    console.log("Gebruiker gevonden:", user);
+    const favorietenArray = await gebruiker.findOne(user.favorieten)
+
+    const index = favorietenArray.indexOf(artiestData);
+
+    if (index >= 0){
+      user.favorietenArray.splice(index)
+      
+    } else {
       await gebruiker.updateOne(
         { emailadress: req.session.user.emailadress},
         //Uiteindelijk alle artiestendata doorsturen naar database
-        { $push: { favorieten:  artiestData } }  
+        { $push: { favorieten:  artiestData } }
       );
-      console.log("Gebruiker gevonden:", user);
-   } else {
+      
+      console.log(user)
+    }
+  } else {
     console.log('of niet')
     return res.status(404).send("Gebruiker niet gevonden");
   }
   res.redirect("/") 
-})
+});
 
-// Ik had deze if else erin gezet om ze ook weer te kunnen ontliken maar dat werkte niet helemaal dus ik voeg even als comment toe
-// if (artiestData) {
-//   //Anders moet de artiest gegevens gewoon weer toegevoegd worden
-//   await gebruiker.updateOne(
-//     { emailadress: req.session.user.emailadress},
-//     //Uiteindelijk alle artiestendata doorsturen naar database
-//     { $pull: { favorieten:  artiestData } }  
-//   );
-// } else {
-// //Anders moet de artiest gegevens gewoon weer toegevoegd worden
-// console.log("Gebruiker gevonden:", user);
-// await gebruiker.updateOne(
-//   { emailadress: req.session.user.emailadress},
-//   //Uiteindelijk alle artiestendata doorsturen naar database
-//   { $push: { favorieten:  artiestData }})
-//     console.log(user)
 
-// }
+//     if (!artiestData){
+//       await gebruiker.updateOne(
+//         { emailadress: req.session.user.emailadress},
+//         //Uiteindelijk alle artiestendata doorsturen naar database
+//         { $push: { favorieten:  artiestData } }
+//       );
+//     } else {
+//       await gebruiker.updateOne(
+//         { emailadress: req.session.user.emailadress},
+//         //Uiteindelijk alle artiestendata uit data base halen
+//         { $:pull { favorieten:  artiestData } }
+// )}
 
 
 // ******** uitloggen **********
+
 app.get("/uitloggen", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
