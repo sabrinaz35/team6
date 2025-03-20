@@ -257,15 +257,15 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     volgers: Number(req.body.artistFollowers) || 0,// Zorg dat dit een getal is  volgers: parseInt(req.body.artistFollowers) || 0,
     images: req.body.artistFoto
   };
-  
 
   if (user) {
-      //Anders moet de artiest gegevens gewoon weer toegevoegd worden
+      // Anders moet de artiest gegevens gewoon weer toegevoegd worden
       await gebruiker.updateOne(
         { emailadress: req.session.user.emailadress},
         //Uiteindelijk alle artiestendata doorsturen naar database
-        { $pull: { favorieten:  artiestData } }  
+        { $push: { favorieten:  artiestData } }  
       );
+      console.log("Gebruiker gevonden:", user);
    } else {
     console.log('of niet')
     return res.status(404).send("Gebruiker niet gevonden");
@@ -294,7 +294,6 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
 
 
 // ******** uitloggen **********
-
 app.get("/uitloggen", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
