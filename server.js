@@ -120,6 +120,14 @@ app.get("/contact", (req, res) => {
   res.render("pages/contact"); // Zorg ervoor dat je een contact.ejs bestand hebt
 });
 
+app.get("/filter-populariteit", function (req, res) {
+  res.render("pages/filter-populariteit");
+});
+
+app.get("/filter-genre", function (req, res) {
+  res.render("pages/filter-genre");
+});
+
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
