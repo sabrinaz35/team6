@@ -2,10 +2,6 @@
 <html lang="nl">
   <head>
     <%- include('../partials/head'); %>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap"
-      rel="stylesheet"
-    />
   </head>
 
   <body class="startpagina">
@@ -27,12 +23,26 @@
         </section>
       </section>
 
-
+      <marquee behavior="scroll" direction="right" scrollamount="10">
+        🚀 <span>ACCOUNT AANMAKEN IS GRATIS!</span> 🚀
+    </marquee>
+    
       <section class="background-opacity-80">
         <section class="uitgelichte-artiest">
+          <form action="/opgeslagen-artiesten" method="POST">
+            <button type="submit" id="likebutton">Like</button>
+            <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
+            <input name="artistId" id="favoInput" type="hidden">
+            <input name="artistName" id="artistNameInput" type="hidden">
+            <input name="artistGenre" id="artistGenreInput" type="hidden">
+            <input name="artistFollowers" id="artistFollowersInput" type="hidden">
+            <input name="artistFoto" id="artistFotoInput" type="hidden">
+          </form>
+     
           <img id="artiestfoto" src="static/images/artiest-milo.png" alt="foto van de artiest">
           <h3 id="artiestinformatie">Milolaathetlukken - 21k volgers</h3>
-          <p id="artiestbeschrijving">Een jonge rapper uit Amsterdam met grappige lines.</p>
+          <p id="artiestgenres"></p>
+          <a id="artiestlink" href="https://open.spotify.com/artist/31RYhg7Auitqp3eg9rTB9i?si=_UN40XIbQUuH5tRnoKkyqQ">Luister Op Spotify</a>
         </section>
         <section class="playlist">
           <h3>Luister nu onze playlist!</h3>
@@ -42,7 +52,9 @@
     </main>
 
 
-    <footer></footer>
-
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
+    <%- include('../partials/script'); %>
   </body>
 </html>

@@ -40,9 +40,10 @@ CLIENT_ID:
 CLIENT_SECRET: 
 
 # Contributers 
-[Mogen andere mensen er ook aan meewerken?]
-
-[Onze eigen namen]
+Maks Breijer
+David Jenniskens
+Maja Wendelin
+Sabrina Zuurbier
 
 
 # Bronnen

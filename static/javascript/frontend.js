@@ -24,6 +24,7 @@ function getRandomSearch() {
 
 // artist data van spotify opvragen en naar de artist spotlight op de homepagina overzetten
 async function fetchData() {
+  console.log('Fetching data')
   try {
     // Access token opvragen voordat de data opgevraagd wordt
     const accessToken = await getAccessToken(); 
@@ -34,6 +35,8 @@ async function fetchData() {
       }
     });
 
+    
+    console.log("Spotify API response status:", response.status); // Debugging
     //alle artiesten data loggen
     const data = await response.json();
     console.log("Full artist data:", data.artists.items);
@@ -58,8 +61,27 @@ async function fetchData() {
       document.getElementById('artiestinformatie').innerText = `${eersteArtiest.name} - ${eersteArtiest.followers.total} volgers`;
       //image vervangen door foto van spotfy artiest
       document.getElementById('artiestfoto').src = `${eersteArtiest.images[0].url}`;
-      //er wordt van spotify geen beschrijving gegeven dus als er geen artiest word gevonden haal de beschrijving weg
-      document.getElementById('artiestbeschrijving').innerText = "";
+      //laat genres van de artiest zien
+      if(eersteArtiest.genres == ""){
+        document.getElementById('artiestgenres').innerText = ""
+      } else {
+        document.getElementById('artiestgenres').innerText = `${eersteArtiest.genres[0]}`;
+      }
+      
+      //laat link naar spotify zien
+      document.getElementById('artiestlink').href = `${eersteArtiest.external_urls.spotify}`;
+
+
+
+
+      //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
+      document.getElementById('favoInput').value=eersteArtiest.id
+      //Andere gegevens ook meegeven aan naar de mongodb database
+      document.getElementById("artistNameInput").value = eersteArtiest.name;
+      document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
+      document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
+      document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
+      console.log(eersteArtiest.id)
     }
     
 
@@ -71,6 +93,28 @@ async function fetchData() {
 
 // functie aanroepen
 fetchData();
+
+document.addEventListener("DOMContentLoaded", function () {
+  function splitHeart() {
+      const heart = document.querySelector(".heart-container");
+      heart.classList.add("split");
+
+      // Optioneel: Reset na animatie (na 1000 ms)
+      setTimeout(() => {
+          heart.classList.remove("split");
+      }, 1000);
+  }
+
+  // Voeg de event listener toe aan de hart-container
+  const heartContainer = document.querySelector(".heart-container");
+  heartContainer.addEventListener('click', splitHeart);
+});
+
+
+
+
+
+
 
 
 
