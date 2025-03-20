@@ -254,24 +254,43 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     id: req.body.artistId,
     naam: req.body.artistName,
     genre: req.body.artistGenre,
-    volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
+    volgers: Number(req.body.artistFollowers) || 0,// Zorg dat dit een getal is  volgers: parseInt(req.body.artistFollowers) || 0,
     images: req.body.artistFoto
   };
   
+
   if (user) {
-    console.log("Gebruiker gevonden:", user);
-    await gebruiker.updateOne(
-      { emailadress: req.session.user.emailadress},
-      //Uiteindelijk alle artiestendata doorsturen naar database
-      { $push: { favorieten:  artiestData } }
-    );
-    console.log(user)
-  } else {
+      //Anders moet de artiest gegevens gewoon weer toegevoegd worden
+      await gebruiker.updateOne(
+        { emailadress: req.session.user.emailadress},
+        //Uiteindelijk alle artiestendata doorsturen naar database
+        { $pull: { favorieten:  artiestData } }  
+      );
+   } else {
     console.log('of niet')
     return res.status(404).send("Gebruiker niet gevonden");
   }
   res.redirect("/") 
-});
+})
+
+// Ik had deze if else erin gezet om ze ook weer te kunnen ontliken maar dat werkte niet helemaal dus ik voeg even als comment toe
+// if (artiestData) {
+//   //Anders moet de artiest gegevens gewoon weer toegevoegd worden
+//   await gebruiker.updateOne(
+//     { emailadress: req.session.user.emailadress},
+//     //Uiteindelijk alle artiestendata doorsturen naar database
+//     { $pull: { favorieten:  artiestData } }  
+//   );
+// } else {
+// //Anders moet de artiest gegevens gewoon weer toegevoegd worden
+// console.log("Gebruiker gevonden:", user);
+// await gebruiker.updateOne(
+//   { emailadress: req.session.user.emailadress},
+//   //Uiteindelijk alle artiestendata doorsturen naar database
+//   { $push: { favorieten:  artiestData }})
+//     console.log(user)
+
+// }
 
 
 // ******** uitloggen **********
