@@ -314,6 +314,7 @@ label:first-child{
     cursor: pointer;
     padding: 10px;
     transition: transform 0.2s ease-in-out;
+    box-shadow: none;
 }
 
 /* Maak de hartjes kleiner */
@@ -380,6 +381,12 @@ label:first-child{
 
 .heart-container.split .heart-right {
     transform: translateX(100px); /* Verplaats de rechterhelft naar rechts */
+}
+
+#gevondenArtiestIframe{
+    position: absolute;
+    z-index: 1000;
+    width: 20%;
 }
 
 

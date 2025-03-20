@@ -122,8 +122,19 @@ async function artiestZoeken(){
     //data van genres uit ejs halen
     let genresFilter = 
 
-    let gevondenArtiest = data.artists.items.filter(artist => artist.popularity > populariteitLaag && artist.popularity < populariteitHoog && artist.genres.includes(genresFilter));
+    //gevonden artiesten filteren op aangegeven voorkeuren
+    let gevondenArtiesten = data.artists.items.filter(artist => artist.popularity > populariteitLaag && artist.popularity < populariteitHoog && artist.genres.includes(genresFilter));
 
+    let gevondenArtiest = gevondenArtiesten[0]
+
+    //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
+    document.getElementById('favoInput').value=gevondenArtiest.id
+    //Andere gegevens ook meegeven aan naar de mongodb database
+    document.getElementById("artistNameInput").value = gevondenArtiest.name;
+    document.getElementById("artistGenreInput").value = gevondenArtiest.genres.join(", "); // Genre als string
+    document.getElementById("artistFollowersInput").value = gevondenArtiest.followers.total;
+    document.getElementById("artistFotoInput").value = gevondenArtiest.images[0].url;
+    console.log(gevondenArtiest.id)
 
     //source van de iframe te vervangen naar de top tracks van de gevonden artiest
     let artiestID = gevondenArtiest.id;
@@ -134,9 +145,14 @@ async function artiestZoeken(){
   }
 }
 
+//hart rechts en links activeeren opnieuw zoeken artiest
+const hartLike = document.querySelector(".icon-button")
+hartLike.addEventListener("click", artiestZoeken)
 
+const hartDislike = document.querySelector(".heart-container")
+hartDislike.addEventListener("click", artiestZoeken)
 
-//hart split als je op dislike clickt
+//hart links split als je op dislike clickt 
 document.addEventListener("DOMContentLoaded", function () {
   function splitHeart() {
       const heart = document.querySelector(".heart-container");
@@ -153,6 +169,21 @@ document.addEventListener("DOMContentLoaded", function () {
   heartContainer.addEventListener('click', splitHeart);
 });
 
+
+
+
+//Dit is de java die de mouseover naar een rode afbeelding brengt!
+document.addEventListener("DOMContentLoaded", function() {
+  const logo = document.getElementById("logo");
+
+  logo.addEventListener("mouseover", () => {
+      this.src = "/static/images/logo-rood.png";
+  });
+
+  logo.addEventListener("mouseout", () => {
+      this.src = "/static/images/logogeel.png";
+  });
+}
 
 
 

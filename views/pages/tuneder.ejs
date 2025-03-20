@@ -22,13 +22,22 @@
     <!-- Centrale afbeelding -->
     <img src="static/images/radio2.png" alt="Radio afbeelding" class="tuneder-image">
 
-    <!-- iframe voor artiest na het zoeken -->
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/31RYhg7Auitqp3eg9rTB9i?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <!-- iframe voor gevonden artiest na het zoeken -->
+    <iframe id="gevondenArtiestIframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/31RYhg7Auitqp3eg9rTB9i?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
     <!-- Rechter knop -->
-    <button class="icon-btn">
+    <form action="/opgeslagen-artiesten" method="POST">
+      <button class="icon-btn">
         <img src="static/images/heart.svg" alt="Volgende">
-    </button>
+      </button>
+      <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
+      <input name="artistId" id="favoInput" type="hidden">
+      <input name="artistName" id="artistNameInput" type="hidden">
+      <input name="artistGenre" id="artistGenreInput" type="hidden">
+      <input name="artistFollowers" id="artistFollowersInput" type="hidden">
+      <input name="artistFoto" id="artistFotoInput" type="hidden">
+    </form>
+    
 </div>
 
       
