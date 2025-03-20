@@ -140,6 +140,7 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
         //alvast een lege array ter voorbereiding 
         favorieten: [ ], 
       }
+
   
     //Om het document toe te voegen in de database de volgende code
     const toevoegen = await gebruiker.insertOne(doc)
