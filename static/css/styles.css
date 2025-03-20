@@ -82,6 +82,23 @@ h1, h2, h3{
     font-weight: 800;
 }
 
+button {
+    background-color: rgb(77, 119, 79);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Pixelify Sans', sans-serif;
+    cursor: pointer;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:hover{
+    background-color: rgb(185, 67, 67);
+}
 /* Hieronder komt styling van index.pagina.  */
 .startpagina h1{
     visibility: hidden;
@@ -150,6 +167,7 @@ h1, h2, h3{
     justify-content: space-around;
     flex-wrap: wrap;
     align-items: center;
+    gap: 10px;
 }
 .background-opacity-80 section{
     width:400px;
@@ -212,4 +230,58 @@ label:first-child{
     text-decoration: none;
     font-weight: 700;
     color: black;
+}
+
+
+/* Profielpagina */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mijn-account h1{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 2em;
+}
+
+@media (max-width: 480px){
+    display: flex;
+    justify-content: center;
+}
+
+.profile-picture{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.background-opacity-white{
+    background-color: rgba(255, 255, 255, 0.50);
+    width: 100vw;
+    margin-top: 10%;
+}
+
+.opgeslagen-artiesten-column{
+    display: flex;
+    flex-direction: column;
+}
+.opgeslagen-artiesten-titel{
+    margin-left: 3em;
+    padding-top: 1em;
+}
+.account-opgeslagen-artiest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
+    gap: 16px;
+    padding: 20px;
+}
+
+.grid-item {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 300px;
 }
