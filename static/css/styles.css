@@ -257,8 +257,10 @@ label:first-child{
 }
 
 @media (max-width: 480px){
-    display: flex;
-    justify-content: center;
+    .mijn-account h1 {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .profile-picture{
