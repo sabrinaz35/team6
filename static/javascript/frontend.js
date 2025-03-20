@@ -61,8 +61,18 @@ async function fetchData() {
       document.getElementById('artiestinformatie').innerText = `${eersteArtiest.name} - ${eersteArtiest.followers.total} volgers`;
       //image vervangen door foto van spotfy artiest
       document.getElementById('artiestfoto').src = `${eersteArtiest.images[0].url}`;
-      //er wordt van spotify geen beschrijving gegeven dus als er geen artiest word gevonden haal de beschrijving weg
-      document.getElementById('artiestbeschrijving').innerText = "";
+      //laat genres van de artiest zien
+      if(eersteArtiest.genres == ""){
+        document.getElementById('artiestgenres').innerText = ""
+      } else {
+        document.getElementById('artiestgenres').innerText = `${eersteArtiest.genres[0]}`;
+      }
+      
+      //laat link naar spotify zien
+      document.getElementById('artiestlink').href = `${eersteArtiest.external_urls.spotify}`;
+
+
+
 
       //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
       document.getElementById('favoInput').value=eersteArtiest.id
