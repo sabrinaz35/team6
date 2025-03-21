@@ -265,11 +265,11 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
     images: req.body.artistFoto
   };
+
+  const favorietenArray = await gebruiker.findOne(user.favorieten)
   
   if (user) {
     console.log("Gebruiker gevonden:", user);
-    const favorietenArray = await gebruiker.findOne(user.favorieten)
-
     const index = favorietenArray.indexOf(artiestData);
 
     if (index >= 0){
