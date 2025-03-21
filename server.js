@@ -248,6 +248,7 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
 
 });
 
+
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
 app.post("/opgeslagen-artiesten",async (req, res) => {
@@ -266,23 +267,24 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     images: req.body.artistFoto
   };
 
-  const favorietenArray = await gebruiker.findOne(user.favorieten)
+  const index = user.favorieten.indexOf(artiestData);
+  console.log (index)
   
   if (user) {
     console.log("Gebruiker gevonden:", user);
-    const index = favorietenArray.indexOf(artiestData);
-
-    if (index >= 0){
-      user.favorietenArray.splice(index)
-      
+    if (index <= 0){
+      user.favorieten.splice(index, 1)
+      await gebruiker.updateOne(
+        { emailadress: req.session.user.emailadress},
+        //Uiteindelijk alle artiestendata doorsturen naar database
+        { $set: { favorieten: user.favorieten}})
+      console.log("Artiest is verwijdert uit favorieten") 
     } else {
       await gebruiker.updateOne(
         { emailadress: req.session.user.emailadress},
         //Uiteindelijk alle artiestendata doorsturen naar database
         { $push: { favorieten:  artiestData } }
       );
-      
-      console.log(user)
     }
   } else {
     console.log('of niet')
