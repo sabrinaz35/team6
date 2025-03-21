@@ -387,3 +387,27 @@ input[type="range"] {
     cursor: pointer;
     margin-top: 30%;
   }
+
+
+
+/* voor genre filter pagina */
+.genreFilter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.genreFilter input {
+    all: initial;
+    -moz-appearance: checkbox;
+}
+
+.genreFilter label {
+    width: fit-content;
+}
+
+.genreFilter form {
+    width: 50vw;
+    flex-direction: row;
+    justify-content: space-around;
+}

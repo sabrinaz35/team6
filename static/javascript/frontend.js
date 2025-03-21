@@ -102,6 +102,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+//genres genereren uit spotify API
+
+async function getGenres () {
+  console.log("probeer genres op te halen")
+  try{
+    // Access token opvragen voordat de data opgevraagd wordt
+    const accessToken = await getAccessToken(); 
+    //krijg een random array aan artiesten met een random begin letter
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    });
+
+    
+    console.log("Spotify API response status:", response.status); // Debugging
+    //alle artiesten data loggen
+    const data = await response.json();
+
+    const filteredGenres = data.artists.items
+    .filter(artist => artist.genres.length > 0) // filter alle genre arrays die leeg zijn
+    .flatMap(artist => artist.genres); // laat alle genres in een grote array zien 
+  
+    console.log("Genres:", filteredGenres); 
+
+   
+
+   
+
+
+  } catch {
+    console.error('Error fetching genres:', error);
+  }
+}
+
+const genreLaden = document.querySelector("#genreLaden");
+genreLaden.addEventListener('click', getGenres);
+
+
 
 
 
