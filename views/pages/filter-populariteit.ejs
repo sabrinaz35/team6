@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+<main class="filter-populariteit">
+
+  <h1>Kiez de artiest populariteit!</h1>
+
+  <form action="/tuneder" method="GET">
+
+    <p id="value">30</p>
+    <input type="range" id="rangeSlider" min="10" max="100" value="30" step="10" />
+    
+    <button type="submit">Ga naar artiest</button>
+  </form> 
+
+</main>
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+<%- include('../partials/script'); %>
+</body>
