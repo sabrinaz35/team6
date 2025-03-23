@@ -344,18 +344,22 @@ app.get("/token", (req, res) => {
 //moet onder routes staan dus niet verschuiven!
 
 // error 404 handling
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   // console log voor error 404
   console.error("404 error at URL: " + req.url);
   // 404 status code als HTTP response sturen
   res.status(404).send("404 error at URL: " + req.url);
+
+  next();
 });
 
 // error 500 handling
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   // console log voor error 500
   console.error(err.stack);
   // 500 status code als HTTP response sturen
   res.status(500).send("500: server error");
+
+  next();
 });
 

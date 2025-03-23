@@ -9,19 +9,16 @@
   <%- include('../partials/header'); %>
 </header>
 <main class="filter-populariteit">
- <!-- Code met hulp van https://www.thecoderashok.com/blog/double-range-slider-with-min-max-value -->
- <form action="">
-    <div class="range-slider-box">
-        <div class="range-slider">
-     
-            <input type="range" class="min" min="0" max="100" value="0" step="0" />
-            <input type="range" class="max" min="0" max="100" value="20" step="0" />
-     
-            <div class="minvalue"></div>
-            <div class="maxvalue"></div>
-          </div>
-    </div>
- </form> 
+
+  <h1>Kiez de artiest populariteit!</h1>
+
+  <form action="/tuneder" method="GET">
+
+    <p id="value">30</p>
+    <input type="range" id="rangeSlider" min="10" max="100" value="30" step="10" />
+    
+    <button type="submit">Ga naar artiest</button>
+  </form> 
 
 </main>
 <footer>

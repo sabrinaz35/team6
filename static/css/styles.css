@@ -321,73 +321,12 @@ label:first-child{
 }
 
 /* Code voor de slider op de filter populariteit pagina */
-input[type="range"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 100%;
-    outline: none;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    background-color: transparent;
-    pointer-events: none;
-  }
-
-  .range-slider-box {
-    position: relative;
-    width: 60%;
-    height: 70vh;
-    margin-top: 30px;
+.filter-populariteit form{
     display: flex;
-  }
+    flex-direction: column;
+    align-items: center;
 
-  .range-slider{
-    width: 60%;
-    height: 5px;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    border-radius: 5px;
-    justify-items: center;
-  }
-
-  input {
-    position: absolute;
-    width: 100%;
-    height: 5px;
-    background: none;
-    pointer-events: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  input::-webkit-slider-thumb {
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    border: 3px solid #cbffa3;
-    background-color: #95d564;
-    pointer-events: auto;
-    -webkit-appearance: none;
-    cursor: pointer;
-    margin-bottom: 1px;
-  }
-  input::-moz-range-thumb {
-    height: 18px;
-    width: 18px;
-    border-radius: 50%;
-    border: 3px solid #cbffa3;
-    background-color: #95d564;
-    pointer-events: auto;
-    -moz-appearance: none;
-    cursor: pointer;
-    margin-top: 30%;
-  }
-
+}
 
 
 /* voor genre filter pagina */
@@ -399,7 +338,7 @@ input[type="range"] {
 
 .genreFilter input {
     all: initial;
-    -moz-appearance: checkbox;
+    appearance: checkbox;
 }
 
 .genreFilter label {
@@ -408,6 +347,17 @@ input[type="range"] {
 
 .genreFilter form {
     width: 50vw;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
+}
+
+.genreFilter .genres {
+    display: flex;
+    justify-content: space-around;
+}
+
+.genreFilter .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
