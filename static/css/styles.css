@@ -11,7 +11,7 @@
 /* Logo/ afbeelding styling met name de grote*/
 .logo {
     height: 100px; 
-    width: auto;
+    width: auto; 
     margin-left: 1em;
 }
 
@@ -209,6 +209,7 @@ marquee {
 form{
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 input {
@@ -292,12 +293,30 @@ label:first-child{
 
 .grid-item {
     background: rgb(255, 255, 255);
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    height: 300px;
 }
+
+.grid-item h3, p{
+    margin: 0;
+}
+
+.grid-item h3{
+    font-size: 1.5em;
+}
+
+.grid-item p {
+    color: #3f3f3f;
+    font-weight: 200;
+}
+
+.grid-item img {
+        width: 100%;
+        height: auto; 
+        object-fit: cover; 
+        border-radius: 2px; 
+    }
 
 /* Styling Tuneder*/
 .tuneder-wrapper {
@@ -424,3 +443,10 @@ label:first-child{
     flex-direction: column;
     align-items: center;
 }
+
+/* Opgeslagen Artiesten Pagina */
+.sort{
+    font-size: 1em;
+    margin-left: 20px;
+}
+
