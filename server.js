@@ -295,6 +295,24 @@ app.get("/uitloggen", (req, res) => {
 });
 
 
+
+
+//*******  VRAGEN EN KEUZE OPSLAAN ********
+app.post("/populariteit-kiezen", (req, res) => {
+  let populariteit = req.body.populariteit; // slider value ophalen
+
+  req.session.user = {
+    valuePopulariteit: populariteit
+  };
+
+  console.log("Saved popularity value:", populariteit);
+
+  res.render("pages/tuneder"); //render tuneder pagina
+});
+
+
+
+
 // ******** SPOTIFY API **********
 
 //cors gebruiken om frontend requests naar de backend mogelijk te maken

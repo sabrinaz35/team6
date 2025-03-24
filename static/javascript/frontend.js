@@ -95,12 +95,15 @@ async function fetchData() {
 fetchData();
 
 
+<<<<<<< Updated upstream
 
 
 
 
 
 
+=======
+>>>>>>> Stashed changes
 
 //hart split als je op dislike clickt
 document.addEventListener("DOMContentLoaded", function () {
@@ -155,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<<<<<<< Updated upstream
 
 
 
@@ -229,6 +233,8 @@ getGenres();
 //roep de functie opnieuw aan om ander genres te krijgen
 const genreLaden = document.querySelector("#genreLaden");
 genreLaden.addEventListener('click', getGenres);
+=======
+>>>>>>> Stashed changes
 
 
 
@@ -240,12 +246,12 @@ let valueDisplay = document.getElementById('value')
 let rangeSlider = document.getElementById('rangeSlider')
 
 //zorgt ervoor dat de initiële waarde wordt weergegeven
-valueDisplay.innerHTML = rangeSlider.value;
+valueDisplay.textContent = rangeSlider.value;
 
 //update de waarde wanneer de slider beweegt
-rangeSlider.addEventListener('input', function () {
-    console.log("Slider moved! New value: ", rangeSlider.value);
-    valueDisplay.innerHTML = rangeSlider.value;
+rangeSlider.addEventListener('input', function (event) {
+    console.log("Slider moved! New value: ", event.target.value);
+    valueDisplay.textContent = event.target.value;
 });
 
 
