@@ -208,6 +208,22 @@ async function artiestZoeken(){
     console.log("sliderPopulariteit buiten functie", sliderPopulariteit)
 
 
+    let geselecteerdeGenres;
+    //genres ophalen uit de backend als API call
+    async function fetchGenres() {
+      try {
+        const response = await fetch("/api/genres");
+        const data = await response.json();
+        geselecteerdeGenres = data.selectedGenres;
+        console.log("geselecteerde Genres:", geselecteerdeGenres);
+      } catch (error) {
+        console.error("Error fetching popularity:", error);
+      }
+    }
+
+    await fetchGenres();
+
+
     //data van genres uit ejs halen, kijken welke gecheckt zijn en die in een array zetten
     // const selectedGenres = [];
     // if (document.getElementById("genre1").checked) selectedGenres.push(document.getElementById("genre1").value);

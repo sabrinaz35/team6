@@ -298,22 +298,59 @@ app.get("/uitloggen", (req, res) => {
 
 
 //*******  VRAGEN EN KEUZE OPSLAAN ********
+//populariteitswaarde opslaan
+
+// populariteit opslaan
 app.post("/populariteit-kiezen", (req, res) => {
   let populariteit = req.body.populariteit; // slider value ophalen
 
-  req.session.user = {
-    valuePopulariteit: populariteit
-  };
+  // data mergen
+  req.session.user = req.session.user || {};  
+  req.session.user.valuePopulariteit = populariteit;
 
   console.log("Saved popularity value:", populariteit);
 
-  res.render("pages/tuneder"); //render tuneder pagina
+  res.render("pages/tuneder"); // render tuneder pagina
 });
+
+
 
 app.get("/api/populariteit", (req, res) => {
   res.json({ valuePopulariteit: req.session.user});
 });
 
+
+
+//gekozen genres opslaan
+
+app.post("/genre-kiezen", (req, res) => {
+  // alle genres ophalen en lege array als geen genres geselecteerd zijn
+  let selectedGenres = req.body.genre || []; 
+
+  // nieuwe data mergen aan session die al bestaat
+  req.session.user = req.session.user || {};  //checken of een req.session.user bestaat
+  req.session.user.selectedGenres = selectedGenres;
+
+  console.log("Saved genres:", selectedGenres);
+
+  // Render the next page
+  res.render("pages/filter-populariteit");
+});
+
+
+
+app.get("/api/genres", (req, res) => {
+  console.log("Session data:", req.session)
+  if (req.session.user && req.session.user.selectedGenres) {
+
+    console.log("Genres uit session:", req.session.user.selectedGenres);
+    res.json({ selectedGenres: req.session.user.selectedGenres });
+  } else {
+    //geen genres selected, dan return lege array
+    console.log("Geen genres gevonden in session");
+    res.json({ selectedGenres: [] });
+  }
+});
 
 
 
