@@ -310,6 +310,10 @@ app.post("/populariteit-kiezen", (req, res) => {
   res.render("pages/tuneder"); //render tuneder pagina
 });
 
+app.get("/api/populariteit", (req, res) => {
+  res.json({ valuePopulariteit: req.session.user});
+});
+
 
 
 

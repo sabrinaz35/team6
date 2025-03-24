@@ -22,6 +22,7 @@ function getRandomSearch() {
 }
 
 
+
 // artist data van spotify opvragen en naar de artist spotlight op de homepagina overzetten
 async function fetchData() {
   console.log('Fetching data')
@@ -41,6 +42,7 @@ async function fetchData() {
     const data = await response.json();
     console.log("Full artist data:", data.artists.items);
 
+  
     
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
@@ -95,15 +97,7 @@ async function fetchData() {
 fetchData();
 
 
-<<<<<<< Updated upstream
 
-
-
-
-
-
-=======
->>>>>>> Stashed changes
 
 //hart split als je op dislike clickt
 document.addEventListener("DOMContentLoaded", function () {
@@ -158,101 +152,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<<<<<<< Updated upstream
 
 
 
 
 
-//random genres genereren uit spotify API en deze naar de filter-genre pagina overzetten
-
-async function getGenres () {
-  console.log("probeer genres op te halen")
-  try{
-    // Access token opvragen voordat de data opgevraagd wordt
-    const accessToken = await getAccessToken(); 
-    //krijg een random array aan artiesten met een random begin letter
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken
-      }
-    });
-
-    
-    console.log("Spotify API response status:", response.status); // Debugging
-    //alle artiesten data loggen
-    const data = await response.json();
-
-    const filteredGenres = data.artists.items
-    .filter(artist => artist.genres.length > 0) // filter alle genre arrays die leeg zijn
-    .flatMap(artist => artist.genres); // laat alle genres in een grote array zien 
-  
-    console.log("Genres:", filteredGenres); 
-
-    
-    const randomGenres = [];
-    let i = 0;
-
-    while (i < 4) {
-      const random = Math.floor(Math.random() * filteredGenres.length);
-      
-      if (!randomGenres.includes(filteredGenres[random])) {
-        randomGenres.push(filteredGenres[random]);
-        i++;
-      }
-    }
-
-    console.log("Random genres:", randomGenres);
-   
-    //random genres aangeven op de genre filter pagina
-    document.getElementById('genre1Label').innerText = randomGenres[0];
-    document.getElementById('genre2Label').innerText = randomGenres[1];
-    document.getElementById('genre3Label').innerText = randomGenres[2];
-    document.getElementById('genre4Label').innerText = randomGenres[3];
-
-    //Gegevens ook meegeven aan de input voor de mongodb database
-    document.getElementById("genre1").value = randomGenres[0];
-    document.getElementById("genre2").value = randomGenres[1]; 
-    document.getElementById("genre3").value = randomGenres[2];
-    document.getElementById("genre4").value = randomGenres[3];
-
-    //uncheck de checkboxes bij het opnieuw laden
-    document.getElementById("genre1").checked = false;
-    document.getElementById("genre2").checked = false; 
-    document.getElementById("genre3").checked = false;
-    document.getElementById("genre4").checked = false;
-
-  } catch {
-    console.error('Error fetching genres:', error);
-  }
-}
-
-//roep de getGenres functie aan om een eerste keuze aan genres te krijgen als je de pagina opent
-getGenres();
-
-//roep de functie opnieuw aan om ander genres te krijgen
-const genreLaden = document.querySelector("#genreLaden");
-genreLaden.addEventListener('click', getGenres);
-=======
->>>>>>> Stashed changes
-
-
-
-
-//functie om de value van de populariteits slider zichtbaar te maken
-
-//maak een variabel aan voor de value display en de slider
-let valueDisplay = document.getElementById('value')
-let rangeSlider = document.getElementById('rangeSlider')
-
-//zorgt ervoor dat de initiële waarde wordt weergegeven
-valueDisplay.textContent = rangeSlider.value;
-
-//update de waarde wanneer de slider beweegt
-rangeSlider.addEventListener('input', function (event) {
-    console.log("Slider moved! New value: ", event.target.value);
-    valueDisplay.textContent = event.target.value;
-});
 
 
 
@@ -264,9 +168,9 @@ rangeSlider.addEventListener('input', function (event) {
 async function artiestZoeken(){
   try{
     console.log("probeer artiest te zoeken")
-    //Spotify data opvragen
+   // Spotify data opvragen
 
-    // Access token opvragen voordat de data opgevraagd wordt
+    //Access token opvragen voordat de data opgevraagd wordt
     const accessToken = await getAccessToken(); 
     //krijg een random array aan artiesten met een random begin letter
     const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
@@ -278,18 +182,63 @@ async function artiestZoeken(){
     console.log("Spotify API response status:", response.status); // Debugging
     //alle artiesten data loggen
     const data = await response.json();
-    console.log("Full artist data:", data.artists.items);
 
+    if (!data) {
+      console.log("Geen artiest gevonden.");
+    }
+
+  
+    //populariteit ophalen uit de backend als API call
+    let sliderPopulariteit; 
+
+    async function fetchPopulariteit() {
+      try {
+        const response = await fetch("/api/populariteit");
+        const data = await response.json();
+        sliderPopulariteit = parseInt(data.valuePopulariteit.valuePopulariteit);
+        console.log("Session Popularity Value:", sliderPopulariteit);
+      } catch (error) {
+        console.error("Error fetching popularity:", error);
+      }
+    }
+
+    await fetchPopulariteit();
+
+    console.log("type:",typeof sliderPopulariteit)
+    console.log("sliderPopulariteit buiten functie", sliderPopulariteit)
 
 
     //data van genres uit ejs halen, kijken welke gecheckt zijn en die in een array zetten
-    const selectedGenres = [];
-    if (document.getElementById("genre1").checked) selectedGenres.push(document.getElementById("genre1").value);
-    if (document.getElementById("genre2").checked) selectedGenres.push(document.getElementById("genre2").value);
-    if (document.getElementById("genre3").checked) selectedGenres.push(document.getElementById("genre3").value);
-    if (document.getElementById("genre4").checked) selectedGenres.push(document.getElementById("genre4").value);
+    // const selectedGenres = [];
+    // if (document.getElementById("genre1").checked) selectedGenres.push(document.getElementById("genre1").value);
+    // if (document.getElementById("genre2").checked) selectedGenres.push(document.getElementById("genre2").value);
+    // if (document.getElementById("genre3").checked) selectedGenres.push(document.getElementById("genre3").value);
+    // if (document.getElementById("genre4").checked) selectedGenres.push(document.getElementById("genre4").value);
 
-    console.log("geselecteerde genres:", selectedGenres)
+    // console.log("geselecteerde genres:", selectedGenres)
+
+
+
+
+    //artiesten filteren op populariteit
+    let gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10);
+
+    console.log("alle gevondenArtiesten:", gevondenArtiesten)
+
+    //kies één random artiest uit de array van gevonden artiesten
+    const random = Math.floor(Math.random() * gevondenArtiesten.length);
+    let gevondenArtiest = gevondenArtiesten[random];
+
+    //log ge
+    console.log("gevondenArtiest:", gevondenArtiest)
+
+  
+    //source van de iframe te vervangen naar de top tracks van de gevonden artiest
+    let artiestID = gevondenArtiest.id;
+    document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`
+
+
+    
 
 
     //data van populariteitsvraag uit ejs halen
@@ -298,16 +247,7 @@ async function artiestZoeken(){
 
 
     // artiesten filteren op basis van geselecteerd genre
-    const gevondenArtiest = data.artists.items.find(artist => selectedGenres.some(genre => artist.genres.includes(genre)));
-
-    if (!gevondenArtiest) {
-      console.log("Geen artiest gevonden.");
-    }
-
-
-    //source van de iframe te vervangen naar de top tracks van de gevonden artiest
-    let artiestID = gevondenArtiest.id;
-    document.getElementById("gevondenArtiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`
+    // const gevondenArtiest = data.artists.items.find(artist => selectedGenres.some(genre => artist.genres.includes(genre)));
 
   } catch (error) {
     console.error("error fetching artist source", error)
