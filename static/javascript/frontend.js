@@ -95,44 +95,10 @@ async function fetchData() {
 fetchData();
 
 
-//deze functie gebruiken om de artiest op basis van de zoekcriteria te vinden
-// async function artiestZoeken(){
-//   try{
-//     //Spotify data opvragen
-
-//     // Access token opvragen voordat de data opgevraagd wordt
-//     const accessToken = await getAccessToken(); 
-//     //krijg een random array aan artiesten met een random begin letter
-//     const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
-//       headers: {
-//         Authorization: 'Bearer ' + accessToken
-//       }
-//     });
-
-//     console.log("Spotify API response status:", response.status); // Debugging
-//     //alle artiesten data loggen
-//     const data = await response.json();
-//     console.log("Full artist data:", data.artists.items);
 
 
-//     //data van populariteitsvraag uit ejs halen
-//     let populariteitLaag =
-//     let populariteitHoog =
-
-//     //data van genres uit ejs halen
-//     let genresFilter = 
-
-//     let gevondenArtiest = data.artists.items.filter(artist => artist.popularity > populariteitLaag && artist.popularity < populariteitHoog && artist.genres.includes(genresFilter));
 
 
-//     //source van de iframe te vervangen naar de top tracks van de gevonden artiest
-//     let artiestID = gevondenArtiest.id;
-//     document.getElementById("gevondenArtiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`
-
-//   } catch (error) {
-//     console.error("error fetching artist source")
-//   }
-// }
 
 
 
@@ -152,6 +118,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const heartContainer = document.querySelector(".heart-container");
   heartContainer.addEventListener('click', splitHeart);
 });
+
+
+
+
+
+
+
 
 // Hieronder komt de code voor het sorteren en filteren in opgeslagen artiesten
 // Wacht totdat de DOM volledig is geladen
@@ -178,6 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
       favorietenLijst.sort('naam', { order: 'asc' });
   });
 });
+
+
+
+
+
 
 
 
@@ -254,6 +232,7 @@ genreLaden.addEventListener('click', getGenres);
 
 
 
+
 //functie om de value van de populariteits slider zichtbaar te maken
 
 //maak een variabel aan voor de value display en de slider
@@ -268,6 +247,71 @@ rangeSlider.addEventListener('input', function () {
     console.log("Slider moved! New value: ", rangeSlider.value);
     valueDisplay.innerHTML = rangeSlider.value;
 });
+
+
+
+
+
+
+
+//deze functie gebruiken om de artiest op basis van de zoekcriteria te vinden
+async function artiestZoeken(){
+  try{
+    console.log("probeer artiest te zoeken")
+    //Spotify data opvragen
+
+    // Access token opvragen voordat de data opgevraagd wordt
+    const accessToken = await getAccessToken(); 
+    //krijg een random array aan artiesten met een random begin letter
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    });
+
+    console.log("Spotify API response status:", response.status); // Debugging
+    //alle artiesten data loggen
+    const data = await response.json();
+    console.log("Full artist data:", data.artists.items);
+
+
+
+    //data van genres uit ejs halen, kijken welke gecheckt zijn en die in een array zetten
+    const selectedGenres = [];
+    if (document.getElementById("genre1").checked) selectedGenres.push(document.getElementById("genre1").value);
+    if (document.getElementById("genre2").checked) selectedGenres.push(document.getElementById("genre2").value);
+    if (document.getElementById("genre3").checked) selectedGenres.push(document.getElementById("genre3").value);
+    if (document.getElementById("genre4").checked) selectedGenres.push(document.getElementById("genre4").value);
+
+    console.log("geselecteerde genres:", selectedGenres)
+
+
+    //data van populariteitsvraag uit ejs halen
+    //let populariteit =
+    //let gevondenArtiest = data.artists.items.filter(artist => artist.popularity > populariteitLaag && artist.popularity < populariteitHoog && artist.genres.includes(genresFilter));
+
+
+    // artiesten filteren op basis van geselecteerd genre
+    const gevondenArtiest = data.artists.items.find(artist => selectedGenres.some(genre => artist.genres.includes(genre)));
+
+    if (!gevondenArtiest) {
+      console.log("Geen artiest gevonden.");
+    }
+
+
+    //source van de iframe te vervangen naar de top tracks van de gevonden artiest
+    let artiestID = gevondenArtiest.id;
+    document.getElementById("gevondenArtiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`
+
+  } catch (error) {
+    console.error("error fetching artist source", error)
+  }
+}
+
+
+//als je op zoek artiest klikt wordt er gezocht
+const zoekArtiest = document.getElementById("zoekArtiest")
+zoekArtiest.addEventListener("click", artiestZoeken)
 
 
 

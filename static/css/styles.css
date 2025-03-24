@@ -450,3 +450,11 @@ label:first-child{
     margin-left: 20px;
 }
 
+
+/* Tuneder pagina */
+
+#artiestIframe {
+    position: absolute;
+    z-index: 1000;
+    width: 50vw;
+}
