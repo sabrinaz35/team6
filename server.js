@@ -56,6 +56,7 @@ app.use(
 
 //ejs templates opstarten
 app.set("view engine", "ejs");
+app.set("trust proxy", 1)
 
 //console log op welke poort je bent
 app.listen(port, () => {
@@ -261,10 +262,10 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
 //Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met wat in de index staat en de frontend
   const artiestData = {
     id: req.body.artistId,
-    naam: req.body.artistName,
-    genre: req.body.artistGenre,
-    volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
-    images: req.body.artistFoto
+    // naam: req.body.artistName,
+    // genre: req.body.artistGenre,
+    // volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
+    // images: req.body.artistFoto
   };
 
   const index = user.favorieten.indexOf(artiestData);
@@ -272,7 +273,7 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
   
   if (user) {
     console.log("Gebruiker gevonden:", user);
-    if (index <= 0){
+    if (index < 0){
       user.favorieten.splice(index, 1)
       await gebruiker.updateOne(
         { emailadress: req.session.user.emailadress},
