@@ -26,7 +26,7 @@ app.use("/static", express.static("static"));
 // header script
 app.use(express.static('public'));
 
-
+//APi token krijgen in de backenc
 async function getAccessToken(){
   try{
       const response = await fetch('http://localhost:4000/token');
@@ -37,6 +37,7 @@ async function getAccessToken(){
   }
 }
 
+//ApI aanspreken in de backend
 async function getArtist(artistId) {
   try {
     // Access token opvragen voordat de data opgevraagd wordt
@@ -304,16 +305,15 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
   const query = { emailadress: req.session.user.emailadress };
   const user = await gebruiker.findOne(query)
 
-//Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met wat in de index staat en de frontend
+//Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met de api
   const artiestData = req.body.artistId
-
   const index = user.favorieten.indexOf(artiestData);
-  // const index = user.favorieten.findIndex(artiest => artiest.id === artiestData.id);
 
   console.log (index)
   
   if (user) {
     console.log("Gebruiker gevonden:", user);
+    //Als de gebruiker bestaat en de index is afwezig, dan moet hij die eruit halen.
     if (index >= 0){
       user.favorieten.splice(index, 1)
       await gebruiker.updateOne(
@@ -322,6 +322,7 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
         { $set: { favorieten: user.favorieten}})
       console.log("Artiest is verwijdert uit favorieten") 
     } else {
+          //Als de gebruiker bestaat en de index is aanwezig, dan moet hij die toevoegen
       await gebruiker.updateOne(
         { emailadress: req.session.user.emailadress},
         //Uiteindelijk alle artiestendata doorsturen naar database
@@ -336,19 +337,6 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
   res.redirect("/") 
 });
 
-
-//     if (!artiestData){
-//       await gebruiker.updateOne(
-//         { emailadress: req.session.user.emailadress},
-//         //Uiteindelijk alle artiestendata doorsturen naar database
-//         { $push: { favorieten:  artiestData } }
-//       );
-//     } else {
-//       await gebruiker.updateOne(
-//         { emailadress: req.session.user.emailadress},
-//         //Uiteindelijk alle artiestendata uit data base halen
-//         { $:pull { favorieten:  artiestData } }
-// )}
 
 
 // ******** uitloggen **********
@@ -413,18 +401,18 @@ app.get("/token", (req, res) => {
 //moet onder routes staan dus niet verschuiven!
 
 // error 404 handling
-app.use((err, req, res) => {
-  // console log voor error 404
-  console.error("404 error at URL: " + req.url);
-  // 404 status code als HTTP response sturen
-  res.status(404).send("404 error at URL: " + req.url);
-});
+// app.use((err, req, res) => {
+//   // console log voor error 404
+//   console.error("404 error at URL: " + req.url);
+//   // 404 status code als HTTP response sturen
+//   res.status(404).send("404 error at URL: " + req.url);
+// });
 
-// // error 500 handling
-app.use((err, req, res) => {
-  // console log voor error 500
-  console.error(err.stack);
-  // 500 status code als HTTP response sturen
-  res.status(500).send("500: server error");
-});
+// // // error 500 handling
+// app.use((err, req, res) => {
+//   // console log voor error 500
+//   console.error(err.stack);
+//   // 500 status code als HTTP response sturen
+//   res.status(500).send("500: server error");
+// });
 
