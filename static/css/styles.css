@@ -458,3 +458,10 @@ label:first-child{
     z-index: 1000;
     width: 50vw;
 }
+
+/* Dialog styling */
+
+#errorDialog{
+    position: absolute;
+    z-index: 1001;
+}
