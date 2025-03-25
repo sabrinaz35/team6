@@ -20,7 +20,7 @@
             <% if (user && artiesten.length > 0) { %>
                 <% artiesten.forEach(artiest => { %>
                   <div class="grid-item">
-                    <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
+                    <img src="<%= artiest.images[0].url%>" alt="Foto van <%= artiest.name %>">
                     <h3><%= artiest.name %></h3>
                     <p>Genre: <%= artiest.genre %></p>
                     <p>popularity: <%= artiest.popularity %></p>
