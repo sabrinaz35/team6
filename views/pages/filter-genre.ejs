@@ -11,7 +11,8 @@
 <main class="genreFilter">
 <!-- Code -->
   <h1>Kies je favouriete genres!</h1>
-  <form action="/filter-populariteit" method="GET">
+  <form action="/genre-kiezen" method="POST">
+    
     <div class="genres">
       <div>
         <label id="genre1Label" for="genre1"></label>
@@ -36,14 +37,15 @@
     </div>
     
     <div class="buttons">
-      <button id="genreLaden">Laad nieuwe genres</button>
-
       <button type="submit">Volgende Vraag</button> 
     </div>
   </form>
+
+  <button id="genreLaden">Laad nieuwe genres</button>
 </main>
 <footer>
   <%- include('../partials/footer'); %>
 </footer>
 <%- include('../partials/script'); %>
+<script src="/static/javascript/genre-filteren.js"></script>
 </body>
