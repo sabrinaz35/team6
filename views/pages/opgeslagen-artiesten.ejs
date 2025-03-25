@@ -16,17 +16,14 @@
             <h3>Mijn Opgeslagen Artiesten</h3>
           <section class="account-opgeslagen-artiest-grid">
 
-            
-            <%= artiesten[0].name %>
 
-<!-- DIt invullen met de variabelen -->
             <% if (user && artiesten.length > 0) { %>
                 <% artiesten.forEach(artiest => { %>
                   <div class="grid-item">
-                    <img src="<%= artiesten.images %>" alt="Foto van <%= artiesten.name %>">
-                    <h3><%= artiesten.name %></h3>
-                    <p>Genre: <%= artiesten.genre %></p>
-                    <p>popularity: <%= artiesten.popularity %></p>
+                    <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
+                    <h3><%= artiest.name %></h3>
+                    <p>Genre: <%= artiest.genre %></p>
+                    <p>popularity: <%= artiest.popularity %></p>
                   </div>
                 <% }) %>
               <% } else { %>
