@@ -60,6 +60,9 @@ async function artiestZoeken() {
     
         // Probeer maximaal 8 keer een artiest te vinden
         for (let i = 0; i < 8; i++) {
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.remove("hide");
+
             console.log(`Zoekpoging ${i + 1}...`);
     
             // Nieuwe artiesten ophalen met een willekeurige zoekletter
@@ -85,6 +88,10 @@ async function artiestZoeken() {
         }
     
         if (!gevondenArtiest) {
+            //loading animation stoppen
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.add("hide");
+
             console.error("Geen geschikte artiest gevonden na 5 pogingen.");
             //verbergen van Iframe als er geen artiest gevonden wordt
             document.getElementById("artiestIframe").style.display = 'none';
@@ -100,6 +107,9 @@ async function artiestZoeken() {
     
             return;
         } else {
+            //loading animation stoppen
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.add("hide");document.getElementById("loading").addClass('hide');
             // Zet de artiest in de iframe
             let artiestID = gevondenArtiest.id;
             document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
