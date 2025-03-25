@@ -26,6 +26,43 @@ app.use("/static", express.static("static"));
 // header script
 app.use(express.static('public'));
 
+//APi token krijgen in de backenc
+async function getAccessToken(){
+  try{
+      const response = await fetch('http://localhost:4000/token');
+      const data = await response.json();
+      return data.access_token;
+  } catch(error){
+      console.error("Token not fetched", error)
+  }
+}
+
+//ApI aanspreken in de backend
+async function getArtist(artistId) {
+  try {
+    // Access token opvragen voordat de data opgevraagd wordt
+    const accessToken = await getAccessToken(); 
+
+    //krijg een random array aan artiesten met een random begin letter
+    const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }}); 
+
+      console.log("Spotify API response status:", response.status)// Debugging
+      //alle artiesten data loggen
+      const data = await response.json();
+      // console.log("Artist data:", data.artistsId.items)
+      console.log(data.name)
+      return data
+
+
+  } catch (error) {
+      console.error('Error fetching data:', error);
+  }
+  
+}
+
 
 //Activeren van de helmet module EN alle bronnen van ander websites worden toegestaan
 app.use(
@@ -56,6 +93,7 @@ app.use(
 
 //ejs templates opstarten
 app.set("view engine", "ejs");
+app.set("trust proxy", 1)
 
 //console log op welke poort je bent
 app.listen(port, () => {
@@ -137,14 +175,22 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
 
     //const aanmaken om een hash te creëren voor het wachtwoord
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  
+
+    let filename 
+
+  if (req.file && req.file.filename) {
+    filename = req.file.filename
+  } else {
+    filename = "profiel-placeholder.png" //een afbeelding toevoegen..
+  }
+
     //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
     const doc = { 
         name: xss(req.body.name),            
         emailadress: xss(req.body.email), 
         //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
         password: hashedPassword,
-        profielFoto: (req.file.filename),
+        profielFoto: (filename),
         //alvast een lege array ter voorbereiding 
         favorieten: [ ], 
       }
@@ -165,7 +211,7 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
             console.log("Gebruiker is gevonden na het toevoegen");
           }
           //de gebruiker in een session zetten
-          req.session.user = newUser
+          req.session.user = newUser 
 
           //Na het aanmaken van de session meteen doorsturen naar profiel pagina met daarin de gegevens van de gebruiker
           res.redirect("/profiel");
@@ -227,6 +273,8 @@ app.get("/profiel", (req, res) => {
 //**********artiesten opslaan in mongodb**********
 //ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
 app.get("/opgeslagen-artiesten", async (req, res) => {
+  let artiesten = []
+
   if (!req.session.user) {
     return res.redirect("/profiel");
   }
@@ -240,13 +288,21 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
 
   if (user) {
     console.log("gebruiker gevonden");
+
+    // fetch data van api
+    for (const favoriet of user.favorieten) {
+      const artiest = await getArtist(favoriet)
+      artiesten.push(artiest)
+    }
+
     // return res.status(404).send("Gebruiker gevonden");
-    res.render("pages/opgeslagen-artiesten", { user}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+    res.render("pages/opgeslagen-artiesten", { user, artiesten}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
   } else {
     res.send("Gebruiker is niet gevonden :(")
   }
 
 });
+
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
@@ -257,29 +313,38 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
   const query = { emailadress: req.session.user.emailadress };
   const user = await gebruiker.findOne(query)
 
-//Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met wat in de index staat en de frontend
-  const artiestData = {
-    id: req.body.artistId,
-    naam: req.body.artistName,
-    genre: req.body.artistGenre,
-    volgers: parseInt(req.body.artistFollowers), // Zorg dat dit een getal is
-    images: req.body.artistFoto
-  };
+//Een object met daarin alle info wat naar de mongodb gestuurd moet worden, dit komt overeen met de api
+  const artiestData = req.body.artistId
+  const index = user.favorieten.indexOf(artiestData);
+
+  console.log (index)
   
   if (user) {
     console.log("Gebruiker gevonden:", user);
-    await gebruiker.updateOne(
-      { emailadress: req.session.user.emailadress},
-      //Uiteindelijk alle artiestendata doorsturen naar database
-      { $push: { favorieten:  artiestData } }
-    );
-    console.log(user)
+    //Als de gebruiker bestaat en de index is afwezig, dan moet hij die eruit halen.
+    if (index >= 0){
+      user.favorieten.splice(index, 1)
+      await gebruiker.updateOne(
+        { emailadress: req.session.user.emailadress},
+        //Uiteindelijk alle artiestendata doorsturen naar database
+        { $set: { favorieten: user.favorieten}})
+      console.log("Artiest is verwijdert uit favorieten") 
+    } else {
+          //Als de gebruiker bestaat en de index is aanwezig, dan moet hij die toevoegen
+      await gebruiker.updateOne(
+        { emailadress: req.session.user.emailadress},
+        //Uiteindelijk alle artiestendata doorsturen naar database
+        { $push: { favorieten:  artiestData } },
+        console.log("Artiest is toegevoegd")
+      );
+    }
   } else {
     console.log('of niet')
     return res.status(404).send("Gebruiker niet gevonden");
   }
   res.redirect("/") 
 });
+
 
 
 // ******** uitloggen **********

@@ -401,7 +401,6 @@ label:first-child{
     transform: translateX(100px); /* Verplaats de rechterhelft naar rechts */
 }
 
-
 /* Code voor de slider op de filter populariteit pagina */
 .filter-populariteit form{
     display: flex;
@@ -487,3 +486,8 @@ label:first-child{
 .hide{
     display: none;
 }
+
+/* like button op de index page  */
+/* #likebutton.roodHart {
+ fill: #ff0000;
+} */
