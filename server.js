@@ -158,6 +158,14 @@ app.get("/contact", (req, res) => {
   res.render("pages/contact"); // Zorg ervoor dat je een contact.ejs bestand hebt
 });
 
+app.get("/filter-populariteit", function (req, res) {
+  res.render("pages/filter-populariteit");
+});
+
+app.get("/filter-genre", function (req, res) {
+  res.render("pages/filter-genre");
+});
+
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
@@ -352,6 +360,65 @@ app.get("/uitloggen", (req, res) => {
 });
 
 
+
+
+//*******  VRAGEN EN KEUZE OPSLAAN ********
+//populariteitswaarde opslaan
+
+// populariteit opslaan
+app.post("/populariteit-kiezen", (req, res) => {
+  let populariteit = req.body.populariteit; // slider value ophalen
+
+  // data mergen
+  req.session.user = req.session.user || {};  
+  req.session.user.valuePopulariteit = populariteit;
+
+  console.log("Saved popularity value:", populariteit);
+
+  res.render("pages/tuneder"); // render tuneder pagina
+});
+
+
+
+app.get("/api/populariteit", (req, res) => {
+  res.json({ valuePopulariteit: req.session.user});
+});
+
+
+
+//gekozen genres opslaan
+
+app.post("/genre-kiezen", (req, res) => {
+  // alle genres ophalen en lege array als geen genres geselecteerd zijn
+  let selectedGenres = req.body.genre || []; 
+
+  // nieuwe data mergen aan session die al bestaat
+  req.session.user = req.session.user || {};  //checken of een req.session.user bestaat
+  req.session.user.selectedGenres = selectedGenres;
+
+  console.log("Saved genres:", selectedGenres);
+
+  // Render the next page
+  res.render("pages/filter-populariteit");
+});
+
+
+
+app.get("/api/genres", (req, res) => {
+  console.log("Session data:", req.session)
+  if (req.session.user && req.session.user.selectedGenres) {
+
+    console.log("Genres uit session:", req.session.user.selectedGenres);
+    res.json({ selectedGenres: req.session.user.selectedGenres });
+  } else {
+    //geen genres selected, dan return lege array
+    console.log("Geen genres gevonden in session");
+    res.json({ selectedGenres: [] });
+  }
+});
+
+
+
 // ******** SPOTIFY API **********
 
 //cors gebruiken om frontend requests naar de backend mogelijk te maken
@@ -401,18 +468,22 @@ app.get("/token", (req, res) => {
 //moet onder routes staan dus niet verschuiven!
 
 // error 404 handling
-// app.use((err, req, res) => {
-//   // console log voor error 404
-//   console.error("404 error at URL: " + req.url);
-//   // 404 status code als HTTP response sturen
-//   res.status(404).send("404 error at URL: " + req.url);
-// });
+app.use((err, req, res, next) => {
+  // console log voor error 404
+  console.error("404 error at URL: " + req.url);
+  // 404 status code als HTTP response sturen
+  res.status(404).send("404 error at URL: " + req.url);
 
-// // // error 500 handling
-// app.use((err, req, res) => {
-//   // console log voor error 500
-//   console.error(err.stack);
-//   // 500 status code als HTTP response sturen
-//   res.status(500).send("500: server error");
-// });
+  next();
+});
+
+// error 500 handling
+app.use((err, req, res, next) => {
+  // console log voor error 500
+  console.error(err.stack);
+  // 500 status code als HTTP response sturen
+  res.status(500).send("500: server error");
+
+  next();
+});
 

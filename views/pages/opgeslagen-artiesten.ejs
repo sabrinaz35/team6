@@ -12,16 +12,18 @@
 </header>
 
     <main>
-        <div class="opgeslagen-artiest-column">
-            <h3>Mijn Opgeslagen Artiesten</h3>
-          <section class="account-opgeslagen-artiest-grid">
+            <h1>Mijn Opgeslagen Artiesten</h1>
+            <form action="">
+            <input type="text" class="search" placeholder="Zoek artiest...">
+            </form>
+            <button class="sort" data-sort="naam">Sorteer op naam</button>
 
-
+            <section id="favorieten" class="account-opgeslagen-artiest-grid">
             <% if (user && artiesten.length > 0) { %>
                 <% artiesten.forEach(artiest => { %>
                   <div class="grid-item">
-                    <img src="<%= artiest.images[0].url%>" alt="Foto van <%= artiest.name %>">
-                    <h3><%= artiest.name %></h3>
+                    <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
+                    <h3 class="naam"><%= artiest.name %></h3>
                     <p>Genre: <%= artiest.genre %></p>
                     <p>popularity: <%= artiest.popularity %></p>
                   </div>

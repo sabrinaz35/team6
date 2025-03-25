@@ -1,6 +1,3 @@
-
-console.log("Hallo wereld")
-
 //de access spotify access token van de backend ophalen
 async function getAccessToken(){
     try{
@@ -23,8 +20,9 @@ function getRandomSearch() {
 }
 
 
+
 // artist data van spotify opvragen en naar de artist spotlight op de homepagina overzetten
-async function fetchData() {
+async function zoekKleineArtiest() {
   console.log('Fetching data')
   try {
     // Access token opvragen voordat de data opgevraagd wordt
@@ -42,6 +40,7 @@ async function fetchData() {
     const data = await response.json();
     console.log("Full artist data:", data.artists.items);
 
+  
     
 
     //sorteer de array en check naar artiesten die populariteit =< 10 hebben
@@ -62,17 +61,26 @@ async function fetchData() {
       document.getElementById('artiestinformatie').innerText = `${eersteArtiest.name} - ${eersteArtiest.followers.total} volgers`;
       //image vervangen door foto van spotfy artiest
       document.getElementById('artiestfoto').src = `${eersteArtiest.images[0].url}`;
-      //er wordt van spotify geen beschrijving gegeven dus als er geen artiest word gevonden haal de beschrijving weg
-      document.getElementById('artiestbeschrijving').innerText = "";
+      //laat genres van de artiest zien
+      if(eersteArtiest.genres == ""){
+        document.getElementById('artiestgenres').innerText = ""
+      } else {
+        document.getElementById('artiestgenres').innerText = `${eersteArtiest.genres[0]}`;
+      }
+      
+      //laat link naar spotify zien
+      document.getElementById('artiestlink').href = `${eersteArtiest.external_urls.spotify}`;
+
+
+
 
       //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
       document.getElementById('favoInput').value=eersteArtiest.id
-      // Andere gegevens ook meegeven aan naar de mongodb database
-      // document.getElementById("artistName").innerText = eersteArtiest.name;
-      // document.getElementById("artistGenre").innerText = "Genre: " + eersteArtiest.genres.join(", ");
-      // document.getElementById("artistFollowers").innerText = "Volgers: " + eersteArtiest.followers.total;
-      // document.getElementById("artistFoto").src = eersteArtiest.images[0].url;
-
+      //Andere gegevens ook meegeven aan naar de mongodb database
+      document.getElementById("artistNameInput").value = eersteArtiest.name;
+      document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
+      document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
+      document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
       console.log(eersteArtiest.id)
     }
     
@@ -84,60 +92,4 @@ async function fetchData() {
 }
 
 // functie aanroepen
-fetchData();
-
-//hart split als je op dislike clickt
-document.addEventListener("DOMContentLoaded", function () {
-  function splitHeart() {
-      const heart = document.querySelector(".heart-container");
-      heart.classList.add("split");
-
-      // Optioneel: Reset na animatie (na 1000 ms)
-      setTimeout(() => {
-          heart.classList.remove("split");
-      }, 1000);
-  }
-
-  // Voeg de event listener toe aan de hart-container
-  const heartContainer = document.querySelector(".heart-container");
-  heartContainer.addEventListener('click', splitHeart);
-});
-
-
-// Hieronder komt de code voor het sorteren en filteren in opgeslagen artiesten
-// Wacht totdat de DOM volledig is geladen
-document.addEventListener('DOMContentLoaded', function() {
-  // Maak een nieuwe List.js instance voor de artiestenlijst
-  var opties = {
-      valueNames: ['naam'], // Dit is de naam waarop we gaan zoeken en sorteren
-      listClass: 'account-opgeslagen-artiest-grid' // Zorg ervoor dat je de juiste class gebruikt
-  };
-
-  var favorietenLijst = new List('favorieten', opties);
-
-  // Zoekfunctie
-  var zoekveld = document.querySelector('.search');
-  zoekveld.addEventListener('input', function() {
-      // Zoek op naam van de artiest
-      favorietenLijst.search(zoekveld.value);
-  });
-
-  // Sorteerfunctie
-  var sorteerknop = document.querySelector('.sort');
-  sorteerknop.addEventListener('click', function() {
-      // Sorteer de lijst op naam
-      favorietenLijst.sort('naam', { order: 'asc' });
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
-
+zoekKleineArtiest();
