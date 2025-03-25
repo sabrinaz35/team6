@@ -83,6 +83,13 @@ async function artiestZoeken() {
             const random = Math.floor(Math.random() * gevondenArtiesten.length);
             gevondenArtiest = gevondenArtiesten[random];
             console.log("Gevonden artiest:", gevondenArtiest);
+
+            //loading animation stoppen
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.add("hide");
+            // Zet de artiest in de iframe
+            let artiestID = gevondenArtiest.id;
+            document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
             break; // Stop de loop als een artiest is gevonden
             }
         }
@@ -106,14 +113,7 @@ async function artiestZoeken() {
             });
     
             return;
-        } else {
-            //loading animation stoppen
-            let loadingAnimation = document.getElementById("loading");
-            loadingAnimation.classList.add("hide");
-            // Zet de artiest in de iframe
-            let artiestID = gevondenArtiest.id;
-            document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
-        }
+        } 
     
         
         
