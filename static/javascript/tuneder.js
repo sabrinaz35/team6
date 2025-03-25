@@ -109,7 +109,7 @@ async function artiestZoeken() {
         } else {
             //loading animation stoppen
             let loadingAnimation = document.getElementById("loading");
-            loadingAnimation.classList.add("hide");document.getElementById("loading").addClass('hide');
+            loadingAnimation.classList.add("hide");
             // Zet de artiest in de iframe
             let artiestID = gevondenArtiest.id;
             document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
