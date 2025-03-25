@@ -66,11 +66,12 @@ async function fetchData() {
 
       //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
       document.getElementById('favoInput').value=eersteArtiest.id
-      //Andere gegevens ook meegeven aan naar de mongodb database
-      document.getElementById("artistNameInput").value = eersteArtiest.name;
-      document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
-      document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
-      document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
+      // Andere gegevens ook meegeven aan naar de mongodb database
+      // document.getElementById("artistName").innerText = eersteArtiest.name;
+      // document.getElementById("artistGenre").innerText = "Genre: " + eersteArtiest.genres.join(", ");
+      // document.getElementById("artistFollowers").innerText = "Volgers: " + eersteArtiest.followers.total;
+      // document.getElementById("artistFoto").src = eersteArtiest.images[0].url;
+
       console.log(eersteArtiest.id)
     }
     
