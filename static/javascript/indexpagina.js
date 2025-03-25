@@ -22,7 +22,7 @@ function getRandomSearch() {
 
 
 // artist data van spotify opvragen en naar de artist spotlight op de homepagina overzetten
-async function fetchData() {
+async function zoekKleineArtiest() {
   console.log('Fetching data')
   try {
     // Access token opvragen voordat de data opgevraagd wordt
@@ -92,4 +92,4 @@ async function fetchData() {
 }
 
 // functie aanroepen
-fetchData();
+zoekKleineArtiest();
