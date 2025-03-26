@@ -479,7 +479,7 @@ app.use((err, req, res, next) => {
   console.error("404 error at URL: " + req.url);
   // 404 status code als HTTP response sturen
   res.status(404).send("404 error at URL: " + req.url);
-
+  
   next();
 });
 
