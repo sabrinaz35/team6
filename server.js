@@ -276,7 +276,7 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
   let artiesten = []
 
   if (!req.session.user) {
-    return res.redirect("/profiel");
+    return res.redirect("/inlog");
   }
  
   const database = client.db("klanten");
@@ -298,7 +298,8 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
     // return res.status(404).send("Gebruiker gevonden");
     res.render("pages/opgeslagen-artiesten", { user, artiesten}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
   } else {
-    res.send("Gebruiker is niet gevonden :(")
+    res.send("Gebruiker is niet gevonden")
+    res.render("pages/inlog");
   }
 
 });
@@ -307,6 +308,10 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
 app.post("/opgeslagen-artiesten",async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/inlog"); // Voorkomt fout als er geen sessie is
+  }
+ 
   const database = client.db("klanten")
   const gebruiker = database.collection("user")
 
@@ -339,8 +344,9 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
       );
     }
   } else {
-    console.log('of niet')
-    return res.status(404).send("Gebruiker niet gevonden");
+    // console.log('of niet')
+    // return res.status(404).send("Gebruiker niet gevonden");
+    res.render("pages/inlog");
   }
   res.redirect("/") 
 });
