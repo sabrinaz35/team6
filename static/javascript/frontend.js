@@ -131,6 +131,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Like hartje index en opgeslagen pagina 
+//dit klopt nog niet helamaal oops
+let witHart = document.getElementsByClassName('likeHartje')
+
+witHart.onclick = veranderKleur;
+
+function veranderKleur (){
+
+ witHart.classList.toggle ("roodHart");
+}
+
+
+
+
+
 
 
 
