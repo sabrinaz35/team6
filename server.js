@@ -56,13 +56,11 @@ async function getArtist(artistId) {
       console.log(data.name)
       return data
 
-
   } catch (error) {
       console.error('Error fetching data:', error);
   }
   
 }
-
 
 //Activeren van de helmet module EN alle bronnen van ander websites worden toegestaan
 app.use(
@@ -273,6 +271,7 @@ app.get("/profiel", (req, res) => {
 //**********artiesten opslaan in mongodb**********
 //ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
 app.get("/opgeslagen-artiesten", async (req, res) => {
+ 
   let artiesten = []
 
   if (!req.session.user) {
@@ -296,9 +295,9 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
     }
 
     // return res.status(404).send("Gebruiker gevonden");
-    res.render("pages/opgeslagen-artiesten", { user, artiesten}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+    return res.render("/opgeslagen-artiesten", { user, artiesten}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
   } else {
-    res.send("Gebruiker is niet gevonden")
+    // res.send("Gebruiker is niet gevonden")
     res.render("pages/inlog");
   }
 
@@ -308,6 +307,7 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
 app.post("/opgeslagen-artiesten",async (req, res) => {
+ console.log("Ontvangen artiest ID:", req.body.artistId); 
   if (!req.session.user) {
     return res.redirect("/inlog"); // Voorkomt fout als er geen sessie is
   }
