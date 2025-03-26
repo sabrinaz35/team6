@@ -1,9 +1,9 @@
 # Little artist machine
 Welkom wat leuk dat je dit project bekijkt.
 
-[Wat is/doet de little artist machine? Wat kan je ermee?]
+Dit is The little artist machine een interactieve website waarbij je nieuw kleine artiesten kan ontdekken. 
 
-Je begint bij het startscherm en daar word je geleidt door een aantal vragen om de kunnen filteren tussen de verschillende schermen. Uiteindelijk kon je op een pagina terecht waar je als een soort tinder idee door de artiesten heen kan swipen en zo op kan slaan in je account. Daarbij kan je een snippet beluisteren van een van de bekendste nummers van de artiest en vind je zo nieuwe kleine artiesten. 
+Je begint bij het startscherm en daar word je geleidt door een aantal vragen om de kunnen filteren tussen de verschillende schermen. Uiteindelijk kon je op een pagina terecht waar je als een soort tinder idee door de artiesten heen kan swipen en zo op kan slaan in je account. Daarbij kan je een snippet beluisteren van een van de bekendste nummers van de artiest en vind je zo nieuwe kleine artiesten. Ondertussen kan je ook de genres aanpassen, om zo een kijkje te krijgen van het aanbod in andere genres. 
 
 # Stappenplan installeren
 
