@@ -17,8 +17,11 @@ Start de terminal en geef het command npm init, hierbij installeer je al de beno
 Maak een .env bestand aan en voeg dit bij je git ignore
 
 ### Stap 3.1: 
-Maak een account aan in mongodb en zet de corresponderende link in je .env bestand onder de DB_HOST en voeg alle andere gegevens ook in, zie hieronder de lijst met benodigde gegevens.
+Maak een account aan in MongoDB en zet de corresponderende link in je .env bestand onder de DB_HOST en voeg alle andere gegevens ook in, zie hieronder de lijst met benodigde gegevens.
+Via de volgende link komt u op de MongoDB website.
+https://www.mongodb.com/  
 
+De volgende gegevens die je krijgt en in moet vullen zijn allemaal van belang om uiteindelijk in te kunnen loggen en artiesten te kunnen opslaan in de website.
 DB_HOST= 
 
 DB_NAME=
@@ -30,14 +33,20 @@ DB_PASSWORD=
 DB_COLLECTION=
 
 ### Stap 3.2: 
-Voeg ook een SECRET_SESSION= aan met een zelf bedachte wachtwoord.
+Voeg ook een SECRET_SESSION= aan met een zelf bedachte wachtwoord. Dit heb je nodig om uiteindelijk de sessions van de gebruiker bij te kunnen houden.
 
 ### Stap 3.3: 
-Maak een account aan via spotify develop en maak een eigen app, daarbij krijg je een clientID en een clientSecret en voeg deze ook bij je .env bestand. 
+Maak een account aan via spotify web api voor developers en maak een eigen app, daarbij krijg je een clientID en een clientSecret en voeg deze ook bij je .env bestand. 
+Doe dit via de volgende site: https://developer.spotify.com/documentation/web-api 
+
+Deze gegevens heb je nodig om uiteindelijk de API te zien in de localhost.
 
 CLIENT_ID:
 
 CLIENT_SECRET: 
+
+## Stap 4 
+Zijn alle stappen hiervoor zorgvuldig en goed doorlopen, open dan weer de terminal en geef de command NPM start. Hiermee kan je de site in de localhost zien.
 
 # Contributers 
 Maks Breijer
