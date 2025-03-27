@@ -82,7 +82,7 @@ h1, h2, h3{
     font-weight: 800;
 }
 
-button {
+button, #startZoeken {
     background-color: rgb(77, 119, 79);
     border: none;
     border-radius: 5px;
@@ -94,6 +94,17 @@ button {
     font-weight: bold;
     margin-top: 1em;
     box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* artiest zoeken button */
+#startZoeken{
+    text-decoration: none;
+    background-color: rgb(185, 67, 67);
+    font-size: 2em;
+}
+
+#startZoeken:hover{
+    background-color: rgb(142, 24, 24);
 }
 
 button:hover{
@@ -424,6 +435,7 @@ label:first-child{
 
 .genreFilter label {
     width: fit-content;
+    text-transform: capitalize;
 }
 
 .genreFilter form {
@@ -435,13 +447,10 @@ label:first-child{
 .genreFilter .genres {
     display: flex;
     justify-content: space-around;
+    width: 50vw;
 }
 
-.genreFilter .buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 
 /* Opgeslagen Artiesten Pagina */
 .sort{
