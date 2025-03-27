@@ -2,7 +2,9 @@
 <html lang="nl">
 <head>
   <%- include('../partials/head'); %>
-
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
 
@@ -12,6 +14,27 @@
 
 <!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
 <main>
+
+  <div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+      ...
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+  
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+  </div>
+
   <div class="tuneder-wrapper">
     <!-- Linker knop -->
     <div class="heart-container">

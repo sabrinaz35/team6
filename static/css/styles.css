@@ -450,3 +450,9 @@ label:first-child{
     margin-left: 20px;
 }
 
+/*Swiper */
+.swiper {
+  width: 600px;
+  height: 300px;
+}
+
