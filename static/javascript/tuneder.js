@@ -74,9 +74,18 @@ async function artiestZoeken() {
     
             console.log("Spotify API response status:", response.status);
             const data = await response.json();
+
+            //zorg ervoor dat geselecteerde genres altijd een array is om foutmeldigen te voorkomen bij het selecteren van maar een genre
+            let genresArray;
+
+            if (Array.isArray(geselecteerdeGenres)) {
+                genresArray = geselecteerdeGenres;
+            } else {
+                genresArray = [geselecteerdeGenres];
+            }
     
             // Artiesten filteren op populariteit en genres
-            gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10 && geselecteerdeGenres.some(genre => artist.genres.includes(genre)));
+            gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10 && genresArray.some(genre => artist.genres.includes(genre)));
     
             console.log("Gefilterde artiesten:", gevondenArtiesten);
     
