@@ -20,132 +20,7 @@ function getRandomSearch() {
 }
 
 
-//zoek artiest op basis van criteria
-async function artiestZoeken() {
-    try {
-        console.log("probeer artiest te zoeken");
 
-        // Access token opvragen voordat de data opgevraagd wordt
-        const accessToken = await getAccessToken(); 
-
-        // Populariteit ophalen uit de backend als API call
-        let sliderPopulariteit; 
-        async function fetchPopulariteit() {
-            try {
-            const response = await fetch("/api/populariteit");
-            const data = await response.json();
-            sliderPopulariteit = parseInt(data.valuePopulariteit.valuePopulariteit);
-            console.log("Session Popularity Value:", sliderPopulariteit);
-            } catch (error) {
-            console.error("Error fetching popularity:", error);
-            }
-        }
-        await fetchPopulariteit();
-    
-        // Genres ophalen uit de backend als API call
-        let geselecteerdeGenres;
-        async function fetchGenres() {
-            try {
-            const response = await fetch("/api/genres");
-            const data = await response.json();
-            geselecteerdeGenres = data.selectedGenres;
-            console.log("geselecteerde Genres:", geselecteerdeGenres);
-            } catch (error) {
-            console.error("Error fetching genres:", error);
-            }
-        }
-        await fetchGenres();
-    
-        let gevondenArtiest = null;
-
-        let gevondenArtiesten = null;
-    
-        // Probeer maximaal 8 keer een artiest te vinden
-        for (let i = 0; i < 8; i++) {
-            let loadingAnimation = document.getElementById("loading");
-            loadingAnimation.classList.remove("hide");
-
-            console.log(`Zoekpoging ${i + 1}...`);
-    
-            // Nieuwe artiesten ophalen met een willekeurige zoekletter
-            const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
-            headers: { Authorization: 'Bearer ' + accessToken }
-            });
-    
-            console.log("Spotify API response status:", response.status);
-            const data = await response.json();
-
-            //zorg ervoor dat geselecteerde genres altijd een array is om foutmeldigen te voorkomen bij het selecteren van maar een genre
-            let genresArray;
-
-            if (Array.isArray(geselecteerdeGenres)) {
-                genresArray = geselecteerdeGenres;
-            } else {
-                genresArray = [geselecteerdeGenres];
-            }
-    
-            // Artiesten filteren op populariteit en genres
-            gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10 && genresArray.some(genre => artist.genres.includes(genre)));
-    
-            console.log("Gefilterde artiesten:", gevondenArtiesten);
-    
-            if (gevondenArtiesten.length > 0) {
-
-            // Kies een willekeurige artiest uit de gefilterde lijst
-            const random = Math.floor(Math.random() * gevondenArtiesten.length);
-            gevondenArtiest = gevondenArtiesten[random];
-            console.log("Gevonden artiest:", gevondenArtiest);
-
-            //loading animation stoppen
-            let loadingAnimation = document.getElementById("loading");
-            loadingAnimation.classList.add("hide");
-
-
-            // Zet de artiest in de iframe
-            let artiestID = gevondenArtiest.id;
-            document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
-            document.getElementById("artiestIframe").style.display = 'block';
-
-            break; // Stop de loop als een artiest is gevonden
-            }
-        }
-    
-        if (gevondenArtiesten.length == 0) {
-            //loading animation stoppen
-            let loadingAnimation = document.getElementById("loading");
-            loadingAnimation.classList.add("hide");
-
-            console.error("Geen geschikte artiest gevonden na 8 pogingen.");
-            //verbergen van Iframe als er geen artiest gevonden wordt
-            document.getElementById("artiestIframe").style.display = 'none';
-            //dialog laten verschijnen
-            const dialog = document.getElementById("errorDialog")
-            dialog.showModal();
-    
-            const closeButton = document.querySelector("dialog button");
-    
-            closeButton.addEventListener("click", () => {
-            dialog.close();
-            });
-    
-            return;
-        } 
-    
-        
-        
-        } catch (error) {
-        console.error("Error fetching artist source", error);
-    }
-}
-
-  //als je op zoek artiest klikt wordt er gezocht
-const zoekArtiest = document.getElementById("zoekArtiest");
-zoekArtiest.addEventListener("click", artiestZoeken);
-
-//zoek automatisch zodra tuneder pagina opent
-document.addEventListener("DOMContentLoaded", async () => {
-    await artiestZoeken();
-});
 
 
 
@@ -237,6 +112,8 @@ rangeSliderTuneder.addEventListener('input', function (event) {
 });
 
 
+
+
 // Genres ophalen uit de backend als API call
 let geselecteerdeGenre;
 async function fetchGenres() {
@@ -268,122 +145,189 @@ function genreInSwiper(genre) {
 
         // Voeg de nieuwe slide als eerste child toe
         swiperWrapper.prepend(newSlide);
+
+        // **Update Swiper zodat hij de nieuwe slides herkent**
+        swiper.update();
     }
 }
 
 fetchGenres();
 
 
+//meer genres om uit te kiezen toevoegen aan swiper 
+//const van een lijst aan random genres
 
-
-
-
-
-
-
-
-
-
-
-//zoek artiest op basis van criteria
-// async function keuzeTonen() {
-//     try {
-//         console.log("probeer keuze te laden");
-
-//         // Populariteit ophalen uit de backend als API call
-        
-
-
-
-//         // // Access token opvragen voordat de data opgevraagd wordt
-//         // const accessToken = await getAccessToken(); 
+async function getGenres () {
+    console.log("probeer genres op te halen")
+    try{
+        // Access token opvragen voordat de data opgevraagd wordt
+        const accessToken = await getAccessToken(); 
+        //krijg een random array aan artiesten met een random begin letter
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
+        headers: {
+            Authorization: 'Bearer ' + accessToken
+        }
+        });
 
         
-       
-    
-//        
-    
-//         // let gevondenArtiest = null;
-
-//         // let gevondenArtiesten = null;
-    
-//         // // Probeer maximaal 8 keer een artiest te vinden
-//         // for (let i = 0; i < 8; i++) {
-//         //     let loadingAnimation = document.getElementById("loading");
-//         //     loadingAnimation.classList.remove("hide");
-
-//         //     console.log(`Zoekpoging ${i + 1}...`);
-    
-//         //     // Nieuwe artiesten ophalen met een willekeurige zoekletter
-//         //     const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
-//         //     headers: { Authorization: 'Bearer ' + accessToken }
-//         //     });
-    
-//         //     console.log("Spotify API response status:", response.status);
-//         //     const data = await response.json();
-
-//         //     //zorg ervoor dat geselecteerde genres altijd een array is om foutmeldigen te voorkomen bij het selecteren van maar een genre
-//         //     let genresArray;
-
-//         //     if (Array.isArray(geselecteerdeGenres)) {
-//         //         genresArray = geselecteerdeGenres;
-//         //     } else {
-//         //         genresArray = [geselecteerdeGenres];
-//         //     }
-    
-//         //     // Artiesten filteren op populariteit en genres
-//         //     gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10 && genresArray.some(genre => artist.genres.includes(genre)));
-    
-//         //     console.log("Gefilterde artiesten:", gevondenArtiesten);
-    
-//         //     if (gevondenArtiesten.length > 0) {
-
-//         //     // Kies een willekeurige artiest uit de gefilterde lijst
-//         //     const random = Math.floor(Math.random() * gevondenArtiesten.length);
-//         //     gevondenArtiest = gevondenArtiesten[random];
-//         //     console.log("Gevonden artiest:", gevondenArtiest);
-
-//         //     //loading animation stoppen
-//         //     let loadingAnimation = document.getElementById("loading");
-//         //     loadingAnimation.classList.add("hide");
+        console.log("Spotify API response status:", response.status); // Debugging
+        //alle artiesten data 
+        const data = await response.json();
 
 
-//         //     // Zet de artiest in de iframe
-//         //     let artiestID = gevondenArtiest.id;
-//         //     document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
-//         //     document.getElementById("artiestIframe").style.display = 'block';
+        let filteredGenres = data.artists.items
+        .filter(artist => artist.genres.length > 0) // filter alle genre arrays die leeg zijn
+        .flatMap(artist => artist.genres); // laat alle genres in een grote array zien 
 
-//         //     break; // Stop de loop als een artiest is gevonden
-//         //     }
-//         // }
-    
-//         // if (gevondenArtiesten.length == 0) {
-//         //     //loading animation stoppen
-//         //     let loadingAnimation = document.getElementById("loading");
-//         //     loadingAnimation.classList.add("hide");
+        // Voeg genres toe aan de Swiper
+        meerGenresInSwiper(filteredGenres);
 
-//         //     console.error("Geen geschikte artiest gevonden na 5 pogingen.");
-//         //     //verbergen van Iframe als er geen artiest gevonden wordt
-//         //     document.getElementById("artiestIframe").style.display = 'none';
-//         //     //dialog laten verschijnen
-//         //     const dialog = document.getElementById("errorDialog")
-//         //     dialog.showModal();
+        console.log("Genres:", filteredGenres); 
+    } catch {
+        console.error('Error fetching genres:', error);
+    }
+}
+
+
+// Functie om extra genres als slides toe te voegen
+function meerGenresInSwiper(genres) {
+    const swiperWrapper = document.querySelector(".swiper-wrapper");
+
+    if (swiperWrapper && genres.length > 0) {
+        genres.forEach(genre => {
+            // Maak een nieuwe div voor elke genre-slide
+            const newSlide = document.createElement("div");
+            newSlide.classList.add("swiper-slide");
+            newSlide.textContent = genre; // Genre als tekst erin zetten
+
+            // Voeg de nieuwe slide toe aan de Swiper-wrapper
+            swiperWrapper.appendChild(newSlide);
+
+            // **Update Swiper zodat hij de nieuwe slides herkent**
+            swiper.update();
+        });
+
+        console.log("Genres toegevoegd aan Swiper!");
+    }
+}
+
+// Haal genres op en voeg ze toe aan de Swiper
+getGenres();
+
+
+
+
+
+//Zoek op basis van slider value en genre die in swiper staat
+async function keuzeTonen() {
+    try {
+        console.log("probeer keuze te laden");
+
+        const accessToken = await getAccessToken(); 
+
+        // Haal het geselecteerde genre uit de actieve Swiper-slide
+        let activeSlide = document.querySelector('.swiper-slide-active');
+        let geselecteerdGenre = activeSlide ? activeSlide.textContent : null;
+
+        console.log("Geselecteerd genre:", geselecteerdGenre);
+
+        //haal de geselecteerde populariteit op
+        let geselecteerdePopulariteit = rangeSliderTuneder.value;
+
+
+        let gevondenArtiest = null;
+
+        let gevondenArtiesten = null;
     
-//         //     const closeButton = document.querySelector("dialog button");
+        // Probeer maximaal 8 keer een artiest te vinden
+        for (let i = 0; i < 8; i++) {
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.remove("hide");
+
+            console.log(`Zoekpoging ${i + 1}...`);
     
-//         //     closeButton.addEventListener("click", () => {
-//         //     dialog.close();
-//         //     });
+            // Nieuwe artiesten ophalen met een willekeurige zoekletter
+            const response = await fetch(`https://api.spotify.com/v1/search?q=${getRandomSearch()}&type=artist&limit=50`, {
+            headers: { Authorization: 'Bearer ' + accessToken }
+            });
     
-//         //     return;
-//         // } 
+            console.log("Spotify API response status:", response.status);
+            const data = await response.json();
+
+            //zorg ervoor dat geselecteerde genres altijd een array is om foutmeldigen te voorkomen bij het selecteren van maar een genre
+            let genresArray;
+
+            if (Array.isArray(geselecteerdGenre)) {
+                genresArray = geselecteerdGenre;
+            } else {
+                genresArray = [geselecteerdGenre];
+            }
+    
+            // Artiesten filteren op populariteit en genres
+            gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= geselecteerdePopulariteit && artist.popularity > 10 && genresArray.some(genre => artist.genres.includes(genre)));
+    
+            console.log("Gefilterde artiesten:", gevondenArtiesten);
+    
+            if (gevondenArtiesten.length > 0) {
+
+            // Kies een willekeurige artiest uit de gefilterde lijst
+            const random = Math.floor(Math.random() * gevondenArtiesten.length);
+            gevondenArtiest = gevondenArtiesten[random];
+            console.log("Gevonden artiest:", gevondenArtiest);
+
+            //loading animation stoppen
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.add("hide");
+
+
+            // Zet de artiest in de iframe
+            let artiestID = gevondenArtiest.id;
+            document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
+            document.getElementById("artiestIframe").style.display = 'block';
+
+            break; // Stop de loop als een artiest is gevonden
+            }
+        }
+    
+        if (gevondenArtiesten.length == 0) {
+            //loading animation stoppen
+            let loadingAnimation = document.getElementById("loading");
+            loadingAnimation.classList.add("hide");
+
+            console.error("Geen geschikte artiest gevonden na 5 pogingen.");
+            //verbergen van Iframe als er geen artiest gevonden wordt
+            document.getElementById("artiestIframe").style.display = 'none';
+            //dialog laten verschijnen
+            const dialog = document.getElementById("errorDialog")
+            dialog.showModal();
+    
+            const closeButton = document.querySelector("dialog button");
+    
+            closeButton.addEventListener("click", () => {
+            dialog.close();
+            });
+    
+            return;
+        } 
     
         
         
-//         } catch (error) {
-//         console.error("Error fetching artist source", error);
-//     }
-// }
+        } catch (error) {
+        console.error("Error fetching artist source", error);
+    }
+}
+
+
+
+
+  //als je op zoek artiest klikt wordt er gezocht
+const zoekArtiest = document.getElementById("zoekArtiest");
+zoekArtiest.addEventListener("click", keuzeTonen);
+
+//zoek automatisch zodra tuneder pagina opent
+document.addEventListener("DOMContentLoaded", async () => {
+    await keuzeTonen();
+});
 
 
 
