@@ -295,7 +295,7 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
     }
 
     // return res.status(404).send("Gebruiker gevonden");
-    return res.render("/opgeslagen-artiesten", { user, artiesten}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
+    res.render("pages/opgeslagen-artiesten", { user, artiesten}); // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
   } else {
     // res.send("Gebruiker is niet gevonden")
     res.render("pages/inlog");
