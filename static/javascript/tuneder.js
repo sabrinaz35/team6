@@ -24,21 +24,7 @@ function getRandomSearch() {
 
 
 
-//hart split als je op dislike clickt en zoeken start opnieuw
-function splitHeart() {
-    const heart = document.querySelector(".heart-container");
-    heart.classList.add("split");
 
-    // Reset na animatie (na 1000 ms)
-    setTimeout(() => {
-        heart.classList.remove("split");
-    }, 1000);
-}
-
-function hartjeKlikken(){
-    splitHeart();
-    artiestZoeken();
-}
 
 // Voeg de event listener toe aan de hart-container
 const heartContainer = document.querySelector(".heart-container");
@@ -320,7 +306,7 @@ async function keuzeTonen() {
 
 
 
-  //als je op zoek artiest klikt wordt er gezocht
+//als je op zoek artiest klikt wordt er gezocht
 const zoekArtiest = document.getElementById("zoekArtiest");
 zoekArtiest.addEventListener("click", keuzeTonen);
 
@@ -329,6 +315,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     await keuzeTonen();
 });
 
+
+//hart split als je op dislike clickt en zoeken start opnieuw
+function splitHeart() {
+    const heart = document.querySelector(".heart-container");
+    heart.classList.add("split");
+
+    // Reset na animatie (na 1000 ms)
+    setTimeout(() => {
+        heart.classList.remove("split");
+    }, 1000);
+}
+
+function hartjeKlikken(){
+    splitHeart();
+    keuzeTonen();
+}
 
 
 
