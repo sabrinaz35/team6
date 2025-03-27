@@ -77,11 +77,11 @@ async function zoekKleineArtiest() {
       //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
       document.getElementById('favoInput').value=eersteArtiest.id
       //Andere gegevens ook meegeven aan naar de mongodb database
-      document.getElementById("artistNameInput").value = eersteArtiest.name;
-      document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
-      document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
-      document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
-      console.log(eersteArtiest.id)
+      // document.getElementById("artistNameInput").value = eersteArtiest.name;
+      // document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
+      // document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
+      // document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
+      // console.log(eersteArtiest.id)
     }
     
 
