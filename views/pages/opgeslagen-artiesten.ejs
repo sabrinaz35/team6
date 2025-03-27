@@ -22,6 +22,11 @@
             <% if (user && artiesten.length > 0) { %>
                 <% artiesten.forEach(artiest => { %>
                   <div class="grid-item">
+                    <form action="/opgeslagen-artiesten" method="POST">
+                      <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm"></button>
+                      <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
+                      <input name="artistId" id="favoInput" type="hidden">
+                    </form>
                     <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
                     <h3 class="naam"><%= artiest.name %></h3>
                     <p>Genre: <%= artiest.genre %></p>
@@ -31,6 +36,7 @@
               <% } else { %>
                 <p>Je hebt nog geen artiesten opgeslagen.</p>
               <% } %>
+              </section>
     </main>
     <footer>
         <%- include('../partials/footer'); %>
