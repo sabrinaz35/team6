@@ -91,7 +91,7 @@ app.use(
 
 //ejs templates opstarten
 app.set("view engine", "ejs");
-app.set("trust proxy", 1)
+// app.set("trust proxy", 1)
 
 //console log op welke poort je bent
 app.listen(port, () => {

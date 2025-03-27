@@ -36,11 +36,17 @@
     <div id="loading" class="hide"></div>
 
     <!-- Rechter knop -->
-    <form class="icon-btn" action="/opgeslagen-artiesten" method="POST">
-      <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm"></button>
-      <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
-      <input name="artistId" id="tunderInput" type="hidden">
-    </form>
+
+    <% if (user){ %>
+      <form class="icon-btn" action="/opgeslagen-artiesten" method="POST">
+        <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm"></button>
+        
+        <input name="artistId" id="tunderInput" type="hidden">
+      </form>
+    <% } else { %>
+      <p>Je bent nog niet ingelogd</p>
+      <a href="/inlog" class="nav-item"> Inloggen</a>
+    <% } %>
 
     <!-- <button class="icon-btn">
         <img src="static/images/heart.svg" alt="Volgende">
