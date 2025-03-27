@@ -492,6 +492,6 @@ label:first-child{
  fill: #ff0000;
 }
 
-.likeHartje {
-    max-width: 5%;
+#likebutton img{
+    max-width: 8%;
 }
