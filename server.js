@@ -228,6 +228,7 @@ app.get("/aanmelden", (req, res) => {
 
 //**********inloggen en check via mongo**********
 app.post("/inlog-account", async (req, res) => {
+
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten");
   const gebruiker = database.collection("user");
@@ -253,6 +254,7 @@ app.post("/inlog-account", async (req, res) => {
     }
   } else {
     // Als de gebruiker niet wordt gevonden
+
     res.send("Gebruiker niet gevonden. Probeer opnieuw.");
   }
 });
@@ -308,6 +310,7 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
 app.post("/opgeslagen-artiesten",async (req, res) => {
  console.log("Ontvangen artiest ID:", req.body.artistId); 
+
   if (!req.session.user) {
     return res.redirect("/inlog"); // Voorkomt fout als er geen sessie is
   }
@@ -327,22 +330,26 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
   if (user) {
     console.log("Gebruiker gevonden:", user);
     //Als de gebruiker bestaat en de index is afwezig, dan moet hij die eruit halen.
-    if (index >= 0){
-      user.favorieten.splice(index, 1)
-      await gebruiker.updateOne(
-        { emailadress: req.session.user.emailadress},
-        //Uiteindelijk alle artiestendata doorsturen naar database
-        { $set: { favorieten: user.favorieten}})
-      console.log("Artiest is verwijdert uit favorieten") 
+    if  (artiestData == ""){
+      console.log("Dit is de milo laat het lukken placholder")
+      return
     } else {
-          //Als de gebruiker bestaat en de index is aanwezig, dan moet hij die toevoegen
-      await gebruiker.updateOne(
-        { emailadress: req.session.user.emailadress},
-        //Uiteindelijk alle artiestendata doorsturen naar database
-        { $push: { favorieten:  artiestData } },
-        console.log("Artiest is toegevoegd")
-      );
-    }
+        if (index >= 0){
+          user.favorieten.splice(index, 1)
+          await gebruiker.updateOne(
+            { emailadress: req.session.user.emailadress},
+            //Uiteindelijk alle artiestendata doorsturen naar database
+            { $set: { favorieten: user.favorieten}})
+          console.log("Artiest is verwijdert uit favorieten") 
+        } else {
+              //Als de gebruiker bestaat en de index is aanwezig, dan moet hij die toevoegen
+          await gebruiker.updateOne(
+            { emailadress: req.session.user.emailadress},
+            //Uiteindelijk alle artiestendata doorsturen naar database
+            { $push: { favorieten:  artiestData } },
+            console.log("Artiest is toegevoegd")
+          );
+        }}
   } else {
     // console.log('of niet')
     // return res.status(404).send("Gebruiker niet gevonden");
