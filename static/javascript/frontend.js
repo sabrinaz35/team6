@@ -1,5 +1,7 @@
 
+
 console.log("Hallo wereld")
+
 
 // Hieronder komt de code voor het sorteren en filteren in opgeslagen artiesten
 // Wacht totdat de DOM volledig is geladen
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
 // Like hartje index en opgeslagen pagina 
 //dit klopt nog niet helamaal oops
 let witHart = document.getElementsByClassName('likeHartje')
@@ -38,17 +41,6 @@ function veranderKleur (){
 
  witHart.classList.toggle ("roodHart");
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

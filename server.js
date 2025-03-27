@@ -68,15 +68,17 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'"], // inline scripts toestaan
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"], // Voeg Swiper CDN toe aan scriptSrc
         connectSrc: ["'self'", "https://api.spotify.com", "http://localhost:4000"], // API calls naar Spotify en backend toestaan
         frameSrc: ["'self'", "https://open.spotify.com"], // Spotify playlist embeds toestaan
-        imgSrc: ["'self'", "data:", "https://i.scdn.co"], // fotos toestaan van de door spotify gegeven bron
-        styleSrc: ["'self'", 'https://fonts.googleapis.com'], //fonts van google toestaan
+        imgSrc: ["'self'", "data:", "https://i.scdn.co"], // Foto's toestaan van de door Spotify gegeven bron
+        styleSrc: ["'self'", 'https://fonts.googleapis.com', "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"], // Voeg Swiper CDN toe aan styleSrc
       },
     },
   })
 );
+
+
 
 //Middleware Sessions bij het inloggen
 app.use(
