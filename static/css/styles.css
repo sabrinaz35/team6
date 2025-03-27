@@ -504,8 +504,29 @@ label:first-child{
 
 /*Swiper */
 .swiper {
-  width: 600px;
-  height: 300px;
+  width: 300px;
+  height: 100px;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+#displayFilters{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.swiper-slide{
+    text-align: center;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.zoekWrapper{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
 }
 
 
