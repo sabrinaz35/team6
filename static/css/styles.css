@@ -497,6 +497,10 @@ label:first-child{
 }
 
 /* like button op de index page  */
-/* #likebutton.roodHart {
+.likeHartje.roodHart {
  fill: #ff0000;
-} */
+}
+
+#likebutton img{
+    max-width: 8%;
+}
