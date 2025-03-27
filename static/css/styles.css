@@ -500,3 +500,12 @@ label:first-child{
 /* #likebutton.roodHart {
  fill: #ff0000;
 } */
+
+
+/*Swiper */
+.swiper {
+  width: 600px;
+  height: 300px;
+}
+
+
