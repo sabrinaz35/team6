@@ -105,6 +105,9 @@ async function artiestZoeken() {
             let artiestID = gevondenArtiest.id;
             document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
             document.getElementById("artiestIframe").style.display = 'block';
+            
+            //De id meegeven aan de button om die te kunnen opslaan
+            document.getElementById('tunderInput').value=gevondenArtiest.id
 
             break; // Stop de loop als een artiest is gevonden
             }

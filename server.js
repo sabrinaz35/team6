@@ -349,8 +349,8 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
             { $push: { favorieten:  artiestData } },
             console.log("Artiest is toegevoegd")
           );
-        }}
-  } else {
+        }}}
+  else {
     // console.log('of niet')
     // return res.status(404).send("Gebruiker niet gevonden");
     res.render("pages/inlog");
