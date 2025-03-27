@@ -57,6 +57,8 @@ async function artiestZoeken() {
         await fetchGenres();
     
         let gevondenArtiest = null;
+
+        let gevondenArtiesten = null;
     
         // Probeer maximaal 8 keer een artiest te vinden
         for (let i = 0; i < 8; i++) {
@@ -74,11 +76,12 @@ async function artiestZoeken() {
             const data = await response.json();
     
             // Artiesten filteren op populariteit en genres
-            let gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10 && geselecteerdeGenres.some(genre => artist.genres.includes(genre)));
+            gevondenArtiesten = data.artists.items.filter(artist => artist.popularity <= sliderPopulariteit && artist.popularity > 10 && geselecteerdeGenres.some(genre => artist.genres.includes(genre)));
     
             console.log("Gefilterde artiesten:", gevondenArtiesten);
     
             if (gevondenArtiesten.length > 0) {
+
             // Kies een willekeurige artiest uit de gefilterde lijst
             const random = Math.floor(Math.random() * gevondenArtiesten.length);
             gevondenArtiest = gevondenArtiesten[random];
@@ -87,14 +90,18 @@ async function artiestZoeken() {
             //loading animation stoppen
             let loadingAnimation = document.getElementById("loading");
             loadingAnimation.classList.add("hide");
+
+
             // Zet de artiest in de iframe
             let artiestID = gevondenArtiest.id;
             document.getElementById("artiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
+            document.getElementById("artiestIframe").style.display = 'block';
+
             break; // Stop de loop als een artiest is gevonden
             }
         }
     
-        if (!gevondenArtiest) {
+        if (gevondenArtiesten.length == 0) {
             //loading animation stoppen
             let loadingAnimation = document.getElementById("loading");
             loadingAnimation.classList.add("hide");
