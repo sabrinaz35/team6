@@ -502,11 +502,12 @@ label:first-child{
 } 
 
 #likebutton img{
-    max-width: 8%;
+    max-width: 100%;
 }
 
-
-
+#likebutton {
+    max-width: 21%;
+}
 
 /*Swiper */
 .swiper {
@@ -534,4 +535,3 @@ label:first-child{
     display: flex;
     justify-content: center;
 }
-
