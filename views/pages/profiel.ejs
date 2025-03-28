@@ -19,26 +19,26 @@
     </form>
   </section>
   
-  <!-- <div class="background-opacity-white">
+  <div class="background-opacity-white">
     <div class="opgeslagen-artiest-column">
-      <h3 class="opgeslagen-artiesten-titel">Mijn Opgeslagen Artiesten</h3> -->
-<!--       
+      <h3 class="opgeslagen-artiesten-titel">Mijn Opgeslagen Artiesten</h3> 
+      
       <section class="account-opgeslagen-artiest-grid">
-        <% if (user && user.favorieten.length > 0) { %>
-          <% user.favorieten.forEach(artiest => { %>
+        <% if (user && artiesten.length > 0) { %>
+          <% artiesten.forEach(artiest => { %>
             <div class="grid-item">
-              <img src="<%= artiest.images %>" alt="Foto van <%= artiest.naam %>">
-              <h3><%= artiest.naam %></h3>
+              <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
+              <h3><%= artiest.name %></h3>
               <p>Genre: <%= artiest.genre %></p>
-              <p>Volgers: <%= artiest.volgers %></p>
+              <p>Populariteit: <%= artiest.popularity %></p>
             </div>
           <% }) %>
         <% } else { %>
           <p>Je hebt nog geen artiesten opgeslagen.</p>
         <% } %>
-      </section> -->
-    <!-- </div>
-  </div> -->
+      </section>
+    </div>
+  </div>
 </main>
 <footer>
   <%- include('../partials/footer'); %>

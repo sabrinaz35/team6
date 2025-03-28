@@ -226,7 +226,7 @@ app.get("/aanmelden", (req, res) => {
 
 //**********inloggen en check via mongo**********
 app.post("/inlog-account", async (req, res) => {
-
+  let artiesten = []
   //Eerst de consts weer definieren vanuit welke database de gegevens gehaald moeten worden
   const database = client.db("klanten");
   const gebruiker = database.collection("user");
@@ -244,8 +244,13 @@ app.post("/inlog-account", async (req, res) => {
 
     if (isMatch) {
       // Als het wachtwoord overeenkomt, start de sessie en daarin slaat hij user op
+   // fetch data van api
+      for (const favoriet of user.favorieten) {
+        const artiest = await getArtist(favoriet)
+        artiesten.push(artiest)
+      }
       req.session.user = user
-      res.render("pages/profiel", { user: req.session.user });
+      res.render("pages/profiel", { user: req.session.user, artiesten });
     } else {
       // Als het wachtwoord niet overeenkomt
       res.send("Wachtwoord komt niet overeen");
@@ -374,7 +379,6 @@ app.get("/uitloggen", (req, res) => {
 
 //*******  VRAGEN EN KEUZE OPSLAAN ********
 //populariteitswaarde opslaan
-
 // populariteit opslaan
 app.post("/populariteit-kiezen", async (req, res) => {
   let populariteit = req.body.populariteit; // slider value ophalen
@@ -498,4 +502,3 @@ app.use((err, req, res) => {
   // 500 status code als HTTP response sturen
   res.status(500).send("500: server error");
 });
-

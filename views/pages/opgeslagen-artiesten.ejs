@@ -24,13 +24,12 @@
                   <div class="grid-item">
                     <form action="/opgeslagen-artiesten" method="POST">
                       <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm"></button>
-                      <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
                       <input name="artistId" value="<%= artiest.id %>" type="hidden">
                     </form>
                     <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
                     <h3 class="naam"><%= artiest.name %></h3>
                     <p>Genre: <%= artiest.genre %></p>
-                    <p>popularity: <%= artiest.popularity %></p>
+                    <p>populariteit: <%= artiest.popularity %></p>
                   </div>
                 <% }) %>
               <% } else { %>
