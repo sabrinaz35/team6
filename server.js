@@ -91,7 +91,6 @@ app.use(
 
 //ejs templates opstarten
 app.set("view engine", "ejs");
-// app.set("trust proxy", 1)
 
 //console log op welke poort je bent
 app.listen(port, () => {
@@ -104,7 +103,6 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //******* DATABASE **********
-
 const { MongoClient, ServerApiVersion } = require("mongodb");
 // URL aanmaken om met de database te connecten met info uit de .env file //process klopt wel alleen komt het uit de extensie wat Eslint niet kan lezen
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority&appName=${process.env.DB_NAME}`;
@@ -149,7 +147,7 @@ app.get("/about", (req, res) => {
 
 
 app.get('/tuneder', (req, res) => {
-  res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
+    res.render('pages/tuneder'); // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
   });
 
 app.get("/contact", (req, res) => {
@@ -265,7 +263,6 @@ app.get("/profiel", (req, res) => {
     res.render("pages/profiel", { user: req.session.user });
   } else {
     res.render("pages/inlog");
-    //, {user: req.session.user}
   }
 });
 
@@ -379,16 +376,22 @@ app.get("/uitloggen", (req, res) => {
 //populariteitswaarde opslaan
 
 // populariteit opslaan
-app.post("/populariteit-kiezen", (req, res) => {
+app.post("/populariteit-kiezen", async (req, res) => {
   let populariteit = req.body.populariteit; // slider value ophalen
-
+  
   // data mergen
   req.session.user = req.session.user || {};  
   req.session.user.valuePopulariteit = populariteit;
 
+  const database = client.db("klanten")
+  const gebruiker = database.collection("user")
+
+  const query = { emailadress: req.session.user.emailadress };
+  const user = await gebruiker.findOne(query)
+
   console.log("Saved popularity value:", populariteit);
 
-  res.render("pages/tuneder"); // render tuneder pagina
+  res.render("pages/tuneder", {user}); // render tuneder pagina
 });
 
 
@@ -479,24 +482,20 @@ app.get("/token", (req, res) => {
 
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
-
-// error 404 handling
-app.use((err, req, res, next) => {
-  // console log voor error 404
-  console.error("404 error at URL: " + req.url);
-  // 404 status code als HTTP response sturen
-  res.status(404).send("404 error at URL: " + req.url);
-  
-  next();
-});
+// Middleware to handle not found errors - error 404
+app.use((err, req, res) => {
+  // log error to console
+  console.error('404 error at URL: ' + req.url)
+  // send back a HTTP response with status code 404
+  res.status(404).send('404 error at URL: ' + req.url)
+  console.error(err.stack)
+})
 
 // error 500 handling
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // console log voor error 500
   console.error(err.stack);
   // 500 status code als HTTP response sturen
   res.status(500).send("500: server error");
-
-  next();
 });
 

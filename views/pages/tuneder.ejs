@@ -40,17 +40,12 @@
     <% if (user){ %>
       <form class="icon-btn" action="/opgeslagen-artiesten" method="POST">
         <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm"></button>
-        
         <input name="artistId" id="tunderInput" type="hidden">
       </form>
     <% } else { %>
       <p>Je bent nog niet ingelogd</p>
       <a href="/inlog" class="nav-item"> Inloggen</a>
     <% } %>
-
-    <!-- <button class="icon-btn">
-        <img src="static/images/heart.svg" alt="Volgende">
-    </button> -->
 </div>
 
       
