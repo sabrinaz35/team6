@@ -55,6 +55,19 @@ Maja Wendelin
 Sabrina Zuurbier
 
 
-# Bronnen
+# Bronnen/Library's
+In dit project kom je in aanraking met de volgende library's die zijn gebruikt:
+* bcryptjs: Bcrypt zorgt er namelijk voor dat de gegeven wachtwoord gehasht wordt in onze database, dit creërt veiligheid voor de gegevens van de gebruiker. 
+* cors: Backend als een soort API in de frontend te gebruiken.
+* dotenv: Hierin worden alle wachtwoorden van de site in bewaard, zodat dit niet open een bloot op de server te zien is.
+* ejs: Dit is om de templates mogelijk te maken voor de head, header en de footer.
+* express: Deze gebruiken voor de routes om die te kunnen definieren en mogelijk te maken. 
+* express-session: Deze gebruiken we om een gebruiker in een sessie te kunnen plaatsen en om te kijken of de gebruiker nog actief is op de website.
+* helmet: Deze library's zorgt ervoor dat er niet zomaar elementen van buitenaf zomaar in de website gezet kunnen worden. 
+* list.js: Dit gebruiken wij om in onze opgeslagen-artiesten pagina te kunnen filteren.
+* mongodb: Dit gebruiken wij om bij onze database te kunnen komen waar wij onze gebruikers in opslaan en de favorieten die zij hebben en dat weer terug te kunnen halen.
+* Multer: Hiermee kan je je eigen account een profielfoto geven en deze daarbij ook opslaan in de database.
+* request: Om de token te kunnen ophalen in de backend voor de API.
+* xss: Hierdoor halen ze de gegevens nog eens door een check om te kijken of er geen gekke tekens in staan. 
 
 
