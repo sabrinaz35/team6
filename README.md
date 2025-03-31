@@ -70,4 +70,7 @@ In dit project kom je in aanraking met de volgende library's die zijn gebruikt:
 * request: Om de token te kunnen ophalen in de backend voor de API.
 * xss: Hierdoor halen ze de gegevens nog eens door een check om te kijken of er geen gekke tekens in staan. 
 
+# Toekomst plan 
+Onze toekomst plan is om nog een aantal funcionaliteiten toe te voegen, hierbij moet je denken de nieuwe opkomende concerten die die kleine artiesten dan geven waar je dan naartoe zou kunnen gaan. Daarnaast op sociale vlak zou je dan ook in aanraking kunnen komen met nieuwe mensen die die artiesten ook net hebben ontdekt en zo samen naar het concert kunnen gaan. 
+
 
