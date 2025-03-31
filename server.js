@@ -265,13 +265,27 @@ app.post("/inlog-account", async (req, res) => {
 });
 
 //Functie van het account scherm, als de account al bestaat dan naar profiel en anders naar het inlogscherm leiden.
-app.get("/profiel", (req, res) => {
+app.get("/profiel", async(req, res) => {
+  //Om het opnieuw op te halen van de artiesten als je de pagina opnieuw opvraagd
+  let artiesten = []
+  
   if (req.session.user) {
-    res.render("pages/profiel", { user: req.session.user });
+    const database = client.db("klanten");
+    const gebruiker = database.collection("user");
+    const query = { emailadress: xss(req.session.user.emailadress) };
+    const user = await gebruiker.findOne(query); 
+    console.log(req.session.user.emailadress)
+
+    for (const favoriet of user.favorieten) {
+      const artiest = await getArtist(favoriet)
+      artiesten.push(artiest)
+    }
+    res.render("pages/profiel", { user: req.session.user, artiesten});
   } else {
     res.render("pages/inlog");
   }
 });
+
 
 
 //**********artiesten opslaan in mongodb**********
