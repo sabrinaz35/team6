@@ -336,6 +336,8 @@ function hartjeKlikken(){
 }
 
 
+document.getElementById('loading').classList.remove('hide');
+document.getElementById('loading').classList.add('hide');
 
 
 

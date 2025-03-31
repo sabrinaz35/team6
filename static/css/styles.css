@@ -97,10 +97,12 @@ button, #startZoeken {
 }
 
 /* artiest zoeken button */
-#startZoeken{
+.startZoeken {
     text-decoration: none;
     background-color: rgb(185, 67, 67);
     font-size: 2em;
+    position: relative; /* Maak een stacking context voor de button */
+    z-index: 2;       /* Zorgt dat de button boven de afbeelding komt */
 }
 
 #startZoeken:hover{
@@ -360,48 +362,43 @@ label:first-child{
 }
 
 .tuneder-image {
-    margin-top: 20%;
+        margin-top: 3%;
+        position: relative; /* Zet de afbeelding in dezelfde context */
 }
 
 .icon-btn:active .heart-icon {
     transform: scale(1.1); /* Licht inzoomeffect bij klik */
 }
 
-.tuneder-image {
-    margin-top: 20%;
-}
-
 .heart-container {
-    position: relative;
-    width: 90px;
-    height: 90px;
+    position: absolute;
+    left: 10%;
+    top: 100%; /* Plaatst het hartje in het midden van de pagina */
+    transform: translateY(-50%) scale(1.5); /* Vergroot het hartje en centreer verticaal */
+    width: 50px; /* Grotere container */
+    height: 50px;
     display: flex;
-    justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: transform 1s ease; /* Toegevoegde transitie voor de container */
+    transition: transform 1s ease; /* Gladde overgang */
 }
 
+/* Effect bij split */
 .heart-container.split {
-    transform: scale(0.5) rotate(45deg); /* Voorbeeld van een effect voor de container */
+    transform: translateY(-50%) scale(0.75) rotate(45deg); /* Kleiner en gekanteld */
 }
 
-/* De linker- en rechterhelft die gaan bewegen */
+/* Linker- en rechterhelft van het hart */
 .heart-left, .heart-right {
     position: absolute;
-    width: 50%; /* Zorg ervoor dat de helften op hun plaats zitten */
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Toegevoegde transitie voor beweging */
+    width: 50%;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-/* Linker helft positie */
-.heart-left {
-    left: 0;
-}
+/* Positie van de helften */
+.heart-left { left: 0; }
+.heart-right { right: 0; }
 
-/* Rechter helft positie */
-.heart-right {
-    right: 0;
-}
 
 /* Wanneer de split-klasse wordt toegevoegd, bewegen de helften van elkaar weg */
 .heart-container.split .heart-left {
@@ -411,13 +408,39 @@ label:first-child{
 .heart-container.split .heart-right {
     transform: translateX(100px); /* Verplaats de rechterhelft naar rechts */
 }
+.like-button {
+    all: unset; /* Verwijdert alle standaard button-stijlen */
+    display: inline-block; /* Zorgt ervoor dat de knop nog steeds werkt */
+    cursor: pointer;
+}
+
+.like-button img {
+    max-width: 30%;
+    margin-top: 25%;
+}
+
+/* Verwijder rode hover en focus-stijlen */
+.like-button:focus,
+.like-button:active,
+.like-button:hover {
+    outline: none;
+    box-shadow: none;
+    background: none;
+    border: none;
+}
+
 
 /* Code voor de slider op de filter populariteit pagina */
 .filter-populariteit form{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
 
+.keuze h2 {
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    margin-bottom: 30%;
 }
 
 
@@ -427,6 +450,20 @@ label:first-child{
     flex-direction: column;
     align-items: center;
 }
+
+/* kleuk en font aanpassen van populairiteit */
+#valueTuneder {
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    /* Voeg hier je overige stijlen toe */
+    font-family: 'Pixelify Sans', sans-serif; 
+}
+
+/* Swipe bolletje veranderen van kleur */
+#rangeSliderTuneder {
+    accent-color: #b94343; /* Verandert de kleur van de slider */
+}
+
 
 .genreFilter input {
     all: initial;
@@ -467,6 +504,13 @@ label:first-child{
     width: 50vw;
 }
 
+/* hoofd afbeelding van de radio */
+.image-container {
+    margin-left: 18%;
+    height: 80vh;
+    background-clip: border-box; /* Zorgt ervoor dat de achtergrond beperkt blijft tot de border-box */ 
+}
+
 /* Dialog styling */
 
 #errorDialog{
@@ -479,8 +523,8 @@ label:first-child{
 #loading {
     position: absolute;
     z-index: 1003;
-    border: 16px solid #f3f3f3; 
-    border-top: 16px solid #3498db; 
+    border: 16px solid #ffd60b; 
+    border-top: 16px solid #ffffff; 
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -501,14 +545,6 @@ label:first-child{
  fill: #ff0000;
 } 
 
-#likebutton img{
-    max-width: 100%;
-}
-
-#likebutton {
-    max-width: 21%;
-}
-
 /*Swiper */
 .swiper {
   width: 300px;
@@ -528,6 +564,9 @@ label:first-child{
     display: flex !important;
     align-items: center;
     justify-content: center;
+    color: #ffffff;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: large;
 }
 
 .zoekWrapper{
@@ -535,3 +574,19 @@ label:first-child{
     display: flex;
     justify-content: center;
 }
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    color: #b94343 !important;
+    font-size: 24px;
+    text-shadow: 1px 1px 0 #b94343, -1px -1px 0 #b94343, 
+                 1px -1px 0 #b94343, -1px 1px 0 #b94343;
+}
+
+
+h2{ 
+    font-family: 'Pixelify Sans', sans-serif;
+    color: #ffffff;
+    font-size: 30px;
+}
+
