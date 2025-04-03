@@ -596,7 +596,21 @@ h2{
     font-size: 30px;
 }
 
-<<<<<<< Updated upstream
+.errorPage {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+}
+
+.errorPage h2{
+    color: #3f3f3f;
+}
+
+.errorImg {
+    max-width: 20vw;
+}
+
 /*filter genre pagina styling */
 /* margin van de buttons */
 .genre-button {
@@ -641,7 +655,3 @@ h2{
 .genres input[type="radio"]:checked {
     border-color: #000000;
     background-color: #b94343;
-=======
-
-
-
