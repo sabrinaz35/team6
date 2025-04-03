@@ -18,6 +18,7 @@
       </form>
       <button class="sort" data-sort="naam">Sorteer op naam</button>
 
+
       <section id="favorieten" class="account-opgeslagen-artiest-grid">
         <% if (user && artiesten.length > 0) { %>
           <% artiesten.forEach(artiest => { %>
@@ -36,6 +37,7 @@
           <p>Je hebt nog geen artiesten opgeslagen.</p>
         <% } %>
       </section>
+
     </main>
     <footer>
         <%- include('../partials/footer'); %>
