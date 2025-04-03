@@ -373,7 +373,7 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
     // return res.status(404).send("Gebruiker niet gevonden")
     res.render("pages/inlog")
   }
-  res.redirect("/") 
+  res.redirect("/opgeslagen-artiesten") 
 })
 
 
@@ -503,12 +503,11 @@ app.get("/token", (req, res) => {
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
 // Middleware to handle not found errors - error 404
-app.use((err, req, res) => {
+app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url)
   // send back a HTTP response with status code 404
   res.status(404).send('404 error at URL: ' + req.url)
-  console.error(err.stack)
 })
 
 // error 500 handling
