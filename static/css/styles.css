@@ -495,6 +495,17 @@ label:first-child{
 
 
 
+.genres div:focus-within {
+    border: 3px solid hotpink;
+}
+
+
+
+
+
+
+
+
 /* Opgeslagen Artiesten Pagina */
 .sort{
     font-size: 1em;
@@ -596,6 +607,16 @@ h2{
     font-size: 30px;
 }
 
+
+
+.container footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100vw;
+}
+
+
+
 .errorPage {
     display: flex;
     flex-direction: column;
@@ -656,4 +677,5 @@ h2{
 .genres input[type="radio"]:checked {
     border-color: #000000;
     background-color: #b94343;
+
 
