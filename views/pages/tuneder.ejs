@@ -52,7 +52,7 @@
   
   
 
-  <div class="tuneder-wrapper">
+<section class="tuneder-wrapper">
     <!-- Linker knop -->
     <div class="heart-container">
         <img src="static/images/linkerhart.svg" alt="Linker helft" class="heart-left">
@@ -62,7 +62,7 @@
     <!-- Centrale afbeelding -->
     <div class="image-container">
       <img src="static/images/radio2.png" alt="Radio afbeelding" class="tuneder-image">
-  </div>
+    </div>
 
     <!-- iframe voor artiest na het zoeken -->
     <iframe id="artiestIframe" style="border-radius:12px" src="" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -82,7 +82,7 @@
       <form class="icon-btn" action="/opgeslagen-artiesten" method="POST">
         <button type="submit" id="likebutton" class="like-button">
           <img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm">
-      </button>
+        </button>
       
         <input name="artistId" id="tunderInput" type="hidden">
       </form>
@@ -90,12 +90,10 @@
       <p>Je bent nog niet ingelogd</p>
       <a href="/inlog" class="nav-item"> Inloggen</a>
     <% } %>
-</div>
+</section>
 
       
 </main>
-
-<footer> </footer>
 <%- include('../partials/script'); %>
 <script src="/static/javascript/tuneder.js"></script>
 </body>

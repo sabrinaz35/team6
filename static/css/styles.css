@@ -489,6 +489,17 @@ label:first-child{
 
 
 
+.genres div:focus-within {
+    border: 3px solid hotpink;
+}
+
+
+
+
+
+
+
+
 /* Opgeslagen Artiesten Pagina */
 .sort{
     font-size: 1em;
@@ -589,4 +600,13 @@ h2{
     color: #ffffff;
     font-size: 30px;
 }
+
+
+.container footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100vw;
+}
+
+
 
