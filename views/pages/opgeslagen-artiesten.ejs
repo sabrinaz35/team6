@@ -23,7 +23,7 @@
                 <% artiesten.forEach(artiest => { %>
                   <div class="grid-item">
                     <form action="/opgeslagen-artiesten" method="POST">
-                      <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm"></button>
+                      <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heartrood.svg" alt="button in een hart vorm"></button>
                       <input name="artistId" value="<%= artiest.id %>" type="hidden">
                     </form>
                     <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
