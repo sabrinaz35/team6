@@ -610,6 +610,7 @@ h2{
 /*De styling van de genre */
 .genres {
     gap: 20px;
+    margin-top: 5%;
     margin-bottom: 15px;
     font-family: 'Pixelify Sans', sans-serif;
     color: #ffffff;
@@ -641,7 +642,6 @@ h2{
 .genres input[type="radio"]:checked {
     border-color: #000000;
     background-color: #b94343;
-=======
 
 
 
