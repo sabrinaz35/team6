@@ -502,12 +502,13 @@ app.get("/token", (req, res) => {
 
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!
-// Middleware to handle not found errors - error 404
+//Error 404
 app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url)
   // send back a HTTP response with status code 404
-  res.status(404).send('404 error at URL: ' + req.url)
+  // res.status(404).send('404 error at URL: ' + req.url)
+  res.status(404).render("pages/404")
 })
 
 // error 500 handling

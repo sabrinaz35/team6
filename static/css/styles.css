@@ -590,3 +590,17 @@ h2{
     font-size: 30px;
 }
 
+.errorPage {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+}
+
+.errorPage h2{
+    color: #3f3f3f;
+}
+
+.errorImg {
+    max-width: 20vw;
+}
