@@ -97,12 +97,12 @@ button, #startZoeken {
 }
 
 /* artiest zoeken button */
-.startZoeken {
+#startZoeken {
     text-decoration: none;
     background-color: rgb(185, 67, 67);
     font-size: 2em;
-    position: relative; /* Maak een stacking context voor de button */
-    z-index: 2;       /* Zorgt dat de button boven de afbeelding komt */
+    position: relative; 
+    z-index: 2;       
 }
 
 #startZoeken:hover{
