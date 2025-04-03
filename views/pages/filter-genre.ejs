@@ -11,40 +11,36 @@
 <main class="genreFilter">
 <!-- Code -->
   <h1>Kies je favouriete genres!</h1>
-  <button id="genreLaden">Laad nieuwe genres</button>
+<<<<<<< Updated upstream
+  <button id="genreLaden" class="genre-button">Laad nieuwe genres</button>
+=======
+  <div class="center-button">
+    <button id="genreLaden">Laad nieuwe genres</button>
+</div>
+>>>>>>> Stashed changes
   <form action="/genre-kiezen" method="POST">
-    
     <div class="genres">
-      <div>
-        
-        <input id="genre1" type="radio" name="genre" value="genre1">
-        <label id="genre1Label" for="genre1"></label>
-      </div>
-      
-      <div>
-       
-        <input id="genre2" type="radio" name="genre" value="genre2">
-        <label id="genre2Label" for="genre2"></label>
-      </div>
-  
-      <div>
-        
-        <input id="genre3" type="radio" name="genre" value="genre3">
-        <label id="genre3Label" for="genre3"></label> 
-      </div>
-      
-      
-      <div>
-        
-        <input id="genre4" type="radio" name="genre" value="genre4">
-        <label id="genre4Label" for="genre4"></label>
-      </div>
+        <div>
+            <input id="genre1" type="radio" name="genre" value="genre1">
+            <label id="genre1Label" for="genre1"></label>
+        </div>
+        <div>
+            <input id="genre2" type="radio" name="genre" value="genre2">
+            <label id="genre2Label" for="genre2"></label>
+        </div>
+        <div>
+            <input id="genre3" type="radio" name="genre" value="genre3">
+            <label id="genre3Label" for="genre3"></label>
+        </div>
+        <div>
+            <input id="genre4" type="radio" name="genre" value="genre4">
+            <label id="genre4Label" for="genre4"></label>
+        </div>
     </div>
-    
     <div class="buttons">
-      <button type="submit">Volgende Vraag</button> 
+        <button id="nextQuestion" class="question-button">Volgende Vraag</button>
     </div>
-  </form>
+</form>
 
 </main>
 <footer>
