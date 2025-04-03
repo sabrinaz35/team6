@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-  <%- include('../partials/head'); %>
-</head>
-<body class="container">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="container">
 
-<header>
-  <%- include('../partials/header'); %>
-</header>
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
 
 
-<main>
-  <div class="inloggen">
-      <section>
-        <h1>Inloggen</h1>
-        <form action="/inlog-account" method="post">
+  <main>
+    <div class="inloggen">
+        <section>
+          <h1>Inloggen</h1>
+          <form action="/inlog-account" method="post">
 
-          <label for="e-mailadress">E-mailadres</label>
-          <input name="email" type="email" required>
-    
-          <label for="password">Password</label>
-          <input name="password" type="password" required>
-    
-          <button type="submit" value="Send Request">Inloggen</button>
-        </form>
-      </section>
-      <p>Nog geen account? <a href="/aanmelden">Meld je nu aan!</a></p>
-  </div>
-</main>
+            <label for="e-mailadress">E-mailadres</label>
+            <input name="email" type="email" required>
+      
+            <label for="password">Password</label>
+            <input name="password" type="password" required>
+      
+            <button type="submit" value="Send Request">Inloggen</button>
+          </form>
+        </section>
+        <p>Nog geen account? <a href="/aanmelden">Meld je nu aan!</a></p>
+    </div>
+  </main>
 
-<footer>
-  <%- include('../partials/footer'); %>
-</footer>
+  <footer>
+    <%- include('../partials/footer'); %>
+  </footer>
 </body>

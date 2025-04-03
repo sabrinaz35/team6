@@ -6,39 +6,39 @@
 
   <body>
 
-<header>
-  <%- include('../partials/header'); %>
-  <div class="shape"></div>
-</header>
+    <header>
+      <%- include('../partials/header'); %>
+      <div class="shape"></div>
+    </header>
 
     <main>
-            <h1>Mijn Opgeslagen Artiesten</h1>
-            <form action="">
-            <input type="text" class="search" placeholder="Zoek artiest...">
-            </form>
-            <button class="sort" data-sort="naam">Sorteer op naam</button>
+      <h1>Mijn Opgeslagen Artiesten</h1>
+      <form action="">
+        <input type="text" class="search" placeholder="Zoek artiest...">
+      </form>
+      <button class="sort" data-sort="naam">Sorteer op naam</button>
 
-            <section id="favorieten" class="account-opgeslagen-artiest-grid">
-            <% if (user && artiesten.length > 0) { %>
-                <% artiesten.forEach(artiest => { %>
-                  <div class="grid-item">
-                    <form action="/opgeslagen-artiesten" method="POST">
-                      <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm"></button>
-                      <input name="artistId" value="<%= artiest.id %>" type="hidden">
-                    </form>
-                    <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
-                    <h3 class="naam"><%= artiest.name %></h3>
-                    <p>Genre: <%= artiest.genre %></p>
-                    <p>populariteit: <%= artiest.popularity %></p>
-                  </div>
-                <% }) %>
-              <% } else { %>
-                <p>Je hebt nog geen artiesten opgeslagen.</p>
-              <% } %>
-            </section>
+      <section id="favorieten" class="account-opgeslagen-artiest-grid">
+        <% if (user && artiesten.length > 0) { %>
+          <% artiesten.forEach(artiest => { %>
+            <div class="grid-item">
+              <form action="/opgeslagen-artiesten" method="POST">
+                <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm"></button>
+                <input name="artistId" value="<%= artiest.id %>" type="hidden">
+              </form>
+              <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
+              <h3 class="naam"><%= artiest.name %></h3>
+              <p>Genre: <%= artiest.genre %></p>
+              <p>populariteit: <%= artiest.popularity %></p>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>Je hebt nog geen artiesten opgeslagen.</p>
+        <% } %>
+      </section>
     </main>
     <footer>
         <%- include('../partials/footer'); %>
     </footer>
-</body>
+  </body>
 </html>
