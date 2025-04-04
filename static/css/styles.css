@@ -727,7 +727,6 @@ h2{
 }
 
 
-
 /* styling artist spotlight playlist */
 .playlist{
     display: flex;
@@ -742,5 +741,47 @@ h2{
     min-height: 20rem;
 
 }
+  /* Stijl voor de waardeweergave */
+  #value {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+  }
 
+
+#rangeSlider {
+    -webkit-appearance: none; /* Verwijder standaardstijl in Webkit (Chrome, Safari) dus geen firefox */
+    width: 20%;
+    height: 50px;
+    background: #ddd; /* Achtergrond van de track */
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.3s;
+  }
+
+  /* Styling van de track (achtergrondbalk) */
+  #rangeSlider::-webkit-slider-runnable-track {
+    height: 20px;
+    background: linear-gradient(90deg, #b94343, #ea0000);
+    border-radius: 5px;
+  }
+
+  /* Styling van de slider-knop */
+  #rangeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #009d4c;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  /* Actief effect wanneer je de slider sleept */
+  #rangeSlider:active::-webkit-slider-thumb {
+    background: #09e214;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.399);
+  }
 
