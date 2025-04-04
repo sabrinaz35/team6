@@ -104,16 +104,20 @@ rangeSliderTuneder.addEventListener('input', function (event) {
 let geselecteerdeGenre;
 async function fetchGenres() {
     try {
-    const response = await fetch("/api/genres");
-    const data = await response.json();
-    geselecteerdeGenre = data.selectedGenres;
-    console.log("geselecteerde Genres:", geselecteerdeGenre);
+        const response = await fetch("/api/genres");
+        const data = await response.json();
+        
+        if (data.selectedGenres && data.selectedGenres.length > 0) {
+            geselecteerdeGenre = data.selectedGenres;
+            console.log("Geselecteerde Genres:", geselecteerdeGenre);
 
-    // Voeg het geselecteerde genre toe als eerste slide in de Swiper
-    genreInSwiper(geselecteerdeGenre);
-
+            // Voeg het geselecteerde genre toe als eerste slide in de Swiper
+            genreInSwiper(geselecteerdeGenre);
+        } else {
+            console.log("Geen genres ontvangen van de backend.");
+        }
     } catch (error) {
-    console.error("Error fetching genres:", error);
+        console.error("Error fetching genres:", error);
     }
 }
         
@@ -138,6 +142,7 @@ function genreInSwiper(genre) {
 }
 
 fetchGenres();
+
 
 
 //meer genres om uit te kiezen toevoegen aan swiper 
@@ -165,10 +170,18 @@ async function getGenres () {
         .filter(artist => artist.genres.length > 0) // filter alle genre arrays die leeg zijn
         .flatMap(artist => artist.genres); // laat alle genres in een grote array zien 
 
-        // Voeg genres toe aan de Swiper
-        meerGenresInSwiper(filteredGenres);
+         // Verwijder dubbele genres 
+        let uniqueGenres = [];
+        for (let genre of filteredGenres) {
+            if (!uniqueGenres.includes(genre)) {
+                uniqueGenres.push(genre);
+            }
+        }
 
-        console.log("Genres:", filteredGenres); 
+        // Voeg genres toe aan de Swiper
+        meerGenresInSwiper(uniqueGenres);
+
+        console.log("Genres:", uniqueGenres); 
     } catch {
         console.error('Error fetching genres:', error);
     }

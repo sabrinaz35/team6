@@ -68,7 +68,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"], // Voeg Swiper CDN toe aan scriptSrc
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js", "https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"],// Voeg Swiper CDN toe aan scriptSrc
         connectSrc: ["'self'", "https://api.spotify.com", "http://localhost:4000"], // API calls naar Spotify en backend toestaan
         frameSrc: ["'self'", "https://open.spotify.com"], // Spotify playlist embeds toestaan
         imgSrc: ["'self'", "data:", "https://i.scdn.co"], // Foto's toestaan van de door Spotify gegeven bron
@@ -162,6 +162,10 @@ app.get("/filter-populariteit", function (req, res) {
 
 app.get("/filter-genre", function (req, res) {
   res.render("pages/filter-genre")
+})
+
+app.get("/fout-inlog", function (req, res) {
+  res.render("pages/fout-inlog")
 })
 
 
@@ -260,7 +264,7 @@ app.post("/inlog-account", async (req, res) => {
   } else {
     // Als de gebruiker niet wordt gevonden
 
-    res.send("Gebruiker niet gevonden. Probeer opnieuw.")
+    res.render("pages/fout-inlog")
   }
 })
 

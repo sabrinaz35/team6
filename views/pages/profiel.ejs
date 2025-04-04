@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-  <%- include('../partials/head'); %>
-</head>
-<body class="mijn-account">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="mijn-account">
 
-<header>
-  <%- include('../partials/header'); %>
-</header>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
 
-<main>
-  <h1>Mijn account</h1>
-  <section class="profile-section">
-    <img src="<%= '/static/upload/' + user.profielFoto %>" alt="Profielfoto" class="profile-picture" width="300">
-    <h2><%= user.name %></h2>
-    <form action="/uitloggen">
-      <button>Uitloggen</button>
-    </form>
-  </section>
-  
-  <div class="background-opacity-white">
-    <div class="opgeslagen-artiest-column">
-      <h3 class="opgeslagen-artiesten-titel">Mijn Opgeslagen Artiesten</h3> 
-      
-      <section class="account-opgeslagen-artiest-grid">
-        <% if (user && artiesten.length > 0) { %>
-          <% artiesten.forEach(artiest => { %>
-            <div class="grid-item">
-              <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
-              <h3><%= artiest.name %></h3>
-              <p>Genre: <%= artiest.genre %></p>
-              <p>Populariteit: <%= artiest.popularity %></p>
-            </div>
-          <% }) %>
-        <% } else { %>
-          <p>Je hebt nog geen artiesten opgeslagen.</p>
-        <% } %>
+    <main>
+      <h1>Mijn account</h1>
+      <section class="profile-section">
+        <img src="<%= '/static/upload/' + user.profielFoto %>" alt="Profielfoto" class="profile-picture" width="300">
+        <h2><%= user.name %></h2>
+        <form action="/uitloggen">
+          <button>Uitloggen</button>
+        </form>
       </section>
-    </div>
-  </div>
-</main>
-<footer>
-  <%- include('../partials/footer'); %>
-</footer>
-</body>
+      
+      <div class="background-opacity-white">
+        <div class="opgeslagen-artiest-column">
+          <h3 class="opgeslagen-artiesten-titel">Mijn Opgeslagen Artiesten</h3> 
+          
+          <section class="account-opgeslagen-artiest-grid">
+            <% if (user && artiesten.length > 0) { %>
+              <% artiesten.forEach(artiest => { %>
+                <div class="grid-item">
+                  <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
+                  <h3><%= artiest.name %></h3>
+                  <p>Genre: <%= artiest.genre %></p>
+                  <p>Populariteit: <%= artiest.popularity %></p>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p>Je hebt nog geen artiesten opgeslagen.</p>
+            <% } %>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
+  </body>
+
+</html>

@@ -82,6 +82,9 @@ async function getGenres () {
     document.getElementById("genre3").checked = false;
     document.getElementById("genre4").checked = false;
 
+
+   
+
   } catch {
     console.error('Error fetching genres:', error);
   }
