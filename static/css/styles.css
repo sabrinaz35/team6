@@ -88,7 +88,7 @@ h2, h3{
     font-weight: 800;
 }
 
-button, #startZoeken {
+button, #startZoeken, #artiestlink {
     background-color: rgb(77, 119, 79);
     border: none;
     border-radius: 5px;
@@ -100,11 +100,12 @@ button, #startZoeken {
     font-weight: bold;
     margin-top: 1em;
     box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    text-align: center;
 }
 
 /* artiest zoeken button */
 #startZoeken {
-    text-decoration: none;
     background-color: rgb(185, 67, 67);
     font-size: 2em;
     position: relative; 
@@ -180,7 +181,7 @@ button:hover{
 
 .background-opacity-80{
     width: 100%;
-    margin-top: 20%;
+    margin-top: 5%;
     padding: 3em 0em;
     background-color: rgba(255, 255, 255, 0.3);
     display: flex;
@@ -189,12 +190,20 @@ button:hover{
     align-items: center;
     gap: 10px;
 }
-.background-opacity-80 section{
+.background-opacity-80 article{
     width:400px;
-    margin-top: 20%;
+    margin-top: 5%;
     border-radius: 5px;
     padding: 0.5em;
     background: rgb(255,255,255,0.7);
+}
+
+#likebutton{
+    background: none;
+    position: absolute;
+    box-shadow: none;
+    width: 7rem;
+
 }
 
 marquee {
@@ -717,6 +726,21 @@ h2{
     background-color: #b94343;
 }
 
+
+/* styling artist spotlight playlist */
+.playlist{
+    display: flex;
+    flex-direction: column;
+}
+
+#artiestlink{
+    margin-bottom: 1rem;
+}
+
+#artiestFotoContainer{
+    min-height: 20rem;
+
+}
   /* Stijl voor de waardeweergave */
   #value {
     font-size: 40px;

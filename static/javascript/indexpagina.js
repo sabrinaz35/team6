@@ -51,6 +51,7 @@ async function zoekKleineArtiest() {
     //als er geen kleine artiesten in de 50 opgehaalde artiest data zitten stuur een foutmelding
     if(kleineArtiesten == ""){
       console.log("geen kleine Artiesten gevonden!")
+      zoekKleineArtiest();
     } else {
       console.log("kleine Artiesten zijn: " + JSON.stringify(kleineArtiesten, null, 2))
 
@@ -63,7 +64,7 @@ async function zoekKleineArtiest() {
       document.getElementById('artiestfoto').src = `${eersteArtiest.images[0].url}`;
       //laat genres van de artiest zien
       if(eersteArtiest.genres == ""){
-        document.getElementById('artiestgenres').innerText = ""
+        document.getElementById('artiestgenres').innerText = "";
       } else {
         document.getElementById('artiestgenres').innerText = `${eersteArtiest.genres[0]}`;
       }
@@ -75,13 +76,11 @@ async function zoekKleineArtiest() {
 
 
       //code voor de like button die dan de artiesten id meegeeft aan de button en daarna like doorgeeft aan de data base
-      document.getElementById('favoInput').value=eersteArtiest.id
-      //Andere gegevens ook meegeven aan naar de mongodb database
-      // document.getElementById("artistNameInput").value = eersteArtiest.name;
-      // document.getElementById("artistGenreInput").value = eersteArtiest.genres.join(", "); // Genre als string
-      // document.getElementById("artistFollowersInput").value = eersteArtiest.followers.total;
-      // document.getElementById("artistFotoInput").value = eersteArtiest.images[0].url;
-      // console.log(eersteArtiest.id)
+      document.getElementById('favoInput').value=eersteArtiest.id;
+
+      //link playlist aan gevonden artiest
+      let artiestID = eersteArtiest.id;
+      document.getElementById("kleineArtiestIframe").src = `https://open.spotify.com/embed/artist/${artiestID}?utm_source=generator`;
     }
     
 

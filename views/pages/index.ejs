@@ -33,10 +33,13 @@
       <section class="background-opacity-80">
         <article class="uitgelichte-artiest">
           <form action="/opgeslagen-artiesten" method="POST">
-            <img id="artiestfoto" src="static/images/artiest-milo.png" alt="foto van de artiest">
-            <h3 id="artiestinformatie">Milolaathetlukken - 21k volgers</h3>
+            <div id="artiestFotoContainer">
+              <img id="artiestfoto" src="" alt="foto van de artiest">
+            </div>
+            
+            <h3 id="artiestinformatie"></h3>
             <p id="artiestgenres"></p>
-            <a id="artiestlink" href="https://open.spotify.com/artist/31RYhg7Auitqp3eg9rTB9i?si=_UN40XIbQUuH5tRnoKkyqQ">Luister Op Spotify</a>
+            
 
             <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heart.svg" alt="hartje likebutton"></button>
             <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
@@ -44,8 +47,8 @@
           </form>
         </article>
         <article class="playlist">
-          <h3>Luister nu onze playlist!</h3>
-          <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWUS3jbm4YExP?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <a id="artiestlink" href="">Luister Op Spotify</a>
+          <iframe id="kleineArtiestIframe" src="" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </article>
       </section>
     </main>
