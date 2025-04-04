@@ -317,7 +317,7 @@ label:first-child{
     margin-left: 3em;
     padding-top: 1em;
 }
-.account-opgeslagen-artiest-grid {
+#account-opgeslagen-artiest-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
     gap: 16px;
@@ -329,6 +329,12 @@ label:first-child{
     padding: 12px;
     border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    list-style-type: none;
+}
+.grid-item:hover {
+    transform: scale(1.05); 
+    transition: transform 0.4s ease-in-out;
+    cursor: pointer;
 }
 
 .grid-item h3, p{
@@ -349,6 +355,18 @@ label:first-child{
         height: auto; 
         object-fit: cover; 
         border-radius: 2px; 
+    }
+.grid-item-container {
+        display: flex;
+        justify-content: center; /* Centers the like button */
+        width: 100%; /* Ensures the container takes up full width to allow centering */
+      }
+
+.grid-item button{ 
+    background: none;
+    box-shadow: none;
+    width: 5em;
+    margin-top: 0;
     }
 
 /* Styling Tuneder*/
