@@ -68,7 +68,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"], // Voeg Swiper CDN toe aan scriptSrc
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js", "https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"],// Voeg Swiper CDN toe aan scriptSrc
         connectSrc: ["'self'", "https://api.spotify.com", "http://localhost:4000"], // API calls naar Spotify en backend toestaan
         frameSrc: ["'self'", "https://open.spotify.com"], // Spotify playlist embeds toestaan
         imgSrc: ["'self'", "data:", "https://i.scdn.co"], // Foto's toestaan van de door Spotify gegeven bron
