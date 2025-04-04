@@ -73,11 +73,17 @@ html, body{
 }
 
 body{
-    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-family: 'Pixelify Sans', sans-serif;
     background-color: rgb(152, 199, 140);
 }
 
-h1, h2, h3{
+h1{
+    font-family: 'Pixelify Sans', sans-serif;
+    color: #ffffff;
+    text-align: center;
+}
+
+h2, h3{
     font-family: 'Kanit', Arial, Helvetica, sans-serif;
     font-weight: 800;
 }
@@ -165,7 +171,7 @@ button:hover{
 }
 
 .link-row a:last-child{
-    background-color: rgb(99 152 103);
+    background-color: #639867;
 }
 .link-row a:hover {
     background-color: rgb(185, 67, 67);
@@ -527,6 +533,17 @@ label:first-child{
 
 
 
+.genres div:focus-within {
+    border: 3px solid hotpink;
+}
+
+
+
+
+
+
+
+
 /* Opgeslagen Artiesten Pagina */
 .sort{
     font-size: 1em;
@@ -627,4 +644,76 @@ h2{
     color: #ffffff;
     font-size: 30px;
 }
+
+
+
+.container footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100vw;
+}
+
+
+
+.errorPage {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    align-items: center;
+}
+
+.errorPage h2{
+    color: #3f3f3f;
+}
+
+.errorImg {
+    max-width: 20vw;
+}
+
+/*filter genre pagina styling */
+/* margin van de buttons */
+.genre-button {
+    margin-bottom: 5%;
+    }
+
+    .question-button {
+    margin-top: 30%;
+    }
+
+/*De styling van de genre */
+.genres {
+    gap: 20px;
+    margin-top: 5%;
+    margin-bottom: 15px;
+    font-family: 'Pixelify Sans', sans-serif;
+    color: #ffffff;
+    font-size: x-large;
+}
+/*De styling voor de buttons */
+.genres input[type="radio"] {
+    /* Verwijder de standaardweergave */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Basis styling voor de radio button */
+    background-color: #4D774F;
+    border: 2px solid ;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Hover effect */
+.genres input[type="radio"]:hover {
+    border-color: #ccc;
+}
+
+/* Styling wanneer de radio button geselecteerd is */
+.genres input[type="radio"]:checked {
+    border-color: #000000;
+    background-color: #b94343;
+
 

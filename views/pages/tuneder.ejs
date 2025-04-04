@@ -1,101 +1,96 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-  <%- include('../partials/head'); %>
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-</head>
-<body>
+  <head>
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  </head>
+  <body>
 
-<header>
-  <%- include('../partials/header'); %>
-</header>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
 
-<!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
-<main>
-  
-  <section id="displayFilters">
-    <div>
-      <h2>Genre:</h2>
-      <div class="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <!-- Slides worden dynamisch toegevoegd in javascript -->
+    <!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
+    <main>
       
+      <section id="displayFilters">
+        <div>
+          <h2>Genre:</h2>
+          <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+              <!-- Slides worden dynamisch toegevoegd in javascript -->
+            </div>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
+          </div>
         </div>
-     
+        
+
+        <div class="keuze">
+          <h2>Populariteit:</h2>
+          <form>
+            <p id="valueTuneder">10</p>
+            <input type="range" name="populariteit" id="rangeSliderTuneder" min="11" max="100" value="20" step="1" />
+          </form> 
+        </div>
+      </section>
+
       
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
+      <div class="zoekWrapper">
+        <button id="zoekArtiest" class="startZoeken">zoek opnieuw</button>
       </div>
-    </div>
-    
-
-    <div class="keuze">
-      <h2>Populariteit:</h2>
-      <form>
-        <p id="valueTuneder">10</p>
-        <input type="range" name="populariteit" id="rangeSliderTuneder" min="11" max="100" value="20" step="1" />
-      </form> 
-    </div>
-  </section>
-
-  
-  <div class="zoekWrapper">
-    <button id="zoekArtiest" class="startZoeken">zoek opnieuw</button>
-  </div>
-  
-  
-
-  <div class="tuneder-wrapper">
-    <!-- Linker knop -->
-    <div class="heart-container">
-        <img src="static/images/linkerhart.svg" alt="Linker helft" class="heart-left">
-        <img src="static/images/rechterhard.svg" alt="Rechter helft" class="heart-right">
-    </div>
-
-    <!-- Centrale afbeelding -->
-    <div class="image-container">
-      <img src="static/images/radio2.png" alt="Radio afbeelding" class="tuneder-image">
-  </div>
-
-    <!-- iframe voor artiest na het zoeken -->
-    <iframe id="artiestIframe" style="border-radius:12px" src="" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
-    <!-- dialog die in beeld komt als er geen artiest gevonden wordt -->
-    <dialog id="errorDialog">
-      <button autofocus>Sluit</button>
-      <p>Geen artiesten passend bij je filters gevonden!</p>
-    </dialog>
-
-    <!-- loading animation -->
-    <div id="loading" class="hide"></div>
-
-    <!-- Rechter knop -->
-
-    <% if (user){ %>
-      <form class="icon-btn" action="/opgeslagen-artiesten" method="POST">
-        <button type="submit" id="likebutton" class="like-button">
-          <img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm">
-      </button>
       
-        <input name="artistId" id="tunderInput" type="hidden">
-      </form>
-    <% } else { %>
-      <p>Je bent nog niet ingelogd</p>
-      <a href="/inlog" class="nav-item"> Inloggen</a>
-    <% } %>
-</div>
+      <section class="tuneder-wrapper">
+          <!-- Linker knop -->
+          <div class="heart-container">
+              <img src="static/images/linkerhart.svg" alt="Linker helft" class="heart-left">
+              <img src="static/images/rechterhard.svg" alt="Rechter helft" class="heart-right">
+          </div>
 
-      
-</main>
+          <!-- Centrale afbeelding -->
+          <div class="image-container">
+            <img src="static/images/radio2.png" alt="Radio afbeelding" class="tuneder-image">
+          </div>
 
-<footer> </footer>
-<%- include('../partials/script'); %>
-<script src="/static/javascript/tuneder.js"></script>
-</body>
+          <!-- iframe voor artiest na het zoeken -->
+          <iframe id="artiestIframe" style="border-radius:12px" src="" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+          <!-- dialog die in beeld komt als er geen artiest gevonden wordt -->
+          <dialog id="errorDialog">
+            <button autofocus>Sluit</button>
+            <p>Geen artiesten passend bij je filters gevonden!</p>
+          </dialog>
+
+          <!-- loading animation -->
+          <div id="loading" class="hide"></div>
+
+          <!-- Rechter knop -->
+
+          <% if (user){ %>
+            <form class="icon-btn" action="/opgeslagen-artiesten" method="POST">
+              <button type="submit" id="likebutton" class="like-button">
+                <img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm">
+              </button>
+            
+              <input name="artistId" id="tunderInput" type="hidden">
+            </form>
+          <% } else { %>
+            <div>
+              <p>Je bent nog niet ingelogd</p>
+              <a href="/inlog" class="nav-item"> Inloggen</a>
+            </div>
+          <% } %>
+      </section>   
+    </main>
+    <%- include('../partials/script'); %>
+    <script src="/static/javascript/tuneder.js"></script>
+  </body>
+
+</html>

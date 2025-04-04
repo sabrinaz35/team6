@@ -6,10 +6,10 @@
 
   <body class="startpagina">
 
-<header>
-  <%- include('../partials/header'); %>
-  <div class="shape"></div>
-</header>
+    <header>
+      <%- include('../partials/header'); %>
+      <div class="shape"></div>
+    </header>
 
     <main>
       <!-- Home is "hidden", voor accesiblity. -->
@@ -20,34 +20,33 @@
 
         <a id="startZoeken" href="/filter-genre">Start met zoeken</a>
 
-        <section class="link-row">
+        <div class="link-row">
           <a href="/inlog">Inloggen</a>
           <a href="/aanmelden">Aanmelden</a>
-        </section>
-        
+        </div> 
       </section>
 
       <marquee behavior="scroll" direction="right" scrollamount="10">
         🚀 <span>ACCOUNT AANMAKEN IS GRATIS!</span> 🚀
-    </marquee>
-    
+      </marquee>
+      
       <section class="background-opacity-80">
-        <section class="uitgelichte-artiest">
+        <article class="uitgelichte-artiest">
           <form action="/opgeslagen-artiesten" method="POST">
-          <img id="artiestfoto" src="static/images/artiest-milo.png" alt="foto van de artiest">
-          <h3 id="artiestinformatie">Milolaathetlukken - 21k volgers</h3>
-          <p id="artiestgenres"></p>
-          <a id="artiestlink" href="https://open.spotify.com/artist/31RYhg7Auitqp3eg9rTB9i?si=_UN40XIbQUuH5tRnoKkyqQ">Luister Op Spotify</a>
+            <img id="artiestfoto" src="static/images/artiest-milo.png" alt="foto van de artiest">
+            <h3 id="artiestinformatie">Milolaathetlukken - 21k volgers</h3>
+            <p id="artiestgenres"></p>
+            <a id="artiestlink" href="https://open.spotify.com/artist/31RYhg7Auitqp3eg9rTB9i?si=_UN40XIbQUuH5tRnoKkyqQ">Luister Op Spotify</a>
 
-          <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heart.svg" alt="hart vorm"></button>
-          <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
-          <input name="artistId" id="favoInput" type="hidden">
-        </form>
-        </section>
-        <section class="playlist">
+            <button type="submit" id="likebutton"><img class="likeHartje" src="/static/images/heart.svg" alt="hartje likebutton"></button>
+            <!-- Dit is om deze gegevens van de artiest op te slaan in de mongodb na het liken -->
+            <input name="artistId" id="favoInput" type="hidden">
+          </form>
+        </article>
+        <article class="playlist">
           <h3>Luister nu onze playlist!</h3>
           <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWUS3jbm4YExP?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </section>
+        </article>
       </section>
     </main>
 
