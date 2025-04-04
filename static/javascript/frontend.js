@@ -11,7 +11,7 @@ var options = {
   
   // Stap 3.
   var charactersList = new List('theList', options);
-  
+
 // Like hartje index en opgeslagen pagina 
 //dit klopt nog niet helamaal oops
 let witHart = document.getElementsByClassName('likeHartje')

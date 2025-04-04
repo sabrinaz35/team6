@@ -18,6 +18,7 @@
 /* Geeft aan dat het klikbaar is en maakt het logo iets groter */ 
 .logo:hover {
     transform: scale(1.05); 
+    transition: 0.3s ease-out;
     cursor: pointer; 
 }
 
@@ -27,6 +28,7 @@
     display: flex;
     gap: 20px;
 }
+
 
 /* Basis stijlen voor de navigatie items */
 .nav-item {
@@ -73,12 +75,12 @@ html, body{
 }
 
 body{
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     background-color: rgb(152, 199, 140);
 }
 
 h1{
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     color: #ffffff;
     text-align: center;
 }
@@ -108,11 +110,12 @@ button, #startZoeken {
     background-color: rgb(185, 67, 67);
     font-size: 2em;
     position: relative; 
-    z-index: 2;       
+    z-index: 2; 
+    margin-top: 0em;      
 }
 
 #startZoeken:hover{
-    background-color: rgb(142, 24, 24);
+    background-color: rgb(77, 119, 79);
 }
 
 button:hover{
@@ -252,6 +255,7 @@ label:first-child{
 .inloggen h1,.accountAanmaken h1{
     font-size: 3em;
     margin: 0.5em;
+    color: black;
 }
 
 .inloggen p, .accountAanmaken p{
@@ -284,7 +288,7 @@ label:first-child{
 }
 
 
-/* Profielpagina */
+/* Profielpagina + opgeslagen artiesten pagina */
 .profile-section {
     display: flex;
     flex-direction: column;
@@ -300,6 +304,7 @@ label:first-child{
     .mijn-account h1 {
         display: flex;
         justify-content: center;
+        margin-left: 0;
     }
 }
 
@@ -334,13 +339,14 @@ label:first-child{
     background: rgb(255, 255, 255);
     padding: 12px;
     border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
     list-style-type: none;
 }
 .grid-item:hover {
-    transform: scale(1.05); 
-    transition: transform 0.4s ease-in-out;
+    transform: scale(1.03); 
+    transition: transform 0.2s ease-in-out;
     cursor: pointer;
+    box-shadow: 0px 0px 15px 10px rgba(0, 0, 0, 0,3);
 }
 
 .grid-item h3, p{
@@ -538,16 +544,20 @@ label:first-child{
 }
 
 
-
-
-
-
-
-
 /* Opgeslagen Artiesten Pagina */
 .sort{
     font-size: 1em;
     margin-left: 20px;
+}
+
+.opgeslagen-artiesten-pagina input{
+    width: 40%;
+    padding: 1em;
+    align-self: center;
+    color: black;
+    border: none;
+    font-size: medium;
+
 }
 
 
@@ -715,5 +725,5 @@ h2{
 .genres input[type="radio"]:checked {
     border-color: #000000;
     background-color: #b94343;
-
+}
 
