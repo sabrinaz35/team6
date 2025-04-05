@@ -3,27 +3,28 @@
 console.log("Hallo wereld")
 
 
-var options = {
-    // de classes van de h2's en p's (daarin gaat gezocht worden naar matches)
-    valueNames: [ 'name' ]
-  };
+// var options = {
+//     // de classes van de h2's en p's (daarin gaat gezocht worden naar matches)
+//     valueNames: [ 'name' ]
+//   };
   
   
-  // Stap 3.
-  var charactersList = new List('theList', options);
+//   // Stap 3.
+//   var charactersList = new List('theList', options);
 
-// Like hartje index en opgeslagen pagina 
-//dit klopt nog niet helamaal oops
-let witHart = document.getElementsByClassName('likeHartje')
+// // Like hartje index en opgeslagen pagina 
+// //dit klopt nog niet helamaal oops
+// let witHart = document.getElementsByClassName('likeHartje')
 
-witHart.onclick = veranderKleur;
+// witHart.onclick = veranderKleur;
 
-function veranderKleur (){
+// function veranderKleur (){
 
- witHart.classList.toggle ("roodHart");
-}
+//  witHart.classList.toggle ("roodHart");
+// }
 
 
+//hamburger menu
 document.addEventListener('DOMContentLoaded', function () {
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
