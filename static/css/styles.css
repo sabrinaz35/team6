@@ -50,6 +50,64 @@
     margin-right: 5px;
 }
 
+/* Hamburger icon alleen zichtbaar op mobiel */
+.hamburger {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+/* Mobiele menu standaard verborgen */
+.mobile-menu {
+    display: none;
+    flex-direction: column; /* <--- belangrijk, anders geen stacking */
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 70%;
+    background-color: #4D774F;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.mobile-menu.active {
+    display: flex;
+}
+
+/* Items in het mobiele menu */
+.mobile-nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-family: 'Pixelify Sans', sans-serif;
+    margin-bottom: 20px;
+    background-color: #6c9c6e;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+/* Sluitknop */
+.close-btn {
+    align-self: flex-end;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+/* Media query voor mobiel */
+@media (max-width: 768px) {
+    .nav-buttons {
+        display: none;
+    }
+    .hamburger {
+        display: block;
+        width: 2em;
+        height: auto;
+    }
+}
+
 /* Hover effect voor de nav-items */
 .nav-item:hover {
     background-color: rgb(185, 67, 67);
