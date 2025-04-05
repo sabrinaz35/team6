@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-  <%- include('../partials/head'); %>
-</head>
-<body class="container">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="container">
 
-<header>
-  <%- include('../partials/header'); %>
-</header>
+    <header>
+      <%- include('../partials/header'); %>
+    </header>
 
-<!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
-<main>
-  <div class="accountAanmaken">
-      <div>
-        <h1>Aanmelden</h1>
-        <form action="/add-account" method="post" enctype="multipart/form-data">
-          <label for="name">Naam</label>
-          <input name="name" type="text" >
-    
-          <label for="e-mailadress">E-mailadres</label>
-          <input name="email" type="email" required>
-    
-          <label for="password">Password</label>
-          <input name="password" type="password" required>
+    <!-- Even code om account aanmaak backend te testen, pas maar aan, maar laat de name of hetzelfde of pas deze ook aan in de server.js -->
+    <main>
+      <div class="accountAanmaken">
+          <div>
+            <h1>Aanmelden</h1>
+            <form action="/add-account" method="post" enctype="multipart/form-data">
+              <label for="name">Naam</label>
+              <input name="name" type="text" >
+        
+              <label for="e-mailadress">E-mailadres</label>
+              <input name="email" type="email" required>
+        
+              <label for="password">Password</label>
+              <input name="password" type="password" required>
 
-          <label for="profiel-foto">Selecteer een foto voor je profiel</label>
-          <input type="file" name="profielFoto" accept=".jpg, .jpeg, .png" />
+              <label for="profiel-foto">Selecteer een foto voor je profiel</label>
+              <input type="file" name="profielFoto" accept=".jpg, .jpeg, .png" />
 
-    
-          <button type="submit" value="Send Request">Aanmelden</button>
-        </form>
-        <p>Al een account? <a href="/inlog">Inloggen</a></p>
+              <button type="submit" value="Send Request">Aanmelden</button>
+            </form>
+            <p>Al een account? <a href="/inlog">Inloggen</a></p>
+          </div>
       </div>
-  </div>
-</main>
+    </main>
 
-<footer>
-  <%- include('../partials/footer'); %>
-</footer>
-</body>
+    <footer>
+      <%- include('../partials/footer'); %>
+    </footer>
+  </body>
+
+</html>
