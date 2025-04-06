@@ -291,13 +291,21 @@ marquee {
 
 /* Styling inlog- en aanmeldpagina*/
 .inloggen, .accountAanmaken{
-    width: 300px;
+    width: 350px;
     background: rgb(255, 255, 255, 0.7);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     margin: auto;
     margin-top: 50px;
+}
+
+@media 
+(max-width: 480px){
+    .inloggen, .accountAanmaken{
+        width: 300px;
+        margin-bottom: 1em;
+    }
 }
 
 form{
