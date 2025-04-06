@@ -259,13 +259,7 @@ button:hover{
     background: rgb(255,255,255,0.7);
 }
 
-#likebutton{
-    background: none;
-    position: absolute;
-    box-shadow: none;
-    width: 7rem;
 
-}
 
 marquee {
         font-size: 24px;      /* Grotere tekst */
@@ -448,57 +442,123 @@ label:first-child{
     margin-top: 0;
     }
 
+    
+
 /* Styling Tuneder*/
 .tuneder-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    justify-items: center;
+    align-items: end;
+    align-self: flex-end;
+}
+
+
+#artiestIframe {
+    position: absolute;
+    z-index: 1000;
+    width: 75%;
+    align-self: center;
+    
+}
+
+
+
+@media (max-width: 930px){
+    #artiestIframe {
+        margin-bottom: 0px;
+    }
+}
+
+@media (min-width: 931px){
+    #artiestIframe {
+        margin-bottom: 10%;
+    }
+}
+
+@media (min-width: 1160px){
+    #artiestIframe {
+        margin-bottom: 20%;
+    }
+}
+
+@media (min-width: 1420px){
+    #artiestIframe {
+        margin-bottom: 30%;
+    }
+}
+
+/* hoofd afbeelding van de radio */
+.image-container {
+    width: 100%;
+    background-clip: border-box; /* Zorgt ervoor dat de achtergrond beperkt blijft tot de border-box */ 
     display: flex;
-    justify-content: center; /* Elementen in het midden uitlijnen */
-    align-items: center;
-    gap: 20px; /* Ruimte tussen de knoppen en afbeelding */
-    height: 80vh;
+    align-items: end;
+    justify-content: center;
+    position: relative;
 }
 
-.icon-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* Maak de hartjes kleiner */
-.icon-btn img[alt="Volgende"],  
-.icon-btn img[alt="Vorige"] {
-    width: 80px; /* Kleinere grootte */
-    height: auto;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* Optioneel: hover-effect */
-.icon-btn:hover img {
-    transform: scale(1.1);
-}
-
-.tuneder-image {
-        margin-top: 3%;
-        position: relative; /* Zet de afbeelding in dezelfde context */
-}
-
-.icon-btn:active .heart-icon {
-    transform: scale(1.1); /* Licht inzoomeffect bij klik */
+.image-container img {
+    width: 100%;
 }
 
 .heart-container {
-    position: absolute;
-    left: 10%;
-    top: 100%; /* Plaatst het hartje in het midden van de pagina */
-    transform: translateY(-50%) scale(1.5); /* Vergroot het hartje en centreer verticaal */
-    width: 50px; /* Grotere container */
-    height: 50px;
+    align-self: center;
+    
+    position: relative;
+    width: 30%; /* Grotere container */
+    
     display: flex;
     align-items: center;
     cursor: pointer;
     transition: transform 1s ease; /* Gladde overgang */
 }
+
+/* like button styling */
+#gridRow3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+}
+
+/* Dialog styling */
+
+#errorDialog{
+    position: absolute;
+    z-index: 1002;
+}
+
+/* loading animation */
+
+#gridRow2{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#loading {
+    position: absolute;
+    z-index: 1003;
+    border: 16px solid #ffd60b; 
+    border-top: 16px solid #ffffff; 
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hide{
+    display: none;
+}
+
 
 /* Effect bij split */
 .heart-container.split {
@@ -525,6 +585,14 @@ label:first-child{
 .heart-container.split .heart-right {
     transform: translateX(100px); /* Verplaats de rechterhelft naar rechts */
 }
+
+#likebutton{
+    background: none;
+    width: 30%;
+    box-shadow: none;
+    
+
+}
 .like-button {
     all: unset; /* Verwijdert alle standaard button-stijlen */
     display: inline-block; /* Zorgt ervoor dat de knop nog steeds werkt */
@@ -532,8 +600,8 @@ label:first-child{
 }
 
 .like-button img {
-    max-width: 30%;
-    margin-top: 25%;
+    width: 100%;
+    
 }
 
 /* Verwijder rode hover en focus-stijlen */
@@ -544,6 +612,42 @@ label:first-child{
     box-shadow: none;
     background: none;
     border: none;
+}
+
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.tuneder-image {
+    margin-top: 3%;
+    position: relative; /* Zet de afbeelding in dezelfde context */
+}
+
+/* Maak de hartjes kleiner */
+.icon-btn img[alt="Volgende"],  
+.icon-btn img[alt="Vorige"] {
+    width: 80px; /* Kleinere grootte */
+    height: auto;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Optioneel: hover-effect */
+.icon-btn:hover img {
+    transform: scale(1.1);
+}
+
+
+
+.icon-btn:active .heart-icon {
+    transform: scale(1.1); /* Licht inzoomeffect bij klik */
 }
 
 
@@ -628,49 +732,10 @@ label:first-child{
 }
 
 
-/* Tuneder pagina */
 
-#artiestIframe {
-    position: absolute;
-    z-index: 1000;
-    width: 50vw;
-}
 
-/* hoofd afbeelding van de radio */
-.image-container {
-    margin-left: 18%;
-    height: 80vh;
-    background-clip: border-box; /* Zorgt ervoor dat de achtergrond beperkt blijft tot de border-box */ 
-}
 
-/* Dialog styling */
 
-#errorDialog{
-    position: absolute;
-    z-index: 1002;
-}
-
-/* loading animation */
-
-#loading {
-    position: absolute;
-    z-index: 1003;
-    border: 16px solid #ffd60b; 
-    border-top: 16px solid #ffffff; 
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.hide{
-    display: none;
-}
 
 /* like button op de index page  */
 .likeHartje.roodHart {
@@ -793,6 +858,14 @@ h2{
     border-color: #000000;
     background-color: #b94343;
 }
+
+/* styling voor volgende vraag button */
+.buttons{
+    display: flex;
+    justify-content:  center;
+}
+
+
 
 /* styling artist spotlight playlist */
 .playlist{
