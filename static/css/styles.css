@@ -853,3 +853,7 @@ h2{
   }
 
 
+  .button-wrapper {
+    display: flex;
+    justify-content: center; /* Horizontaal centreren */
+  }
