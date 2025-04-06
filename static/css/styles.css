@@ -55,7 +55,7 @@
 /* Hamburger icon alleen zichtbaar op mobiel */
 .hamburger {
     display: none;
-    font-size: 2em;
+    font-size: 3em;
     color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     margin-right: 20px;
@@ -71,10 +71,9 @@
     height: 100%;
     width: 90%;
     background-color: #4D774F;
-    box-shadow: inset 18px 19px 20px 4px rgb(0 0 0 / 10%);
+    box-shadow: inset 18px 19px 20px 4px rgb(0 0 0 / 10%), 1px 1px 13px 2px rgba(0, 0, 0, 0.4);
     padding: 20px;
     z-index: 1000;
-
     transform: translateX(-100%);
     opacity: 0;
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
@@ -113,11 +112,9 @@
     }
     .hamburger {
         display: block;
-        font: 3em;
-        height: auto;
     }
     .logo {
-        height: 65px;
+        height: 80px;
         width: auto;
     }
 }
@@ -402,13 +399,35 @@ label:first-child{
     margin-left: 3em;
     padding-top: 1em;
 }
-#account-opgeslagen-artiest-grid {
+#account-opgeslagen-artiest-grid ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 16px;
     padding: 20px;
-}
-
+} 
+  @media (max-width: 1200px) {
+    #account-opgeslagen-artiest-grid ul {
+      grid-template-columns: repeat(4, 1fr); /* 4 items per rij */
+    }
+  }
+  @media (max-width: 1024px) {
+    #account-opgeslagen-artiest-grid ul {
+      grid-template-columns: repeat(3, 1fr); /* 3 items per rij */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #account-opgeslagen-artiest-grid ul {
+      grid-template-columns: repeat(2, 1fr); /* 2 items per rij */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #account-opgeslagen-artiest-grid ul {
+      grid-template-columns: repeat(1, 1fr); /* 1 item per rij */
+    }
+  }
+  
 .grid-item {
     background: rgb(255, 255, 255);
     padding: 12px;
@@ -729,7 +748,7 @@ label:first-child{
 
 
 /* Opgeslagen Artiesten Pagina */
-.sort{
+.opgeslagen-artiesten-pagina button{
     font-size: 1em;
     margin-left: 20px;
 }
