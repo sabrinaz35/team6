@@ -292,20 +292,29 @@ marquee {
 }
 
 /* Styling inlog- en aanmeldpagina*/
-.inloggen,
-.accountAanmaken {
-  width: 300px;
-  background: rgb(255, 255, 255, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  margin: auto;
-  margin-top: 50px;
+
+.inloggen, .accountAanmaken{
+    width: 350px;
+    background: rgb(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+@media 
+(max-width: 480px){
+    .inloggen, .accountAanmaken{
+        width: 300px;
+        margin-bottom: 1em;
+    }
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+
 }
 
 input {
