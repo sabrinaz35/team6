@@ -56,26 +56,33 @@
 .hamburger {
     display: none;
     font-size: 2em;
+    color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     margin-right: 20px;
 }
 
 /* Mobiele menu standaard verborgen */
 .mobile-menu {
-    display: none;
-    flex-direction: column; /* <--- belangrijk, anders geen stacking */
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0; /* <-- van rechts naar links veranderd */
     height: 100%;
-    width: 70%;
+    width: 90%;
     background-color: #4D774F;
+    box-shadow: inset 18px 19px 20px 4px rgb(0 0 0 / 10%);
     padding: 20px;
     z-index: 1000;
+
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 .mobile-menu.active {
-    display: flex;
+    transform: translateX(0);
+    opacity: 1;
 }
 
 /* Items in het mobiele menu */
@@ -93,7 +100,8 @@
 /* Sluitknop */
 .close-btn {
     align-self: flex-end;
-    font-size: 1.5em;
+    font-size: 2em;
+    color: rgba(255,255,255, 0.9);
     cursor: pointer;
     margin-bottom: 30px;
 }
@@ -105,14 +113,19 @@
     }
     .hamburger {
         display: block;
-        width: 2em;
+        font: 3em;
         height: auto;
+    }
+    .logo {
+        height: 65px;
+        width: auto;
     }
 }
 
 /* Hover effect voor de nav-items */
 .nav-item:hover {
     background-color: rgb(185, 67, 67);
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .footer-bar {
@@ -281,7 +294,7 @@ marquee {
 
 /* Styling inlog- en aanmeldpagina*/
 .inloggen, .accountAanmaken{
-    width: 350px;
+    width: 300px;
     background: rgb(255, 255, 255, 0.7);
     padding: 20px;
     border-radius: 10px;
