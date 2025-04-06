@@ -92,3 +92,6 @@ async function zoekKleineArtiest() {
 
 // functie aanroepen
 zoekKleineArtiest();
+
+
+
