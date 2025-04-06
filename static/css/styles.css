@@ -622,8 +622,7 @@ label:first-child{
     background: none;
     width: 30%;
     box-shadow: none;
-    
-
+    margin-left: 0;
 }
 .like-button {
     all: unset; /* Verwijdert alle standaard button-stijlen */
@@ -646,7 +645,6 @@ label:first-child{
     border: none;
 }
 
-
 .icon-btn {
     background: transparent;
     border: none;
@@ -655,7 +653,6 @@ label:first-child{
     display: flex;
     align-items: center;
     justify-content: center;
-    
 }
 
 .tuneder-image {
@@ -676,8 +673,6 @@ label:first-child{
     transform: scale(1.1);
 }
 
-
-
 .icon-btn:active .heart-icon {
     transform: scale(1.1); /* Licht inzoomeffect bij klik */
 }
@@ -695,7 +690,6 @@ label:first-child{
     font-size: 30px;
     margin-bottom: 30%;
 }
-
 
 /* voor genre filter pagina */
 .genreFilter {
@@ -716,7 +710,6 @@ label:first-child{
 #rangeSliderTuneder {
     accent-color: #b94343; /* Verandert de kleur van de slider */
 }
-
 
 .genreFilter input {
     all: initial;
@@ -740,8 +733,6 @@ label:first-child{
     width: 50vw;
 }
 
-
-
 .genres div:focus-within {
     border: 3px solid hotpink;
 }
@@ -760,14 +751,13 @@ label:first-child{
     color: black;
     border: none;
     font-size: medium;
-
 }
 
-
-
-
-
-
+@media (max-width: 768px) {
+    .opgeslagen-artiesten-pagina input{
+        width: 80%;
+    }
+}
 
 /* like button op de index page  */
 .likeHartje.roodHart {
