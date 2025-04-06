@@ -599,13 +599,20 @@ label:first-child{
     transform: translateX(100px); /* Verplaats de rechterhelft naar rechts */
 }
 
-#likebutton{
+
+
+#likebutton,#likebuttonindex {
     background: none;
     width: 30%;
     box-shadow: none;
     
-
 }
+
+#likebuttonindex{
+    position: absolute;
+    width: 7%;
+}
+
 .like-button {
     all: unset; /* Verwijdert alle standaard button-stijlen */
     display: inline-block; /* Zorgt ervoor dat de knop nog steeds werkt */
