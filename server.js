@@ -23,6 +23,7 @@ const upload = multer({dest: 'static/upload/'})
 //static data access mogelijk maken
 app.use("/static", express.static("static"))
 
+
 // header script
 app.use(express.static('public'))
 
