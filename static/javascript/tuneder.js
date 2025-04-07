@@ -36,18 +36,18 @@ heartContainer.addEventListener('click', hartjeKlikken);
 
 //carousel 
 
-const swiper = new Swiper('.swiper', {
+const swiper = new Swiper('.swiper', {  //zoekt html .swiper
   // Optional parameters
-  loop: true,
+  loop: true, // zorgt dat deze oneindigdoorloopt
 
   // If we need pagination
   pagination: {
-    el: '.swiper-pagination',
+    el: '.swiper-pagination', // zorgt dat de swiper je feedback geeft waar je bent tijdens het swipen. 
   },
 
   // Navigation arrows
   navigation: {
-    nextEl: '.swiper-button-next',
+    nextEl: '.swiper-button-next', // linker en rechter button
     prevEl: '.swiper-button-prev',
   },
 
@@ -129,8 +129,8 @@ function genreInSwiper(genre) {
     
     if (swiperWrapper && genre) {
         // Maak een nieuwe div voor de slide
-        const newSlide = document.createElement("div");
-        newSlide.classList.add("swiper-slide");
+        const newSlide = document.createElement("div"); //wordt een nieuwe slide aangemaakt
+        newSlide.classList.add("swiper-slide"); //geldige swiper
         newSlide.textContent = genre; // Genre als tekst erin zetten
 
         // Voeg de nieuwe slide als eerste child toe
@@ -351,7 +351,6 @@ function hartjeKlikken(){
 
 document.getElementById('loading').classList.remove('hide');
 document.getElementById('loading').classList.add('hide');
-
 
 
 
