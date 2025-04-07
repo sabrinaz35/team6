@@ -24,19 +24,19 @@
         <ul class="list">
           <% if (user && artiesten.length > 0) { %>
             <% artiesten.forEach(artiest => { %>
-              <li class="grid-item">
-                <form action="/opgeslagen-artiesten" method="POST">
-                  <input name="artistId" value="<%= artiest.id %>" type="hidden">
-                </form>
+              <li class="grid-item"> -->
                 <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
                 <h3><span class="name"><%= artiest.name %></span></h3>
                 <p> <span class="genre">Genre: <%= artiest.genres %></span></p>
                 <p> <span class="popularity">Populariteit: <%= artiest.popularity %></span></p>
-                <div class="grid-item-container">
-                  <button type="submit" id="likebutton">
-                    <img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm">
-                  </button>
-                </div>
+                <form action="/opgeslagen-artiesten" method="POST">
+                  <input name="artistId" value="<%= artiest.id %>" type="hidden">
+                  <div class="grid-item-container">
+                    <button type="submit" id="likebutton">
+                      <img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm">
+                    </button>
+                  </div>
+                </form>
               </li>
             <% }) %>
           <% } else { %>
