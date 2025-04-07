@@ -1,49 +1,55 @@
-
-
-console.log("Hallo wereld")
-
-
-//hamburger menu
 document.addEventListener('DOMContentLoaded', function () {
+  console.log("Hallo wereld");
+
+  // Hamburger menu
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   const closeBtn = document.getElementById('closeBtn');
-  
-  console.log("Hamburger element:", hamburger);
-  console.log("Mobile menu element:", mobileMenu);
-  console.log("Close button element:", closeBtn);
-  // Toggle voor het openen/afsluiten van het mobiele menu
+
   hamburger.addEventListener('click', () => {
     mobileMenu.classList.toggle('active');
   });
 
-  // Sluit het menu wanneer je op het kruisje klikt
   closeBtn.addEventListener('click', () => {
     mobileMenu.classList.remove('active');
   });
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Configuratie voor List.js
+  // List.js configuratie
   const options = {
-    valueNames: ['name', 'genre']  // Specify the fields 'name' and 'genre' for List.js to search and sort.
-                                   // These correspond to the class names of HTML elements in the list items.
-                                   // For example, <span class="name">Artist Name</span> and <span class="genre">Genre</span>.
+    valueNames: ['name', 'genre', 'popularity']  
   };
 
-  // Maak een nieuwe List.js lijst
   const artiestenList = new List('account-opgeslagen-artiest-grid', options);
 
   // Zoekfunctie
-    // Zoeken naar overeenkomsten met de tekst die is ingevoerd
-const searchInput = document.querySelector('#search');
-searchInput.addEventListener('input', function() {
-  artiestenList.search(searchInput.value);  // Zoeken naar overeenkomsten met de tekst die is ingevoerd
-});
+  const searchInput = document.querySelector('#search');
+  searchInput.addEventListener('input', function () {
+    artiestenList.search(searchInput.value);
+  });
 
-  // Sorteerfunctie
-  const sortButton = document.querySelector('.sort');
-  sortButton.addEventListener('click', () => {
-    artiestenList.sort('name', { order: "asc" });  // Sorteer op naam in oplopende volgorde
+  // Sorteer op naam A-Z
+  const sortButtonAZ = document.querySelector('.sort');
+  sortButtonAZ.addEventListener('click', () => {
+    artiestenList.sort('name', { order: "asc" });
+  });
+
+  // Sorteer op naam Z-A
+  const sortButtonZA = document.querySelector('.sort-low');
+  sortButtonZA.addEventListener('click', () => {
+    artiestenList.sort('name', { order: "desc" });
+  });
+
+  // Sorteer op populariteit laag → hoog
+  const sortLowButton = document.querySelector('.sort-popularity');
+  sortLowButton.addEventListener('click', () => {
+    artiestenList.sort('popularity', {
+      order: "ssc",
+      sortFunction: function (a, b) {
+        // Zorg ervoor dat de populariteit als een numerieke waarde wordt behandeld
+        const popA = parseInt(a.values().popularity) || 0;
+        const popB = parseInt(b.values().popularity) || 0;
+        return popA - popB;
+      }
+    });
   });
 });

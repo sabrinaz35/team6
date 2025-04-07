@@ -18,7 +18,10 @@
         <input type="search" id="search" class="search" placeholder="Zoek Artiest...">
       </form>
       
-      <button class="sort" data-sort="name">Sorteer op naam</button>
+      <button class="sort" data-sort="name">Sorteer op naam (A → Z)</button>
+      <button class="sort-low" data-sort="name">Sorteer op naam (Z → A)</button>
+      <button class="sort-popularity" data-sort="popularity">Sorteer op populariteit (hoog → laag)</button>
+
 
       <div id="account-opgeslagen-artiest-grid">
         <ul class="list">
@@ -31,7 +34,7 @@
                 <img src="<%= artiest.images[0].url %>" alt="Foto van <%= artiest.name %>">
                 <h3><span class="name"><%= artiest.name %></span></h3>
                 <p> <span class="genre">Genre: <%= artiest.genres %></span></p>
-                <p> <span class="popularity">Populariteit: <%= artiest.popularity %></span></p>
+                <p>Populariteit: <span class="popularity"><%= artiest.popularity %></span></p>
                 <div class="grid-item-container">
                   <button type="submit" id="likebutton">
                     <img class="likeHartje" src="/static/images/heartrood.svg" alt="hart vorm">
