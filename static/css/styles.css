@@ -1,7 +1,19 @@
 /* Hieronder komt de styling van de partials.  */
+:root{
+  --primary-color: rgb(77, 119, 79); /* Voorbeeldkleur voor primary */
+  --secondary-color: rgb(211, 231, 205); /* Vervangen met RGB-code */
+  --button-background: rgb(77, 119, 79); /* Kleur voor knoppen */
+  --hover-color: rgb(185, 67, 67); /* Hover kleur */
+  --accent-color: rgb(152, 199, 140); /* Accent kleur */
+  --text-black: rgb(0, 0, 0); /* Donkere accentkleur */
+  --background-light: rgba(255, 255, 255, 0.7); /* Licht achtergrond */
+  --text-light: rgb(255, 255, 255); /* Tekst kleur wit */
+  --background-opacity: rgb(63, 63, 63); /* Donkere tekstkleur */
+  --error-color: rgb(255, 0, 0); /* Foutkleur */
+}
 /* Algemene stijlen voor de header zoals de kleur en padding */
 .header-bar {
-  background-color: #d3e7cd3f;
+  background-color: var(--background-opacity);
   padding: 20px;
   display: flex;
   align-items: center;
@@ -147,7 +159,11 @@ body {
 
 body {
   font-family: "Helvetica", sans-serif;
-  background-color: rgb(152, 199, 140);
+  background-image: url("../images/background.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 h1 {
@@ -759,7 +775,7 @@ p {
 }
 
 .genres div:focus-within {
-  border: 3px solid hotpink;
+  border: 3px solid var(--accent-color);
 }
 
 /* Opgeslagen Artiesten Pagina */
