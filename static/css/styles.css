@@ -2,18 +2,18 @@
 :root{
   --primary-color: rgb(77, 119, 79); /* Voorbeeldkleur voor primary */
   --secondary-color: rgb(211, 231, 205); /* Vervangen met RGB-code */
-  --button-background: rgb(77, 119, 79); /* Kleur voor knoppen */
+  --button-background: rgb(77, 119, 79); /* Kleur voor buttons */
   --hover-color: rgb(185, 67, 67); /* Hover kleur */
   --accent-color: rgb(152, 199, 140); /* Accent kleur */
   --text-black: rgb(0, 0, 0); /* Donkere accentkleur */
-  --background-light: rgba(255, 255, 255, 0.7); /* Licht achtergrond */
+  --background-light: rgba(255, 255, 255, 0.2); /* Licht achtergrond */
   --text-light: rgb(255, 255, 255); /* Tekst kleur wit */
-  --background-opacity: rgb(63, 63, 63); /* Donkere tekstkleur */
+  --text-small: rgb(63, 63, 63); /* Donkere tekstkleur */
   --error-color: rgb(255, 0, 0); /* Foutkleur */
 }
 /* Algemene stijlen voor de header zoals de kleur en padding */
 .header-bar {
-  background-color: var(--background-opacity);
+  background-color: var(--background-light);
   padding: 20px;
   display: flex;
   align-items: center;
