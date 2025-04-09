@@ -21,7 +21,6 @@ const upload = multer({dest: 'static/upload/'})
 
 const validator = require('validator');
 
-validator.isEmail('foo@bar.com'); //=> true
 //static data access mogelijk maken
 app.use("/static", express.static("static"))
 
@@ -185,6 +184,17 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
   }
 
   const cleanEmail = validator.normalizeEmail(email); 
+
+  const password = req.body.password;
+
+  if (!password) {
+    return res.status(400).send("Wachtwoord is verplicht.");
+  }
+
+  if(!validator.isStrongPassword(password)){
+    return res.status(400).send("Je wachtwoord is niet sterk genoeg. Het moet minimaal 8 karakters lang zijn, met een hoofdletter, een cijfer en een speciaal teken.")
+  }
+
 
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten")
