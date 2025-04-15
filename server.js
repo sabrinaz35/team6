@@ -176,23 +176,26 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
   const email = req.body.email;
 
   if (!email) {
-    return res.status(400).send("E-mail is verplicht.");
+    return res.render("pages/aanmelden", { errorMessage: "E-mail is verplicht." });
   }
 
   if (!validator.isEmail(email)) {
-    return res.status(400).send("Ongeldig e-mailadres.");
+    return res.render("pages/aanmelden", { errorMessage: "Ongeldig e-mailadres." });
   }
 
-  const cleanEmail = validator.normalizeEmail(email); 
+  const cleanEmail = validator.normalizeEmail(email);
 
+  // Wachtwoordvalidatie vóórdat je verder gaat
   const password = req.body.password;
 
   if (!password) {
-    return res.status(400).send("Wachtwoord is verplicht.");
+    return res.render("pages/aanmelden",{errorMessage: "Wachtwoord is verplicht."});
   }
 
-  if(!validator.isStrongPassword(password)){
-    return res.status(400).send("Je wachtwoord is niet sterk genoeg. Het moet minimaal 8 karakters lang zijn, met een hoofdletter, een cijfer en een speciaal teken.")
+  if (!validator.isStrongPassword(password)) {
+    return res.render("pages/aanmelden", {
+      errorMessage: "Wachtwoord is niet sterk genoeg. Gebruik een sterk wachtwoord met verschillende tekens."
+    });
   }
 
 
