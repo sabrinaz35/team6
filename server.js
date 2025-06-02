@@ -169,6 +169,9 @@ app.get("/fout-inlog", function (req, res) {
   res.render("pages/fout-inlog")
 })
 
+app.get('/aanmelden', (req, res) => {
+  res.render("pages/aanmelden", { errorMessage: null });
+});
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
