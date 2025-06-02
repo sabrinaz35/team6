@@ -19,6 +19,7 @@ const multer = require("multer")
 //Hier gaan de ingevoerde foto's naartoe
 const upload = multer({dest: 'static/upload/'})
 
+const validator = require('validator');
 
 //static data access mogelijk maken
 app.use("/static", express.static("static"))
@@ -171,6 +172,33 @@ app.get("/fout-inlog", function (req, res) {
 
 //**********Account aanmaken plus toevoegen in mongo**********
 app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
+  // E-mailvalidatie vóórdat je andere dingen doet
+  const email = req.body.email;
+
+  if (!email) {
+    return res.render("pages/aanmelden", { errorMessage: "E-mail is verplicht." });
+  }
+
+  if (!validator.isEmail(email)) {
+    return res.render("pages/aanmelden", { errorMessage: "Ongeldig e-mailadres." });
+  }
+
+  const cleanEmail = validator.normalizeEmail(email);
+
+  // Wachtwoordvalidatie vóórdat je verder gaat
+  const password = req.body.password;
+
+  if (!password) {
+    return res.render("pages/aanmelden",{errorMessage: "Wachtwoord is verplicht."});
+  }
+
+  if (!validator.isStrongPassword(password)) {
+    return res.render("pages/aanmelden", {
+      errorMessage: "Wachtwoord is niet sterk genoeg. Gebruik een sterk wachtwoord met verschillende tekens."
+    });
+  }
+
+
   //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
     const database = client.db("klanten")
     const gebruiker = database.collection("user")
@@ -189,7 +217,7 @@ app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
     //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
     const doc = { 
         name: xss(req.body.name),            
-        emailadress: xss(req.body.email), 
+        emailadress: xss(cleanEmail), 
         //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
         password: hashedPassword,
         profielFoto: (filename),

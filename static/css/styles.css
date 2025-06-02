@@ -391,6 +391,59 @@ label:first-child {
   transform: scaleX(1);
 }
 
+/* hover effect voor informatie over wachtwoord */
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.password-wrapper input{
+  flex-grow: 1;
+}
+
+.tooltip-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tooltip-icon-wrapper img {
+  width: 20px;
+  height: 20px;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  text-align: left;
+  width: 260px;
+  background-color: var(--button-background);
+  color: var(--text-light);
+  padding: 10px;
+  border-radius: 8px;
+  position: absolute;
+  top: 120%; 
+  right: 0;
+  z-index: 10;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-icon-wrapper:hover .tooltip-text,
+.tooltip-icon-wrapper:active .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+.tooltip-text ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+
 /* Profielpagina + opgeslagen artiesten pagina */
 .profile-section {
   display: flex;
@@ -989,3 +1042,4 @@ h2 {
   display: flex;
   justify-content: center; /* Horizontaal centreren */
 }
+
