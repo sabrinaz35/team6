@@ -24,6 +24,7 @@ const validator = require('validator');
 //static data access mogelijk maken
 app.use("/static", express.static("static"))
 
+
 // header script
 app.use(express.static('public'))
 
@@ -553,3 +554,4 @@ app.use((err, req, res) => {
   // 500 status code als HTTP response sturen
   res.status(500).send("500: server error")
 })
+
