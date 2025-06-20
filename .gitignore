@@ -7,3 +7,4 @@ node_modules/
 .styleintcache
 
 .eslintrc.*
+.DS_Store
