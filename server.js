@@ -19,7 +19,6 @@ const multer = require("multer")
 //Hier gaan de ingevoerde foto's naartoe
 const upload = multer({dest: 'static/upload/'})
 
-
 //static data access mogelijk maken
 app.use("/static", express.static("static"))
 
@@ -78,8 +77,6 @@ app.use(
   })
 )
 
-
-
 //Middleware Sessions bij het inloggen
 app.use(
   sessions({
@@ -89,7 +86,6 @@ app.use(
     cookie: { secure: false } 
   }),
 )
-
 
 //ejs templates opstarten
 app.set("view engine", "ejs")
@@ -101,8 +97,6 @@ app.listen(port, () => {
 
 // maakt het mogelijk om informatie op te halen die in formulieren wordt opgegeven
 app.use(express.urlencoded({ extended: true }))
-
-
 
 //******* DATABASE **********
 const { MongoClient, ServerApiVersion } = require("mongodb")
@@ -147,7 +141,6 @@ app.get("/about", (req, res) => {
   res.render("pages/about") // Zorg ervoor dat je een about.ejs bestand hebt in de 'views/pages' map
 })
 
-
 app.get('/tuneder', (req, res) => {
     res.render('pages/tuneder') // Zorg ervoor dat "tuneder.ejs" bestaat in de map views/pages/
   })
@@ -168,67 +161,87 @@ app.get("/fout-inlog", function (req, res) {
   res.render("pages/fout-inlog")
 })
 
-
-//**********Account aanmaken plus toevoegen in mongo**********
-app.post('/add-account',upload.single('profielFoto'), async (req, res) => {
-  //Je maakt een database aan in je mongo de naam van de collectie zet je tussen de "" 
-    const database = client.db("klanten")
-    const gebruiker = database.collection("user")
-
-    //const aanmaken om een hash te creëren voor het wachtwoord
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-
-    let filename 
-
-  if (req.file && req.file.filename) {
-    filename = req.file.filename
-  } else {
-    filename = "profiel-placeholder.png" //een afbeelding toevoegen..
-  }
-
-    //Om daadwerkelijk een _ID te krijgen maak je een doc aan met daarin de gegevens, in dit geval haalt hij de gegevens op uit de form
-    const doc = { 
-        name: xss(req.body.name),            
-        emailadress: xss(req.body.email), 
-        //Xss is niet nodig voor de password omdat daar al de bcrypt voor gebruikt wordt
-        password: hashedPassword,
-        profielFoto: (filename),
-        //alvast een lege array ter voorbereiding 
-        favorieten: [ ], 
-      }
-  
-    //Om het document toe te voegen in de database de volgende code
-    const toevoegen = await gebruiker.insertOne(doc)
-
-    //Even loggen om te checken of er een ID is aangemaakt
-    console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`)
-
-    //controleren of er daadwerkelijk een user is toegevoegd
-        if (toevoegen.insertedId){
-          //De nieuwe gebruiker vinden in de database
-          const newUser = await gebruiker.findOne({ emailadress: doc.emailadress })
-
-          //controleren of de gebruiker bestaat
-          if (newUser) {
-            console.log("Gebruiker is gevonden na het toevoegen")
-          }
-          //de gebruiker in een session zetten
-          req.session.user = newUser 
-
-          //Na het aanmaken van de session meteen doorsturen naar profiel pagina met daarin de gegevens van de gebruiker
-          res.redirect("/profiel")
-        } else {
-          //Dit werkt helemaal nog niet :(
-          res.send(`Oops er ging iets fout.`)
-        }
-  })
-
-
 //Route voor de form van het acount aanmaken
 app.get("/aanmelden", (req, res) => {
-  res.render("pages/aanmelden")
+  res.render("pages/aanmelden", { errors: [], formData: {} })
 })
 
+//**********Account aanmaken plus toevoegen in mongo**********
+app.post('/add-account', upload.single('profielFoto'), async (req, res) => {
+  try {
+    // Valideer de formuliergegevens
+    const validation = validator.validateRegistrationForm(req.body, req.file)
+    
+    if (!validation.valid) {
+      // Als validatie faalt, stuur errors terug naar de aanmeldpagina
+      return res.render("pages/aanmelden", { 
+        errors: validation.errors,
+        formData: req.body // Behoud ingevulde gegevens
+      })
+    }
+    
+    const database = client.db("klanten")
+    const gebruiker = database.collection("user")
+    
+    // Controleer of email al bestaat
+    const existingUser = await gebruiker.findOne({ emailadress: req.body.email.trim() })
+    if (existingUser) {
+      return res.render("pages/aanmelden", { 
+        errors: [{ field: 'email', message: 'Dit emailadres is al in gebruik' }],
+        formData: req.body
+      })
+    }
+    
+    // Hash het wachtwoord
+    const hashedPassword = await bcrypt.hash(req.body.password, 12) // Verhoogd naar 12 rounds voor betere beveiliging
+    
+    // Bepaal bestandsnaam
+    let filename 
+    if (req.file && req.file.filename) {
+      filename = req.file.filename
+    } else {
+      filename = "profiel-placeholder.png"
+    }
+    
+    // Maak het document aan met gezuiverde data
+    const doc = { 
+      name: xss(req.body.name.trim()),            
+      emailadress: xss(req.body.email.trim().toLowerCase()), // Zet email naar lowercase
+      password: hashedPassword,
+      profielFoto: filename,
+      favorieten: [],
+      createdAt: new Date() // Voeg timestamp toe
+    }
+    
+    // Voeg gebruiker toe aan database
+    const toevoegen = await gebruiker.insertOne(doc)
+    console.log(`A document was inserted with the _id: ${toevoegen.insertedId}`)
+    
+    if (toevoegen.insertedId) {
+      // Zoek de nieuwe gebruiker
+      const newUser = await gebruiker.findOne({ emailadress: doc.emailadress })
+      
+      if (newUser) {
+        console.log("Gebruiker is gevonden na het toevoegen")
+        // Zet gebruiker in sessie
+        req.session.user = newUser 
+        // Redirect naar profiel
+        res.redirect("/profiel")
+      } else {
+        throw new Error("Gebruiker kon niet worden gevonden na aanmaken")
+      }
+    } else {
+      throw new Error("Gebruiker kon niet worden aangemaakt")
+    }
+    
+  } catch (error) {
+    console.error("Fout bij aanmaken account:", error)
+    res.render("pages/aanmelden", { 
+      errors: [{ field: 'general', message: 'Er ging iets mis bij het aanmaken van je account. Probeer het opnieuw.' }],
+      formData: req.body
+    })
+  }
+})
 
 //**********inloggen en check via mongo**********
 app.post("/inlog-account", async (req, res) => {
@@ -290,8 +303,6 @@ app.get("/profiel", async(req, res) => {
   }
 })
 
-
-
 //**********artiesten opslaan in mongodb**********
 //ophalen pagina + het connecten van de pagina aan de database, zodat deze ook de gegevens kan zien
 app.get("/opgeslagen-artiesten", async (req, res) => {
@@ -326,7 +337,6 @@ app.get("/opgeslagen-artiesten", async (req, res) => {
   }
 
 })
-
 
 //Als het goed is moet :artiest dan vervangen worden door iets van de api
 //Het klopt nog niet helemaal 100% en ik weet niet of dat aan de code ligt voor de session
@@ -380,8 +390,6 @@ app.post("/opgeslagen-artiesten",async (req, res) => {
   res.redirect("/opgeslagen-artiesten") 
 })
 
-
-
 // ******** uitloggen **********
 
 app.get("/uitloggen", (req, res) => {
@@ -393,9 +401,6 @@ app.get("/uitloggen", (req, res) => {
     res.redirect("/inlog")
   })
 })
-
-
-
 
 //*******  VRAGEN EN KEUZE OPSLAAN ********
 //populariteitswaarde opslaan
@@ -418,13 +423,9 @@ app.post("/populariteit-kiezen", async (req, res) => {
   res.render("pages/tuneder", {user}) // render tuneder pagina
 })
 
-
-
 app.get("/api/populariteit", (req, res) => {
   res.json({ valuePopulariteit: req.session.user})
 })
-
-
 
 //gekozen genres opslaan
 
@@ -442,8 +443,6 @@ app.post("/genre-kiezen", (req, res) => {
   res.render("pages/filter-populariteit")
 })
 
-
-
 app.get("/api/genres", (req, res) => {
   console.log("Session data:", req.session)
   if (req.session.user && req.session.user.selectedGenres) {
@@ -456,8 +455,6 @@ app.get("/api/genres", (req, res) => {
     res.json({ selectedGenres: [] })
   }
 })
-
-
 
 // ******** SPOTIFY API **********
 
@@ -502,7 +499,6 @@ app.get("/token", (req, res) => {
     res.json({ access_token: body.access_token })
   })
 })
-
 
 // ******* ERROR HANDLING ********
 //moet onder routes staan dus niet verschuiven!

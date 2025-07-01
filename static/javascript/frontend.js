@@ -53,3 +53,75 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+// Drag and drop logicadocument.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
+  const lijst = document.querySelector('#draggable-list')
+  if (!lijst) return
+
+  let gesleept = null
+
+  function voegDragEventsToe() {
+    lijst.querySelectorAll('.grid-item').forEach(item => {
+      item.setAttribute('draggable', true)
+
+      item.addEventListener('dragstart', () => {
+        gesleept = item
+        item.classList.add('dragElem')
+      })
+
+      item.addEventListener('dragover', e => {
+        e.preventDefault()
+        item.classList.add('over')
+      })
+
+      item.addEventListener('dragleave', () => {
+        item.classList.remove('over')
+      })
+
+      item.addEventListener('drop', e => {
+        e.preventDefault()
+        item.classList.remove('over')
+
+        if (gesleept && gesleept !== item) {
+          const bounding = item.getBoundingClientRect()
+          const offset = e.clientY - bounding.top
+
+          if (offset > bounding.height / 2) {
+            lijst.insertBefore(gesleept, item.nextSibling)
+          } else {
+            lijst.insertBefore(gesleept, item)
+          }
+
+          slaNieuweVolgordeOp()
+        }
+      })
+
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragElem')
+        lijst.querySelectorAll('.grid-item').forEach(i => i.classList.remove('over'))
+      })
+    })
+  }
+
+  function slaNieuweVolgordeOp() {
+    const ids = Array.from(lijst.querySelectorAll('.grid-item'))
+      .map(item => item.dataset.id)
+
+    fetch('/opgeslagen-artiesten/volgorde', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nieuweVolgorde: ids })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) console.warn('Niet opgeslagen')
+    })
+    .catch(err => {
+      console.error('Fout bij opslaan:', err)
+    })
+  }
+
+  voegDragEventsToe()
+})
+
