@@ -14,11 +14,10 @@ export default [
     }
   },
   {
-    // Voeg hier browser globals toe voor je client-side code
+   //Bij deze code ziet hij waar hij overheen moet lezen.
     languageOptions: {
       globals: {
         ...globals.browser,
-        // Voeg hier extra globals toe als Swiper, List, error en validator
         Swiper: "readonly",
         List: "readonly",
         error: "readonly",

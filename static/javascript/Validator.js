@@ -1,3 +1,4 @@
+
 // Validator functies voor het aanmeldformulier
 const validator = {
   // Email validatie
